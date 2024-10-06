@@ -5,23 +5,33 @@
 //Include GLFW  
 #include <GLFW/glfw3.h>  
 
+//Include GLM  
+#include <glm/vec3.hpp> // glm::vec3
+#include <glm/vec4.hpp> // glm::vec4
+#include <glm/mat4x4.hpp> // glm::mat4
+#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/gtc/type_ptr.hpp> // glm::value_ptr
+
+#include <stdio.h>
+
 class Shader
 {
 	private:
 		GLuint shader;
-		GLuint fragmentShader;
-		GLuint vertexShader;
+
+		GLenum mode;
+		GLint first;
+		GLsizei count;
 
 	public:
-		Shader() {
-			this->shader = glCreateProgram();
-			this->vertexShader = glCreateShader(GL_VERTEX_SHADER);
-			this->fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-		}
+		Shader(GLenum mode, GLint first, GLsizei count);
 		
-		void AddShader(const char* shader, bool isVertexShader);
+		void AddShaders(const char* vertex_shader, const char* fragment_shader);
+
+		void CheckProgramLinking(GLuint program);
+
 		void UseProgram();
-		void Draw(GLenum mode, GLint first, GLsizei count);
-		void AttachShadersAndLinkProgram();
+
+		void Draw();
 };
 
