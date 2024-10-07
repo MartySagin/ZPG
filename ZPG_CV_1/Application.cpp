@@ -77,12 +77,12 @@ void Application::CreateModels()
 	Model modelTriangle;
 	modelTriangle.GenerateModel(points, sizeof(points));  
 
-	models.push_back(modelTriangle);
+	this->models.push_back(modelTriangle);
 
 	Model modelQuads;
 	modelQuads.GenerateModel(points_quad, sizeof(points_quad));
 
-	models.push_back(modelQuads);
+	this->models.push_back(modelQuads);
 
 
 }

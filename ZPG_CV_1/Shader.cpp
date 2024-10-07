@@ -2,7 +2,7 @@
 
 Shader::Shader(GLenum mode, GLint first, GLsizei count)
 {
-	this->shader = 0;
+	this->shader_id = 0;
 
 	this->mode = mode;
 	this->first = first;
@@ -26,13 +26,13 @@ void Shader::AddShaders(const char* vertex_shader, const char* fragment_shader)
 	glCompileShader(fragmentShader);
 
 	
-	this->shader = glCreateProgram();
+	this->shader_id = glCreateProgram();
 	
-	glAttachShader(this->shader, vertexShader);
-	glAttachShader(this->shader, fragmentShader);
+	glAttachShader(this->shader_id, vertexShader);
+	glAttachShader(this->shader_id, fragmentShader);
 	
-	glLinkProgram(this->shader);
-	CheckProgramLinking(this->shader);
+	glLinkProgram(this->shader_id);
+	CheckProgramLinking(this->shader_id);
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
@@ -63,7 +63,7 @@ void Shader::CheckProgramLinking(GLuint program)
 
 void Shader::UseProgram()
 {
-	glUseProgram(this->shader);
+	glUseProgram(this->shader_id);
 }
 
 void Shader::Draw()

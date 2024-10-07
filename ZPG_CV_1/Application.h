@@ -22,6 +22,7 @@ class Application
 {
 	public:
 		GLFWwindow* window;
+
 		vector<Shader> shaders;
 		vector<Model> models;
 

@@ -17,7 +17,7 @@
 class Shader
 {
 	private:
-		GLuint shader;
+		GLuint shader_id;
 
 		GLenum mode;
 		GLint first;
