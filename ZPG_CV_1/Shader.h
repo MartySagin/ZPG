@@ -30,7 +30,7 @@ class Shader
 
 		void CheckProgramLinking(GLuint program);
 
-		void UseProgram();
+		void UseProgram(glm::mat4 M);
 
 		void Draw();
 };

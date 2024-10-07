@@ -15,6 +15,9 @@
 #include <vector>
 #include "Shader.h"
 #include "Model.h"
+#include "bushes.h"
+#include "sphere.h"
+#include "tree.h"
 
 using namespace std;
 

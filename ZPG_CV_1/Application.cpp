@@ -1,4 +1,4 @@
-#include "Application.h"
+﻿#include "Application.h"
 
 void Application::Init()
 {
@@ -74,7 +74,7 @@ void Application::CreateModels()
 	};
 
 
-	Model modelTriangle;
+	/*Model modelTriangle;
 	modelTriangle.GenerateModel(points, sizeof(points));  
 
 	this->models.push_back(modelTriangle);
@@ -82,36 +82,53 @@ void Application::CreateModels()
 	Model modelQuads;
 	modelQuads.GenerateModel(points_quad, sizeof(points_quad));
 
-	this->models.push_back(modelQuads);
+	this->models.push_back(modelQuads);*/
 
+
+	/*Model modelBush;
+	modelBush.GenerateModel(bushes, sizeof(bushes));
+
+	this->models.push_back(modelBush);*/
+
+	Model modelTree;
+	modelTree.GenerateModel(tree, sizeof(tree));
+
+	this->models.push_back(modelTree);
 
 }
 
 void Application::CreateShaders()
 {
 	const char* vertex_shader =
-		"#version 330\n"
-		"layout(location=0) in vec3 vp;"
-		"void main () {"
-		"     gl_Position = vec4 (vp, 1.0);"
-		"}";
+		"#version 330 core\n"
+		"layout(location = 0) in vec3 aPos;\n"  
+		"layout(location = 1) in vec3 aColor;\n"  
+		"out vec3 ourColor;\n"
+		"uniform mat4 modelMatrix;\n"
+		"void main() {\n"
+		"    gl_Position = modelMatrix * vec4(aPos, 1.0);\n"  
+		"    ourColor = aColor;\n"
+		"}\n";
+
 
 
 	const char* fragment_shader =
-		"#version 330\n"
-		"out vec4 frag_colour;"
-		"void main () {"
-		"     frag_colour = vec4 (1, 1.0, 0.0, 1.0);"
-		"}";
+		"#version 330 core\n"
+		"in vec3 ourColor;\n" 
+		"out vec4 fragColor;\n"
+		"void main() {\n"
+		"    fragColor = vec4(ourColor, 1.0);\n"  
+		"}\n";
 
 	const char* fragment_shader_quad =
 		"#version 330\n"
 		"out vec4 frag_colour;"
 		"void main () {"
-		"     frag_colour = vec4 (1, 0.0, 1, 1.0);"
+		"     frag_colour = vec4 (0, 1, 0, 1.0);"
 		"}";
 
-	Shader shaderTriangle(GL_TRIANGLES, 0, 3);
+
+	/*Shader shaderTriangle(GL_TRIANGLES, 0, 3);
 	shaderTriangle.AddShaders(vertex_shader, fragment_shader);
 	
 	this->shaders.push_back(shaderTriangle);
@@ -119,25 +136,44 @@ void Application::CreateShaders()
 	Shader shaderQuads(GL_QUADS, 0, 4);
 	shaderQuads.AddShaders(vertex_shader, fragment_shader_quad);
 
-	this->shaders.push_back(shaderQuads);
+	this->shaders.push_back(shaderQuads);*/
+
+	/*Shader shaderBush(GL_TRIANGLES, 0, 8730);
+	shaderBush.AddShaders(vertex_shader, fragment_shader);
+
+	this->shaders.push_back(shaderBush);*/
+
+	Shader shaderTree(GL_TRIANGLES, 0, 92814);
+	shaderTree.AddShaders(vertex_shader, fragment_shader);
+
+	this->shaders.push_back(shaderTree);
 
 }
 
 void Application::Run()
 {
+	glEnable(GL_DEPTH_TEST);
+
+	glm::mat4 M = glm::mat4(1.0f);
+
+	M = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 1));
+	M = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
 	while (!glfwWindowShouldClose(this->window))
 	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		for (size_t i = 0; i < models.size(); ++i)
 		{
-			
-			shaders[i].UseProgram();  
+
+			shaders[i].UseProgram(M);
 
 			models[i].BindVAO();
 			
 			shaders[i].Draw();
 
 			models[i].UnbindVAO();
+
 		}
 
 		glfwSwapBuffers(this->window);
@@ -148,6 +184,7 @@ void Application::Run()
 		model.DeleteModel();
 	}
 
+	
 	glfwDestroyWindow(this->window);
 	glfwTerminate();
 }

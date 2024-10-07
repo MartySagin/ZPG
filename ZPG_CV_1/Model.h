@@ -13,7 +13,7 @@ class Model
 
         Model();
 
-        void GenerateModel(float* points, GLsizeiptr size);
+        void GenerateModel(const float* points, GLsizeiptr size);
 
         void BindVAO();
 

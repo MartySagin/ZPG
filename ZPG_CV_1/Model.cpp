@@ -6,7 +6,7 @@ Model::Model()
 	this->VBO = 0;
 }
 
-void Model::GenerateModel(float* points, GLsizeiptr size)
+void Model::GenerateModel(const float* points, GLsizeiptr size)
 {
     
     glGenVertexArrays(1, &this->VAO);
@@ -16,8 +16,12 @@ void Model::GenerateModel(float* points, GLsizeiptr size)
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
     glBufferData(GL_ARRAY_BUFFER, size, points, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid*)0);
     glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

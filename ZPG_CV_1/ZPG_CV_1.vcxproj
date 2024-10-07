@@ -136,6 +136,13 @@
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Desktop\Models\bushes.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Models\gift.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Models\plain.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Models\sphere.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Models\suzi_flat.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Models\suzi_smooth.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Models\tree.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
