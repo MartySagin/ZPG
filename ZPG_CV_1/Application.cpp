@@ -95,6 +95,11 @@ void Application::CreateModels()
 
 	this->models.push_back(modelTree);
 
+	Model modelTree2;
+	modelTree2.GenerateModel(tree, sizeof(tree));
+
+	this->models.push_back(modelTree2);
+
 }
 
 void Application::CreateShaders()
@@ -148,6 +153,11 @@ void Application::CreateShaders()
 
 	this->shaders.push_back(shaderTree);
 
+	Shader shaderTree2(GL_TRIANGLES, 0, 92814);
+	shaderTree2.AddShaders(vertex_shader, fragment_shader);
+
+	this->shaders.push_back(shaderTree);
+
 }
 
 void Application::Run()
@@ -155,26 +165,41 @@ void Application::Run()
 	glEnable(GL_DEPTH_TEST);
 
 	glm::mat4 M = glm::mat4(1.0f);
+	glm::mat4 C = glm::mat4(1.0f);
 
-	M = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 1));
-	M = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+	vector<glm::mat4> v;
+
+
+	C = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f)); 
+	C = glm::translate(C, glm::vec3(-5.0f, 0.0f, 0.0f)); 
+
+	M = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f));
+	M = glm::translate(M, glm::vec3(0.0f, 0.0f, 0.0f));
+
+	v.push_back(M);
+	v.push_back(C);
 
 	while (!glfwWindowShouldClose(this->window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		for (size_t i = 0; i < models.size(); ++i)
+		/*for (size_t i = 0; i < models.size(); ++i)
 		{
-
-			shaders[i].UseProgram(M);
-
+			shaders[i].UseProgram(v[i]);
 			models[i].BindVAO();
-			
 			shaders[i].Draw();
-
 			models[i].UnbindVAO();
+		}*/
 
-		}
+		shaders[0].UseProgram(v[0]);
+		models[0].BindVAO();
+		shaders[0].Draw();
+		models[0].UnbindVAO();
+
+		shaders[1].UseProgram(v[1]);
+		models[1].BindVAO();
+		shaders[1].Draw();
+		models[1].UnbindVAO();
 
 		glfwSwapBuffers(this->window);
 		glfwPollEvents();
@@ -184,10 +209,10 @@ void Application::Run()
 		model.DeleteModel();
 	}
 
-	
 	glfwDestroyWindow(this->window);
 	glfwTerminate();
 }
+
 
 
 void Application::error_callback(int error, const char* description)

@@ -55,7 +55,7 @@ void Shader::CheckProgramLinking(GLuint program)
 	
 }
 
-void Shader::UseProgram(glm::mat4 M)
+void Shader::UseProgram(glm::mat4& M)
 {
 	GLint idModelTransform = glGetUniformLocation(this->shader_id, "modelMatrix");
 
