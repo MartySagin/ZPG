@@ -9,7 +9,9 @@ class DrawableObject
 public:
     Model model;
     Transformation transformation;
+
     Shader shaderProgram;
+
     bool hasNormal;
 
     DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, const char* vertexShader, const char* fragmentShader, bool withNormal);
