@@ -36,8 +36,12 @@ void DrawableObject::SetScale(glm::vec3 scale)
 void DrawableObject::Draw()
 {
     shaderProgram.UseProgram();         
+
     shaderProgram.SetMatrix(transformation.GetMatrix());
+
     model.BindVAO();             
+
     shaderProgram.Draw();
+
     model.UnbindVAO();           
 }
