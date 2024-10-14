@@ -2,7 +2,7 @@
 
 #include "Model.h"
 #include "Transformation.h"
-#include "Shader.h"
+#include "ShaderProgram.h"
 
 class DrawableObject
 {
@@ -10,11 +10,11 @@ public:
     Model model;
     Transformation transformation;
 
-    Shader shaderProgram;
+    ShaderProgram shaderProgram;
 
     bool hasNormal;
 
-    DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, const char* vertexShader, const char* fragmentShader, bool withNormal);
+    DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, Shader vertexShader, Shader fragmentShader, bool withNormal);
 
     void SetPosition(glm::vec3 position);
     void SetRotation(glm::vec3 rotationDegrees);

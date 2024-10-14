@@ -111,9 +111,15 @@ void Application::Init()
 
 	srand(time(NULL));
 
+	Shader vertexS = Shader(vertexShader);
+	Shader fragmentS = Shader(fragmentShader);
+
+	Shader vertexShaderQuad = Shader(vertexShader);
+	Shader fragmentShaderQuad = Shader(fragment_shader_quad);
+
 
 	for (int i = 0; i < 20; i++) {
-		DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader, fragmentShader, true);
+		DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexS, fragmentS, true);
 		treeObject.SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
 		treeObject.SetPosition(glm::vec3(rand() % 20 - 8, rand() % 10 - 5, 0.0f));
 
@@ -122,7 +128,7 @@ void Application::Init()
 
 		treeObject.SetRotation(glm::vec3(randomAngleX, randomAngleY, 0));
 
-		DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader, fragmentShader, true);
+		DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexS, fragmentS, true);
 		bushObject.SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
 		bushObject.SetPosition(glm::vec3(rand() % 8 - 5, rand() % 8 - 5, 0.0f));
 
@@ -135,12 +141,12 @@ void Application::Init()
 
 	AddScene(scene1);
 
-	DrawableObject sphereObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader, fragment_shader, true);
+	DrawableObject sphereObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexS, fragmentS, true);
 	sphereObject.SetScale(glm::vec3(0.5f));
 
 	objects2.push_back(sphereObject);
 
-	DrawableObject quadObject(quad, sizeof(quad), GL_QUADS, vertexShader, fragment_shader_quad, false);
+	DrawableObject quadObject(quad, sizeof(quad), GL_QUADS, vertexS, fragmentShaderQuad, false);
 	quadObject.SetScale(glm::vec3(0.5f));
 	quadObject.SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
 

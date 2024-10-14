@@ -13,7 +13,7 @@
 #include <glm/gtc/type_ptr.hpp> // glm::value_ptr
 
 #include <vector>
-#include "Shader.h"
+#include "ShaderProgram.h"
 #include "Model.h"
 #include "bushes.h"
 #include "sphere.h"
@@ -28,7 +28,7 @@ class Application
 	public:
 		GLFWwindow* window;
 
-		vector<Shader> shaders;
+		vector<ShaderProgram> shaders;
 		vector<Model> models;
 
 		std::vector<Scene> scenes;    
