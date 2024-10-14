@@ -53,18 +53,6 @@ void Application::Init()
 	glfwSetWindowIconifyCallback(this->window, window_iconify_callback);
 
 	glfwSetWindowSizeCallback(this->window, window_size_callback);
-
-	Scene scene1;
-	scene1.Init(0);  // Inicializuje první scénu
-
-	Scene scene2;
-	scene2.Init(1);  // Inicializuje druhou scénu
-
-	// Přidání scén do aplikace
-	AddScene(scene1);
-	AddScene(scene2);
-
-	currentSceneIndex = 0;  // Výchozí scéna je první
 	
 }
 
@@ -242,8 +230,12 @@ void Application::Run()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		scenes[currentSceneIndex].Render();
-		scenes[currentSceneIndex].Update();
+		for (int i = 0; i < this->models.size(); i++) {
+			this->shaders[i].UseProgram();
+			this->models[i].BindVAO();
+			this->shaders[i].Draw();
+			this->models[i].UnbindVAO();
+		}
 	
 
 		glfwSwapBuffers(this->window);
