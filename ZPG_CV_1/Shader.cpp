@@ -73,6 +73,7 @@ void Shader::UseProgram()
 
 	if (idModelTransform == -1) {
 		printf("Error: Cannot find uniform 'modelMatrix' in shader!\n");
+		glUseProgram(this->shader_id);
 	}
 	
 	glUseProgram(this->shader_id);

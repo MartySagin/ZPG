@@ -1,38 +1,32 @@
 #include "Scene.h"
-#include <glm/gtc/matrix_transform.hpp>
-#include <cstdlib>
-#include <ctime>
-#include "tree.h"
-#include "bushes.h"
 
-void Scene::Init()
+void Scene::Init(const std::vector<DrawableObject>& drawableObjects)
 {
-    
+    for (const auto& object : drawableObjects)
+    {
+        this->objects.push_back(object); 
+    }
 }
 
 void Scene::Render()
 {
-   
-    for (size_t i = 0; i < models.size(); ++i)
+    for (auto& object : objects)
     {
-        shaders[i].UseProgram();  
-        models[i].BindVAO();      
-        shaders[i].Draw();       
-        models[i].UnbindVAO();    
+        object.Draw();  
     }
 }
 
 void Scene::Update()
 {
-    //Empty for now
+
+    for (auto& object : objects)
+    {
+        // Zde mùžeš pøidat dynamické aktualizace (napø. rotace)
+        object.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));  // Pro jednoduchý pøíklad rotace
+    }
 }
 
-void Scene::AddShader(Shader shader)
+void Scene::AddObject(DrawableObject object)
 {
-    this->shaders.push_back(shader);
-}
-
-void Scene::AddModel(Model model)
-{
-    this->models.push_back(model);
+    objects.push_back(object);
 }

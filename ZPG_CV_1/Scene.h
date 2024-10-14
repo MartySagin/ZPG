@@ -1,21 +1,18 @@
 #pragma once
 
 #include <vector>
-#include "Shader.h"
-#include "Model.h"
+#include "DrawableObject.h"
 
 using namespace std;
 
 class Scene
 {
 public:
-    vector<Shader> shaders;
-    vector<Model> models;
+    std::vector<DrawableObject> objects;  
 
-    void Init();  
-    void Render(); 
+    void Init(const vector<DrawableObject>& drawableObjects);  
+    void Render();  
     void Update();  
 
-    void AddShader(Shader shader);
-    void AddModel(Model model);
+    void AddObject(DrawableObject object);
 };

@@ -1,5 +1,8 @@
 ﻿#include "Application.h"
 
+vector<DrawableObject> objects;
+vector<DrawableObject> objects2;
+
 void Application::Init()
 {
 	
@@ -53,6 +56,102 @@ void Application::Init()
 	glfwSetWindowIconifyCallback(this->window, window_iconify_callback);
 
 	glfwSetWindowSizeCallback(this->window, window_size_callback);
+
+	const char* vertexShader =
+		"#version 330 core\n"
+		"layout(location = 0) in vec3 aPos;\n"
+		"layout(location = 1) in vec3 aColor;\n"
+		"out vec3 ourColor;\n"
+		"uniform mat4 modelMatrix;\n"
+		"void main() {\n"
+		"    gl_Position = modelMatrix * vec4(aPos, 1.0);\n"
+		"    ourColor = aColor;\n"
+		"}\n";
+
+	const char* fragmentShader =
+		"#version 330 core\n"
+		"in vec3 ourColor;\n"
+		"out vec4 fragColor;\n"
+		"void main() {\n"
+		"    fragColor = vec4(ourColor, 1.0);\n"
+		"}\n";
+
+
+
+	const char* vertex_shader =
+		"#version 330\n"
+		"layout(location=0) in vec3 vp;"
+		"void main () {"
+		"     gl_Position = vec4 (vp, 1.0);"
+		"}";
+
+
+
+	const char* fragment_shader =
+		"#version 330\n"
+		"out vec4 frag_colour;"
+		"void main () {"
+		"     frag_colour = vec4 (0.5, 0.0, 0.5, 1.0);"
+		"}";
+
+	const char* fragment_shader_quad =
+		"#version 330\n"
+		"out vec4 frag_colour;"
+		"void main () {"
+		"     frag_colour = vec4 (0, 1, 0, 1.0);"
+		"}";
+
+	float quad[] = {
+		0.0f, 0.5f, 0.0f,
+		0.5f, 0.5f, 0.0f,
+		0.5f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f
+	};
+
+
+	srand(time(NULL));
+
+
+	for (int i = 0; i < 20; i++) {
+		DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader, fragmentShader, true);
+		treeObject.SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
+		treeObject.SetPosition(glm::vec3(rand() % 20 - 8, rand() % 10 - 5, 0.0f));
+
+		float randomAngleY = rand() % 45;
+		float randomAngleX = rand() % 45;
+
+		treeObject.SetRotation(glm::vec3(randomAngleX, randomAngleY, 0));
+
+		DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader, fragmentShader, true);
+		bushObject.SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
+		bushObject.SetPosition(glm::vec3(rand() % 8 - 5, rand() % 8 - 5, 0.0f));
+
+		objects.push_back(treeObject);
+		objects.push_back(bushObject);
+	}
+
+	Scene scene1;
+	scene1.Init(objects);
+
+	AddScene(scene1);
+
+	DrawableObject sphereObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader, fragment_shader, true);
+	sphereObject.SetScale(glm::vec3(0.5f));
+
+	objects2.push_back(sphereObject);
+
+	DrawableObject quadObject(quad, sizeof(quad), GL_QUADS, vertexShader, fragment_shader_quad, false);
+	quadObject.SetScale(glm::vec3(0.5f));
+	quadObject.SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
+
+	objects2.push_back(quadObject);
+
+	Scene scene2;
+	scene2.Init(objects2);
+
+	AddScene(scene2);
+
+	currentSceneIndex = 0;  
 	
 }
 
@@ -63,7 +162,6 @@ void Application::AddScene(Scene scene)
 
 void Application::SwitchScene()
 {
-	// Cyklicky přepíná mezi scénami
 	currentSceneIndex = (currentSceneIndex + 1) % scenes.size();
 }
 
@@ -145,8 +243,6 @@ void Application::CreateShaders()
 	for (int i = 0; i < 20; i++) {
 		glm::mat4 Matrix = glm::mat4(1.0f);
 
-	
-
 		Matrix = glm::scale(glm::mat4(1.0f), glm::vec3(rand()%100/1000.0+0.05f));
 
 
@@ -188,20 +284,21 @@ void Application::CreateShaders()
 
 void Application::MoveObject(int direction)
 {
+	printf("MoveObject %d\n", direction);
 	
-	for (auto& shader : shaders)
+	for (auto& object : scenes[currentSceneIndex].objects)
 	{
 		if (direction == 0) {
-			shader.Matrix = glm::translate(shader.Matrix, glm::vec3(-0.1f, 0.0f, 0.0f));
+			object.SetPosition(glm::vec3(-0.1f, 0.0f, 0.0f));
 		}
 		else if (direction == 1) {
-			shader.Matrix = glm::translate(shader.Matrix, glm::vec3(0.1f, 0.0f, 0.0f)); 
+			object.SetPosition(glm::vec3(0.1f, 0.0f, 0.0f));
 		}
 		else if (direction == 2) {
-			shader.Matrix = glm::translate(shader.Matrix, glm::vec3(0.0f, 0.1f, 0.0f)); 
+			object.SetPosition(glm::vec3(0.0f, 0.1f, 0.0f));
 		}
 		else if (direction == 3) {
-			shader.Matrix = glm::translate(shader.Matrix, glm::vec3(0.0f, -0.1f, 0.0f));
+			object.SetPosition(glm::vec3(0.0f, -0.1f, 0.0f));
 		}
 	}
 }
@@ -209,13 +306,13 @@ void Application::MoveObject(int direction)
 void Application::RotateObject(int axis)
 {
 	
-	for (auto& shader : shaders)
+	for (auto& object : scenes[currentSceneIndex].objects)
 	{
 		if (axis == 0) {
-			shader.Matrix = glm::rotate(shader.Matrix, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f)); 
+			object.SetRotation(glm::vec3(0.0f, 0.0f, 10.0f));
 		}
 		else if (axis == 1) {
-			shader.Matrix = glm::rotate(shader.Matrix, glm::radians(10.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
+			object.SetRotation(glm::vec3(0.0f, 10.0f, 0.0f));
 		}
 	}
 }
@@ -230,12 +327,8 @@ void Application::Run()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		for (int i = 0; i < this->models.size(); i++) {
-			this->shaders[i].UseProgram();
-			this->models[i].BindVAO();
-			this->shaders[i].Draw();
-			this->models[i].UnbindVAO();
-		}
+		
+		scenes[currentSceneIndex].Render();
 	
 
 		glfwSwapBuffers(this->window);
@@ -280,6 +373,9 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 		else if (key == GLFW_KEY_T) {
 			((Application*)glfwGetWindowUserPointer(window))->RotateObject(1); 
 		}
+		else if (key == GLFW_KEY_SPACE) {
+			((Application*)glfwGetWindowUserPointer(window))->SwitchScene(); 
+		}
 	}
 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -312,7 +408,6 @@ void Application::button_callback(GLFWwindow* window, int button, int action, in
 
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
 	{
-		// Přepne na další scénu po stisknutí pravého tlačítka myši
 		Application* app = (Application*)glfwGetWindowUserPointer(window);
 		app->SwitchScene();
 	}
