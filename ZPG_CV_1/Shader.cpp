@@ -44,6 +44,11 @@ void Shader::AddShaders(const char* vertex_shader, const char* fragment_shader)
 	glDeleteShader(fragmentShader);
 }
 
+void Shader::SetMatrix(glm::mat4 Matrix)
+{
+	this->Matrix = Matrix;
+}
+
 void Shader::CheckProgramLinking(GLuint program)
 {
 

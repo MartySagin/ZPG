@@ -24,9 +24,6 @@ int main(void)
 	Application* application = new Application();
 
 	application->Init();
-	
-	application->CreateShaders();
-	application->CreateModels();
 
 	application->Run();
 	

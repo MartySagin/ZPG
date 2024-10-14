@@ -32,6 +32,8 @@ class Shader
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
 
+		void SetMatrix(glm::mat4 Matrix);
+
 		void CheckProgramLinking(GLuint program);
 
 		void UseProgram();

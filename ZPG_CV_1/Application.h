@@ -37,12 +37,6 @@ class Application
 	public:
 		void Init();
 
-		void AddShader(Shader shader);
-
-		void CreateModels();
-
-		void CreateShaders();
-
 		void AddScene(Scene scene);
 
 		void SwitchScene();

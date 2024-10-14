@@ -1,18 +1,18 @@
 #pragma once
 
 #include "Model.h"
+#include "Transformation.h"
 #include "Shader.h"
-#include <glm/glm.hpp>
 
 class DrawableObject
 {
 public:
-    Model model;         
-    Shader shader;       
-    glm::mat4 transform; 
+    Model model;
+    Transformation transformation;
+    Shader shaderProgram;
     bool hasNormal;
 
-    DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, const char* vertexShader, const char* fragmentShader, bool withNormals);
+    DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, const char* vertexShader, const char* fragmentShader, bool withNormal);
 
     void SetPosition(glm::vec3 position);
     void SetRotation(glm::vec3 rotationDegrees);

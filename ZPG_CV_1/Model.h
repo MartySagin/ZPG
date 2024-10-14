@@ -15,9 +15,8 @@
 class Model
 {
 	public:
-        GLuint VBO;  
-        GLuint VAO;  
-        glm::mat4 Matrix;
+        GLuint VAO;
+        GLuint VBO;
 
         Model();
 
@@ -25,9 +24,7 @@ class Model
         void GenerateModelWithNormal(const float* points, GLsizeiptr size);
 
         void BindVAO();
-
         void UnbindVAO();
-
         void DeleteModel();
 };
 
