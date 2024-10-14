@@ -9,6 +9,18 @@ Shader::Shader(GLenum mode, GLint first, GLsizei count)
 	this->count = count;
 }
 
+
+Shader::Shader(GLenum mode, GLint first, GLsizei count, glm::mat4 Matrix)
+{
+	this->shader_id = 0;
+
+	this->mode = mode;
+	this->first = first;
+	this->count = count;
+
+	this->Matrix = Matrix;
+}
+
 void Shader::AddShaders(const char* vertex_shader, const char* fragment_shader)
 {
 	
@@ -55,7 +67,7 @@ void Shader::CheckProgramLinking(GLuint program)
 	
 }
 
-void Shader::UseProgram(glm::mat4& M)
+void Shader::UseProgram()
 {
 	GLint idModelTransform = glGetUniformLocation(this->shader_id, "modelMatrix");
 
@@ -65,7 +77,7 @@ void Shader::UseProgram(glm::mat4& M)
 	
 	glUseProgram(this->shader_id);
 
-	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &M[0][0]);
+	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &this->Matrix[0][0]);
 }
 
 void Shader::Draw()

@@ -18,6 +18,8 @@ void Application::Init()
 	glfwMakeContextCurrent(this->window);
 	glfwSwapInterval(1);
 
+	glfwSetWindowUserPointer(this->window, this);
+
 	// start GLEW extension handler
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -45,12 +47,36 @@ void Application::Init()
 
 	glfwSetMouseButtonCallback(this->window, button_callback);
 
+
 	glfwSetWindowFocusCallback(this->window, window_focus_callback);
 
 	glfwSetWindowIconifyCallback(this->window, window_iconify_callback);
 
 	glfwSetWindowSizeCallback(this->window, window_size_callback);
+
+	Scene scene1;
+	scene1.Init(0);  // Inicializuje první scénu
+
+	Scene scene2;
+	scene2.Init(1);  // Inicializuje druhou scénu
+
+	// Přidání scén do aplikace
+	AddScene(scene1);
+	AddScene(scene2);
+
+	currentSceneIndex = 0;  // Výchozí scéna je první
 	
+}
+
+void Application::AddScene(Scene scene)
+{
+	scenes.push_back(scene);
+}
+
+void Application::SwitchScene()
+{
+	// Cyklicky přepíná mezi scénami
+	currentSceneIndex = (currentSceneIndex + 1) % scenes.size();
 }
 
 void Application::AddShader(Shader shader)
@@ -74,31 +100,22 @@ void Application::CreateModels()
 	};
 
 
-	/*Model modelTriangle;
-	modelTriangle.GenerateModel(points, sizeof(points));  
-
-	this->models.push_back(modelTriangle);
-
-	Model modelQuads;
-	modelQuads.GenerateModel(points_quad, sizeof(points_quad));
-
-	this->models.push_back(modelQuads);*/
-
-
-	/*Model modelBush;
-	modelBush.GenerateModel(bushes, sizeof(bushes));
-
-	this->models.push_back(modelBush);*/
 
 	Model modelTree;
 	modelTree.GenerateModel(tree, sizeof(tree));
 
-	this->models.push_back(modelTree);
+	for (int i = 0; i < 20; i++) {
+		this->models.push_back(modelTree);
+	}
 
-	Model modelTree2;
-	modelTree2.GenerateModel(tree, sizeof(tree));
+	Model modelBush;
+	modelBush.GenerateModel(bushes, sizeof(bushes));
 
-	this->models.push_back(modelTree2);
+	for (int i = 0; i < 20; i++) {
+		this->models.push_back(modelBush);
+	}
+
+	
 
 }
 
@@ -133,73 +150,101 @@ void Application::CreateShaders()
 		"}";
 
 
-	/*Shader shaderTriangle(GL_TRIANGLES, 0, 3);
-	shaderTriangle.AddShaders(vertex_shader, fragment_shader);
+
+
+	srand(time(NULL));
+
+	for (int i = 0; i < 20; i++) {
+		glm::mat4 Matrix = glm::mat4(1.0f);
+
 	
-	this->shaders.push_back(shaderTriangle);
 
-	Shader shaderQuads(GL_QUADS, 0, 4);
-	shaderQuads.AddShaders(vertex_shader, fragment_shader_quad);
+		Matrix = glm::scale(glm::mat4(1.0f), glm::vec3(rand()%100/1000.0+0.05f));
 
-	this->shaders.push_back(shaderQuads);*/
 
-	/*Shader shaderBush(GL_TRIANGLES, 0, 8730);
-	shaderBush.AddShaders(vertex_shader, fragment_shader);
+		float randomAngleY = rand() % 45;  
+		Matrix = glm::rotate(Matrix, glm::radians(randomAngleY), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	this->shaders.push_back(shaderBush);*/
+		float randomAngleX = rand() % 45;  
+		Matrix = glm::rotate(Matrix, glm::radians(randomAngleX), glm::vec3(1.0f, 0.0f, 0.0f));
 
-	Shader shaderTree(GL_TRIANGLES, 0, 92814);
-	shaderTree.AddShaders(vertex_shader, fragment_shader);
 
-	this->shaders.push_back(shaderTree);
+		Matrix = glm::translate(Matrix, glm::vec3(rand()%20-8, rand()%10-5, 0.0f));
 
-	Shader shaderTree2(GL_TRIANGLES, 0, 92814);
-	shaderTree2.AddShaders(vertex_shader, fragment_shader);
 
-	this->shaders.push_back(shaderTree);
+		Shader shaderTree(GL_TRIANGLES, 0, 92814, Matrix);
+		shaderTree.AddShaders(vertex_shader, fragment_shader);
 
+		this->shaders.push_back(shaderTree);
+	}
+
+	for (int i = 0; i < 20; i++) {
+		glm::mat4 Matrix = glm::mat4(1.0f);
+
+		float randomAngle = rand() % 360;  
+		Matrix = glm::rotate(Matrix, glm::radians(randomAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		Matrix = glm::scale(glm::mat4(1.0f), glm::vec3(rand() % 100 / 500.0 + 0.05f));
+		Matrix = glm::translate(Matrix, glm::vec3(rand() % 8 - 5, rand() % 8 - 5, 0.0f));
+
+		Shader shaderBush(GL_TRIANGLES, 0, 8730, Matrix);
+		shaderBush.AddShaders(vertex_shader, fragment_shader);
+
+		this->shaders.push_back(shaderBush);
+	}
+		
+
+	
+
+}
+
+void Application::MoveObject(int direction)
+{
+	
+	for (auto& shader : shaders)
+	{
+		if (direction == 0) {
+			shader.Matrix = glm::translate(shader.Matrix, glm::vec3(-0.1f, 0.0f, 0.0f));
+		}
+		else if (direction == 1) {
+			shader.Matrix = glm::translate(shader.Matrix, glm::vec3(0.1f, 0.0f, 0.0f)); 
+		}
+		else if (direction == 2) {
+			shader.Matrix = glm::translate(shader.Matrix, glm::vec3(0.0f, 0.1f, 0.0f)); 
+		}
+		else if (direction == 3) {
+			shader.Matrix = glm::translate(shader.Matrix, glm::vec3(0.0f, -0.1f, 0.0f));
+		}
+	}
+}
+
+void Application::RotateObject(int axis)
+{
+	
+	for (auto& shader : shaders)
+	{
+		if (axis == 0) {
+			shader.Matrix = glm::rotate(shader.Matrix, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f)); 
+		}
+		else if (axis == 1) {
+			shader.Matrix = glm::rotate(shader.Matrix, glm::radians(10.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
+		}
+	}
 }
 
 void Application::Run()
 {
 	glEnable(GL_DEPTH_TEST);
 
-	glm::mat4 M = glm::mat4(1.0f);
-	glm::mat4 C = glm::mat4(1.0f);
-
-	vector<glm::mat4> v;
-
-
-	C = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f)); 
-	C = glm::translate(C, glm::vec3(-5.0f, 0.0f, 0.0f)); 
-
-	M = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f));
-	M = glm::translate(M, glm::vec3(0.0f, 0.0f, 0.0f));
-
-	v.push_back(M);
-	v.push_back(C);
+	
 
 	while (!glfwWindowShouldClose(this->window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		/*for (size_t i = 0; i < models.size(); ++i)
-		{
-			shaders[i].UseProgram(v[i]);
-			models[i].BindVAO();
-			shaders[i].Draw();
-			models[i].UnbindVAO();
-		}*/
-
-		shaders[0].UseProgram(v[0]);
-		models[0].BindVAO();
-		shaders[0].Draw();
-		models[0].UnbindVAO();
-
-		shaders[1].UseProgram(v[1]);
-		models[1].BindVAO();
-		shaders[1].Draw();
-		models[1].UnbindVAO();
+		scenes[currentSceneIndex].Render();
+		scenes[currentSceneIndex].Update();
+	
 
 		glfwSwapBuffers(this->window);
 		glfwPollEvents();
@@ -222,10 +267,31 @@ void Application::error_callback(int error, const char* description)
 
 void Application::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	
+	if (action == GLFW_PRESS || action == GLFW_REPEAT)
+	{
+		if (key == GLFW_KEY_LEFT) {
+			((Application*)glfwGetWindowUserPointer(window))->MoveObject(0); 
+		}
+		else if (key == GLFW_KEY_RIGHT) {
+			((Application*)glfwGetWindowUserPointer(window))->MoveObject(1);
+		}
+		else if (key == GLFW_KEY_UP) {
+			((Application*)glfwGetWindowUserPointer(window))->MoveObject(2);
+		}
+		else if (key == GLFW_KEY_DOWN) {
+			((Application*)glfwGetWindowUserPointer(window))->MoveObject(3); 
+		}
+		else if (key == GLFW_KEY_R) {
+			((Application*)glfwGetWindowUserPointer(window))->RotateObject(0); 
+		}
+		else if (key == GLFW_KEY_T) {
+			((Application*)glfwGetWindowUserPointer(window))->RotateObject(1); 
+		}
+	}
+
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
-
-	printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
 }
 
 void Application::window_focus_callback(GLFWwindow* window, int focused)
@@ -252,8 +318,11 @@ void Application::cursor_callback(GLFWwindow* window, double x, double y)
 void Application::button_callback(GLFWwindow* window, int button, int action, int mode)
 {
 
-	if (action == GLFW_PRESS) {
-		printf("button_callback [%d,%d,%d]\n", button, action, mode);
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+	{
+		// Přepne na další scénu po stisknutí pravého tlačítka myši
+		Application* app = (Application*)glfwGetWindowUserPointer(window);
+		app->SwitchScene();
 	}
 
 }

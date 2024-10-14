@@ -23,14 +23,18 @@ class Shader
 		GLint first;
 		GLsizei count;
 
+
 	public:
+		glm::mat4 Matrix;
+
 		Shader(GLenum mode, GLint first, GLsizei count);
+		Shader(GLenum mode, GLint first, GLsizei count, glm::mat4 Matrix);
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
 
 		void CheckProgramLinking(GLuint program);
 
-		void UseProgram(glm::mat4& M);
+		void UseProgram();
 
 		void Draw();
 };

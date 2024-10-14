@@ -18,6 +18,8 @@
 #include "bushes.h"
 #include "sphere.h"
 #include "tree.h"
+#include <random>
+#include "Scene.h"
 
 using namespace std;
 
@@ -29,6 +31,9 @@ class Application
 		vector<Shader> shaders;
 		vector<Model> models;
 
+		std::vector<Scene> scenes;    
+		int currentSceneIndex;
+
 	public:
 		void Init();
 
@@ -37,6 +42,14 @@ class Application
 		void CreateModels();
 
 		void CreateShaders();
+
+		void AddScene(Scene scene);
+
+		void SwitchScene();
+
+		void MoveObject(int direction);
+
+		void RotateObject(int axis);
 
 		void Run();
 

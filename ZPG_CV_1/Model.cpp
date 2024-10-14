@@ -42,3 +42,4 @@ void Model::DeleteModel()
     glDeleteBuffers(1, &this->VBO);
     glDeleteVertexArrays(1, &this->VAO);
 }
+
