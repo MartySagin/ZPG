@@ -13,6 +13,7 @@
 #include <glm/gtc/type_ptr.hpp> // glm::value_ptr
 
 #include <stdio.h>
+#include "Camera.h"
 
 
 class ShaderProgram
@@ -24,17 +25,20 @@ class ShaderProgram
 		GLint first;
 		GLsizei count;
 
-
+		Camera* camera;
 
 	public:
 		glm::mat4 Matrix;
 
-		ShaderProgram(GLenum mode, GLint first, GLsizei count);
-		ShaderProgram(GLenum mode, GLint first, GLsizei count, glm::mat4 Matrix);
+		ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera);
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
 
 		void SetMatrix(glm::mat4 Matrix);
+
+		void SetViewMatrix();     
+		
+		void SetProjectionMatrix();
 
 		void CheckProgramLinking(GLuint program);
 

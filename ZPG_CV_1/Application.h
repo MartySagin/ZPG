@@ -20,6 +20,7 @@
 #include "tree.h"
 #include <random>
 #include "Scene.h"
+#include "Camera.h"
 
 using namespace std;
 
@@ -33,6 +34,8 @@ class Application
 
 		std::vector<Scene> scenes;    
 		int currentSceneIndex;
+
+		Camera* camera;
 
 	public:
 		void Init();

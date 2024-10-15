@@ -63,8 +63,10 @@ void Application::Init()
 		"layout(location = 1) in vec3 aColor;\n"
 		"out vec3 ourColor;\n"
 		"uniform mat4 modelMatrix;\n"
+		"uniform mat4 viewMatrix;\n"
+		"uniform mat4 projectionMatrix;\n"
 		"void main() {\n"
-		"    gl_Position = modelMatrix * vec4(aPos, 1.0);\n"
+		"    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
 		"    ourColor = aColor;\n"
 		"}\n";
 
@@ -109,12 +111,14 @@ void Application::Init()
 	};
 
 
+	this->camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 2.0f, 60.0f, ratio, 0.1f, 100.0f);
+
 	srand(time(NULL));
 ;
 
 
 	for (int i = 0; i < 20; i++) {
-		DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader, fragmentShader, true);
+		DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader, fragmentShader, this->camera, true);
 		treeObject.SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
 		treeObject.SetPosition(glm::vec3(rand() % 20 - 8, rand() % 10 - 5, 0.0f));
 
@@ -123,7 +127,7 @@ void Application::Init()
 
 		treeObject.SetRotation(glm::vec3(randomAngleX, randomAngleY, 0));
 
-		DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader, fragmentShader, true);
+		DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader, fragmentShader, this->camera, true);
 		bushObject.SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
 		bushObject.SetPosition(glm::vec3(rand() % 8 - 5, rand() % 8 - 5, 0.0f));
 
@@ -136,12 +140,12 @@ void Application::Init()
 
 	AddScene(scene1);
 
-	DrawableObject sphereObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader, fragmentShader, true);
+	DrawableObject sphereObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader, fragmentShader, this->camera, true);
 	sphereObject.SetScale(glm::vec3(0.5f));
 
 	objects2.push_back(sphereObject);
 
-	DrawableObject quadObject(quad, sizeof(quad), GL_QUADS, vertexShader, fragment_shader_quad, false);
+	DrawableObject quadObject(quad, sizeof(quad), GL_QUADS, vertexShader, fragment_shader_quad, this->camera, false);
 	quadObject.SetScale(glm::vec3(0.5f));
 	quadObject.SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
 
@@ -264,6 +268,30 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 		}
 	}
 
+	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+
+	// Časový krok pro plynulý pohyb (deltaTime)
+	static float lastFrameTime = 0.0f;
+	float currentFrameTime = glfwGetTime();
+	float deltaTime = currentFrameTime - lastFrameTime;
+	lastFrameTime = currentFrameTime;
+
+	// Detekce kláves pro pohyb kamery
+	if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+		if (key == GLFW_KEY_W) {
+			app->camera->MoveForward(deltaTime);  // Pohyb vpřed
+		}
+		else if (key == GLFW_KEY_S) {
+			app->camera->MoveBackward(deltaTime);  // Pohyb vzad
+		}
+		else if (key == GLFW_KEY_A) {
+			app->camera->MoveLeft(deltaTime);  // Pohyb doleva
+		}
+		else if (key == GLFW_KEY_D) {
+			app->camera->MoveRight(deltaTime);  // Pohyb doprava
+		}
+	}
+
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 }
@@ -286,7 +314,20 @@ void Application::window_size_callback(GLFWwindow* window, int width, int height
 
 void Application::cursor_callback(GLFWwindow* window, double x, double y)
 { 
-	printf("cursor_callback \n"); 
+	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+
+	
+	static double lastX = x, lastY = y;
+
+	double offsetX = x - lastX;
+	double offsetY = y - lastY;
+
+	lastX = x;
+	lastY = y;
+
+	float sensitivity = 0.01f;  // Nastavení citlivosti pohybu
+	app->camera->Rotate(offsetY * sensitivity, offsetX * sensitivity);  // Otáčení kamery
+	
 }
 
 void Application::button_callback(GLFWwindow* window, int button, int action, int mode)
