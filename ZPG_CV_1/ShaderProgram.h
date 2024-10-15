@@ -13,7 +13,7 @@
 #include <glm/gtc/type_ptr.hpp> // glm::value_ptr
 
 #include <stdio.h>
-#include "Shader.h"
+
 
 class ShaderProgram
 {
@@ -25,13 +25,14 @@ class ShaderProgram
 		GLsizei count;
 
 
+
 	public:
 		glm::mat4 Matrix;
 
 		ShaderProgram(GLenum mode, GLint first, GLsizei count);
 		ShaderProgram(GLenum mode, GLint first, GLsizei count, glm::mat4 Matrix);
 		
-		void AddShaders(Shader vertex_shader, Shader fragment_shader);
+		void AddShaders(const char* vertex_shader, const char* fragment_shader);
 
 		void SetMatrix(glm::mat4 Matrix);
 

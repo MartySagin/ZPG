@@ -7,6 +7,7 @@ ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count)
 	this->mode = mode;
 	this->first = first;
 	this->count = count;
+
 }
 
 
@@ -18,18 +19,19 @@ ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, glm::mat4 
 	this->first = first;
 	this->count = count;
 
+
 	this->Matrix = Matrix;
 }
 
-void ShaderProgram::AddShaders(Shader vertex_shader, Shader fragment_shader)
+void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_shader)
 {
 	
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertex_shader.shader, NULL);
+	glShaderSource(vertexShader, 1, &vertex_shader, NULL);
 	glCompileShader(vertexShader);
 
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragment_shader.shader, NULL);
+	glShaderSource(fragmentShader, 1, &fragment_shader, NULL);
 	glCompileShader(fragmentShader);
 
 	this->shader_id = glCreateProgram();
@@ -48,6 +50,7 @@ void ShaderProgram::SetMatrix(glm::mat4 Matrix)
 {
 	this->Matrix = Matrix;
 }
+
 
 void ShaderProgram::CheckProgramLinking(GLuint program)
 {
@@ -89,3 +92,4 @@ void ShaderProgram::Draw()
 {
 	glDrawArrays(this->mode, this->first, this->count);
 }
+
