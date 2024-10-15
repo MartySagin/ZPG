@@ -14,7 +14,7 @@ public:
 
     bool hasNormal;
 
-    DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, Shader vertexShader, Shader fragmentShader, bool withNormal);
+    DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, const char* vertexShader, const char* fragmentShader, bool withNormal);
 
     void SetPosition(glm::vec3 position);
     void SetRotation(glm::vec3 rotationDegrees);
