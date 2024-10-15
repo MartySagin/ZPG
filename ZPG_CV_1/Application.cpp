@@ -117,10 +117,10 @@ void Application::Init()
 ;
 
 
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 100; i++) {
 		DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader, fragmentShader, this->camera, true);
 		treeObject.SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
-		treeObject.SetPosition(glm::vec3(rand() % 20 - 8, rand() % 10 - 5, 0.0f));
+		treeObject.SetPosition(glm::vec3(rand() % 100 - 20, rand() % 20 - 5, 0.0f));
 
 		float randomAngleY = rand() % 45;
 		float randomAngleX = rand() % 45;
@@ -129,7 +129,7 @@ void Application::Init()
 
 		DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader, fragmentShader, this->camera, true);
 		bushObject.SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
-		bushObject.SetPosition(glm::vec3(rand() % 8 - 5, rand() % 8 - 5, 0.0f));
+		bushObject.SetPosition(glm::vec3(rand() % 100 - 20, rand() % 20 - 5, 0.0f));
 
 		objects.push_back(treeObject);
 		objects.push_back(bushObject);
@@ -276,19 +276,18 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 	float deltaTime = currentFrameTime - lastFrameTime;
 	lastFrameTime = currentFrameTime;
 
-	// Detekce kláves pro pohyb kamery
 	if (action == GLFW_PRESS || action == GLFW_REPEAT) {
 		if (key == GLFW_KEY_W) {
-			app->camera->MoveForward(deltaTime);  // Pohyb vpřed
+			app->camera->MoveForward(deltaTime);  
 		}
 		else if (key == GLFW_KEY_S) {
-			app->camera->MoveBackward(deltaTime);  // Pohyb vzad
+			app->camera->MoveBackward(deltaTime);  
 		}
 		else if (key == GLFW_KEY_A) {
-			app->camera->MoveLeft(deltaTime);  // Pohyb doleva
+			app->camera->MoveLeft(deltaTime);  
 		}
 		else if (key == GLFW_KEY_D) {
-			app->camera->MoveRight(deltaTime);  // Pohyb doprava
+			app->camera->MoveRight(deltaTime);  
 		}
 	}
 
@@ -325,8 +324,8 @@ void Application::cursor_callback(GLFWwindow* window, double x, double y)
 	lastX = x;
 	lastY = y;
 
-	float sensitivity = 0.01f;  // Nastavení citlivosti pohybu
-	app->camera->Rotate(offsetY * sensitivity, offsetX * sensitivity);  // Otáčení kamery
+	float sensitivity = 0.01f; 
+	app->camera->Rotate(offsetY * sensitivity, offsetX * sensitivity);  
 	
 }
 

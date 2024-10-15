@@ -21,8 +21,8 @@ void Scene::Update()
 
     for (auto& object : objects)
     {
-        // Zde mùžeš pøidat dynamické aktualizace (napø. rotace)
-        object.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));  // Pro jednoduchý pøíklad rotace
+        // Zde mï¿½ï¿½eï¿½ pï¿½idat dynamickï¿½ aktualizace (napï¿½. rotace)
+        object.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));  // Pro jednoduchï¿½ pï¿½ï¿½klad rotace
     }
 }
 

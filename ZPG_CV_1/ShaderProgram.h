@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include "Camera.h"
 
+class Camera;
 
 class ShaderProgram
 {
@@ -45,5 +46,7 @@ class ShaderProgram
 		void UseProgram();
 
 		void Draw();
+
+		void UpdateFromCamera();
 };
 

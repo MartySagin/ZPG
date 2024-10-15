@@ -10,6 +10,8 @@ ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* ca
 
 	this->camera = camera;
 
+	camera->AddObserver(this);
+
 }
 
 void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_shader)
@@ -33,6 +35,13 @@ void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_s
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+}
+
+void ShaderProgram::UpdateFromCamera() {
+	UseProgram();
+
+	SetViewMatrix();
+	SetProjectionMatrix();
 }
 
 void ShaderProgram::SetMatrix(glm::mat4 Matrix)

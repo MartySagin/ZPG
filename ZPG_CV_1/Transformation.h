@@ -1,5 +1,5 @@
-#pragma once
 
+#pragma once
 #include <glm/glm.hpp>
 
 class Transformation
@@ -9,9 +9,10 @@ public:
 
     Transformation();
 
-    void SetPosition(glm::vec3 position);
-    void SetRotation(glm::vec3 rotationDegrees);
-    void SetScale(glm::vec3 scale);
+    virtual void SetPosition(glm::vec3 position);  
+    virtual void SetRotation(glm::vec3 rotationDegrees);
+    virtual void SetScale(glm::vec3 scale);
 
-    glm::mat4 GetMatrix() const;  
+    virtual glm::mat4 GetMatrix() const;
+    virtual ~Transformation() = default;  
 };
