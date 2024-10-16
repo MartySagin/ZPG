@@ -90,16 +90,19 @@ void Application::Init()
 			float zPos = row * spacing;  
 
 			DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), this->camera, true);
+
 			treeObject.SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
 			treeObject.SetPosition(glm::vec3(xPos, yPos, zPos));
 
+			float randomAngleY = rand() % 360;
+			float randomAngleX = rand() % 40 - 20;
 
-			float randomAngleY = rand() % 45;
-			treeObject.SetRotation(glm::vec3(0.0f, randomAngleY, 0.0f));
+			treeObject.SetRotation(glm::vec3(randomAngleX, randomAngleY, 0.0f));
 
 			objects.push_back(treeObject);
 
 			DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), this->camera, true);
+
 			bushObject.SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
 			bushObject.SetPosition(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f));
 
