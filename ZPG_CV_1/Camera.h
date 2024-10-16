@@ -20,6 +20,9 @@ private:
     float aspectRatio;   
     float zNear, zFar;    
 
+    float yaw;    
+    float pitch;
+
     glm::mat4 viewMatrix;       
     glm::mat4 projectionMatrix; 
 
@@ -31,6 +34,9 @@ public:
     glm::mat4 GetViewMatrix() const; 
 
     glm::mat4 GetProjectionMatrix() const;   
+
+	void IncreaseMovementSpeed(float movementSpeed);
+	void DecreaseMovementSpeed(float movementSpeed);
 
     void Rotate(float deltaX, float deltaY);
 

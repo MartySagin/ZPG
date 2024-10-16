@@ -21,6 +21,9 @@
 #include <random>
 #include "Scene.h"
 #include "Camera.h"
+#include "plain.h"
+#include "FragmentShader.h"
+#include "VertexShader.h"
 
 using namespace std;
 

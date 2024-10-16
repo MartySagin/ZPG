@@ -18,52 +18,88 @@ glm::mat4 Camera::GetProjectionMatrix() const
     return projectionMatrix;
 }
 
+void Camera::IncreaseMovementSpeed(float movementSpeed)
+{
+	this->movementSpeed += movementSpeed;
+}
+
+void Camera::DecreaseMovementSpeed(float movementSpeed)
+{
+	if (this->movementSpeed - movementSpeed < 1.0f) {
+		this->movementSpeed = 1.0f;
+		return;
+    }
+    
+    this->movementSpeed -= movementSpeed;
+}
+
 void Camera::Rotate(float deltaX, float deltaY)
 {
-    
-    target.x += deltaX;
-    target.y += deltaY;
+    yaw += deltaX;
+    pitch += deltaY;
 
-    if (target.y > 89.0f) target.y = 89.0f;
-    if (target.y < -89.0f) target.y = -89.0f;
+    if (pitch > 89.0f) pitch = 89.0f;
+    if (pitch < -89.0f) pitch = -89.0f;
 
-    UpdateViewMatrix();  
+
+    glm::vec3 direction;
+
+    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    direction.y = sin(glm::radians(pitch));
+    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+
+    target = glm::normalize(direction);
+
+    UpdateViewMatrix();
 }
+
+
 
 void Camera::MoveForward(float deltaTime)
 {
     float velocity = movementSpeed * deltaTime;
-    position += target * velocity; 
-    UpdateViewMatrix();  
+
+    position += target * velocity;
+
+    UpdateViewMatrix();
 }
 
 void Camera::MoveBackward(float deltaTime)
 {
     float velocity = movementSpeed * deltaTime;
-    position -= target * velocity; 
+
+    position -= target * velocity;
+
     UpdateViewMatrix();
 }
 
 void Camera::MoveLeft(float deltaTime)
 {
     float velocity = movementSpeed * deltaTime;
-    glm::vec3 right = glm::normalize(glm::cross(target, up));  
-    position -= right * velocity;  
+
+    glm::vec3 right = glm::normalize(glm::cross(target, up));
+
+    position -= right * velocity;
+
     UpdateViewMatrix();
 }
 
 void Camera::MoveRight(float deltaTime)
 {
     float velocity = movementSpeed * deltaTime;
-    glm::vec3 right = glm::normalize(glm::cross(target, up)); 
-    position += right * velocity;  
+
+    glm::vec3 right = glm::normalize(glm::cross(target, up));
+
+    position += right * velocity;
+
     UpdateViewMatrix();
 }
 
 
+
 void Camera::UpdateViewMatrix()
 {
-    viewMatrix = glm::lookAt(position, target, up);  
+    viewMatrix = glm::lookAt(position, position + target, up);
 }
 
 void Camera::UpdateProjectionMatrix()
