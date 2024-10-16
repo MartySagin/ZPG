@@ -12,7 +12,7 @@ void Application::Init()
 		exit(EXIT_FAILURE);
 	}
 
-	this->window = glfwCreateWindow(800, 600, "ZPG", NULL, NULL);
+	this->window = glfwCreateWindow(1920, 1080, "ZPG", NULL, NULL);
 	if (!this->window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
