@@ -8,14 +8,14 @@ Camera::Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movemen
     UpdateProjectionMatrix();
 }
 
-glm::mat4 Camera::GetViewMatrix() const
-{
-    return viewMatrix;
+glm::mat4 Camera::GetViewMatrix()
+{  
+    return this->viewMatrix;
 }
 
-glm::mat4 Camera::GetProjectionMatrix() const
+glm::mat4 Camera::GetProjectionMatrix()
 {
-    return projectionMatrix;
+    return this->projectionMatrix;
 }
 
 void Camera::IncreaseMovementSpeed(float movementSpeed)
@@ -51,6 +51,7 @@ void Camera::Rotate(float deltaX, float deltaY)
     target = glm::normalize(direction);
 
     UpdateViewMatrix();
+
 }
 
 
@@ -62,6 +63,7 @@ void Camera::MoveForward(float deltaTime)
     position += target * velocity;
 
     UpdateViewMatrix();
+
 }
 
 void Camera::MoveBackward(float deltaTime)
@@ -71,6 +73,7 @@ void Camera::MoveBackward(float deltaTime)
     position -= target * velocity;
 
     UpdateViewMatrix();
+
 }
 
 void Camera::MoveLeft(float deltaTime)
@@ -82,6 +85,7 @@ void Camera::MoveLeft(float deltaTime)
     position -= right * velocity;
 
     UpdateViewMatrix();
+
 }
 
 void Camera::MoveRight(float deltaTime)
@@ -93,6 +97,7 @@ void Camera::MoveRight(float deltaTime)
     position += right * velocity;
 
     UpdateViewMatrix();
+
 }
 
 
@@ -112,11 +117,8 @@ void Camera::AddObserver(ShaderProgram* observer) {
 }
 
 void Camera::RemoveObserver(ShaderProgram* observer) {
-    observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
+    observers.erase(remove(observers.begin(), observers.end(), observer), observers.end());
 }
 
-void Camera::NotifyObservers() {
-    for (ShaderProgram* observer : observers) {
-        observer->UpdateFromCamera(); 
-    }
-}
+
+

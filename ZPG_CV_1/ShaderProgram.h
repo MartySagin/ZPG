@@ -43,10 +43,10 @@ class ShaderProgram
 
 		void CheckProgramLinking(GLuint program);
 
+		void CheckProgramCompiling(GLuint program);
+
 		void UseProgram();
 
 		void Draw();
-
-		void UpdateFromCamera();
 };
 

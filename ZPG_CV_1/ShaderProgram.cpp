@@ -10,8 +10,6 @@ ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* ca
 
 	this->camera = camera;
 
-	camera->AddObserver(this);
-
 }
 
 void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_shader)
@@ -21,9 +19,13 @@ void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_s
 	glShaderSource(vertexShader, 1, &vertex_shader, NULL);
 	glCompileShader(vertexShader);
 
+	CheckProgramCompiling(vertexShader);
+
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragment_shader, NULL);
 	glCompileShader(fragmentShader);
+
+	CheckProgramCompiling(fragmentShader);
 
 	this->shader_id = glCreateProgram();
 
@@ -37,12 +39,6 @@ void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_s
 	glDeleteShader(fragmentShader);
 }
 
-void ShaderProgram::UpdateFromCamera() {
-	UseProgram();
-
-	SetViewMatrix();
-	SetProjectionMatrix();
-}
 
 void ShaderProgram::SetMatrix(glm::mat4 Matrix)
 {
@@ -51,7 +47,8 @@ void ShaderProgram::SetMatrix(glm::mat4 Matrix)
 
 void ShaderProgram::SetViewMatrix()
 {
-	glm::mat4 viewMatrix = camera->GetViewMatrix();
+	
+	glm::mat4 viewMatrix = this->camera->GetViewMatrix();
 
 	GLint viewLoc = glGetUniformLocation(this->shader_id, "viewMatrix");
 
@@ -64,7 +61,8 @@ void ShaderProgram::SetViewMatrix()
 
 void ShaderProgram::SetProjectionMatrix()
 {
-	glm::mat4 projectionMatrix = camera->GetProjectionMatrix();
+	
+	glm::mat4 projectionMatrix = this->camera->GetProjectionMatrix();
 	
 	GLint projectionLoc = glGetUniformLocation(this->shader_id, "projectionMatrix");
 
@@ -97,6 +95,26 @@ void ShaderProgram::CheckProgramLinking(GLuint program)
 		exit(EXIT_FAILURE);
 	}
 	
+}
+
+void ShaderProgram::CheckProgramCompiling(GLuint program) {
+	GLint status;
+
+	glGetProgramiv(program, GL_COMPILE_STATUS, &status);
+
+	if (status == GL_FALSE)
+	{
+		GLint infoLogLength;
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
+		GLchar* strInfoLog = new GLchar[infoLogLength + 1];
+		glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
+
+		fprintf(stderr, "Program compiling failure: %s\n", strInfoLog);
+
+		delete[] strInfoLog;
+
+		exit(EXIT_FAILURE);
+	}
 }
 
 void ShaderProgram::UseProgram()

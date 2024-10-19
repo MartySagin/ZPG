@@ -43,6 +43,7 @@ void Application::Init()
 	float ratio = width / (float)height;
 	glViewport(0, 0, width, height);
 
+	// Hide cursor
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Sets the key callback
@@ -60,8 +61,8 @@ void Application::Init()
 	glfwSetWindowSizeCallback(this->window, window_size_callback);
 
 
-	//Init Camera
-	this->camera = new Camera(glm::vec3(0.0f, 5.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
+	//Init Camera For Scene 1
+	Camera* camera = new Camera(glm::vec3(0.0f, 5.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
 	
 	//Init Shaders
@@ -71,7 +72,7 @@ void Application::Init()
 	FragmentShader* fragmentShaderPlain = new FragmentShader(glm::vec4(0.3f, 0.20f, 0.20f, 1.0f));
 
 	//Scene 1
-	DrawableObject plainObject(plain, sizeof(plain), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderPlain->GetShader(), this->camera, true);
+	DrawableObject plainObject(plain, sizeof(plain), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderPlain->GetShader(), camera, true);
 	plainObject.SetScale(glm::vec3(25.0f));
 	plainObject.SetPosition(glm::vec3(0.0f, 0.0f, 0.5f));
 
@@ -89,7 +90,7 @@ void Application::Init()
 			float yPos = 0.0f;  
 			float zPos = row * spacing;  
 
-			DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), this->camera, true);
+			DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera, true);
 
 			treeObject.SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
 			treeObject.SetPosition(glm::vec3(xPos, yPos, zPos));
@@ -101,7 +102,7 @@ void Application::Init()
 
 			objects.push_back(treeObject);
 
-			DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), this->camera, true);
+			DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera, true);
 
 			bushObject.SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
 			bushObject.SetPosition(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f));
@@ -111,7 +112,7 @@ void Application::Init()
 	}
 
 	Scene scene1;
-	scene1.Init(objects);
+	scene1.Init(objects, camera);
 
 	AddScene(scene1);
 
@@ -124,21 +125,23 @@ void Application::Init()
 		0.5f, 1.0f, 0.0f
 	};
 
-	DrawableObject sphereObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), this->camera, true);
+	Camera* camera2 = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
+
+	DrawableObject sphereObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
 	sphereObject.SetScale(glm::vec3(0.5f));
 
 	objects2.push_back(sphereObject);
 
 	FragmentShader* fragmentShaderQuad = new FragmentShader(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
-	DrawableObject quadObject(quad, sizeof(quad), GL_QUADS, vertexShader->GetShader(), fragmentShaderQuad->GetShader(), this->camera, false);
+	DrawableObject quadObject(quad, sizeof(quad), GL_QUADS, vertexShader->GetShader(), fragmentShaderQuad->GetShader(), camera2, false);
 	quadObject.SetScale(glm::vec3(0.5f));
 	quadObject.SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
 
 	objects2.push_back(quadObject);
 
 	Scene scene2;
-	scene2.Init(objects2);
+	scene2.Init(objects2, camera);
 
 	AddScene(scene2);
 
@@ -256,39 +259,44 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 
 	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 
-	static float lastFrameTime = 0.0f;
-	float currentFrameTime = glfwGetTime();
-	float deltaTime = currentFrameTime - lastFrameTime;
+	if (app->scenes[app->currentSceneIndex].GetCamera()) {
+		Camera* camera = app->scenes[app->currentSceneIndex].GetCamera();
 
-	const float maxDeltaTime = 0.01f;
+		static float lastFrameTime = 0.0f;
+		float currentFrameTime = glfwGetTime();
+		float deltaTime = currentFrameTime - lastFrameTime;
 
-	if (deltaTime > maxDeltaTime) {
-		deltaTime = maxDeltaTime;
-	}
+		const float maxDeltaTime = 0.01f;
 
-	lastFrameTime = currentFrameTime;
-
-	if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-		if (key == GLFW_KEY_W) {
-			app->camera->MoveForward(deltaTime);  
+		if (deltaTime > maxDeltaTime) {
+			deltaTime = maxDeltaTime;
 		}
-		else if (key == GLFW_KEY_S) {
-			app->camera->MoveBackward(deltaTime);  
-		}
-		else if (key == GLFW_KEY_A) {
-			app->camera->MoveLeft(deltaTime);  
-		}
-		else if (key == GLFW_KEY_D) {
-			app->camera->MoveRight(deltaTime);  
-		}
-	}
 
-	if (key == GLFW_KEY_U && action == GLFW_PRESS) {
-		app->camera->IncreaseMovementSpeed(2.0f);
-	}
+		lastFrameTime = currentFrameTime;
 
-	if (key == GLFW_KEY_J && action == GLFW_PRESS) {
-		app->camera->DecreaseMovementSpeed(2.0f);
+		if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+			if (key == GLFW_KEY_W) {
+				camera->MoveForward(deltaTime);
+			}
+			else if (key == GLFW_KEY_S) {
+				camera->MoveBackward(deltaTime);
+			}
+			else if (key == GLFW_KEY_A) {
+				camera->MoveLeft(deltaTime);
+			}
+			else if (key == GLFW_KEY_D) {
+				camera->MoveRight(deltaTime);
+			}
+		}
+
+		if (key == GLFW_KEY_U && action == GLFW_PRESS) {
+			camera->IncreaseMovementSpeed(2.0f);
+		}
+
+		if (key == GLFW_KEY_J && action == GLFW_PRESS) {
+			camera->DecreaseMovementSpeed(2.0f);
+		}
+
 	}
 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -314,16 +322,10 @@ void Application::window_size_callback(GLFWwindow* window, int width, int height
 void Application::cursor_callback(GLFWwindow* window, double x, double y)
 { 
 	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+	
+	Camera* camera = app->scenes[app->currentSceneIndex].GetCamera();
 
 	static double lastX = 400, lastY = 300;
-	static bool firstMouse = true;
-
-	if (firstMouse)
-	{
-		lastX = x;
-		lastY = y;
-		firstMouse = false;
-	}
 
 	double offsetX = x - lastX;
 	double offsetY = lastY - y;  
@@ -335,7 +337,7 @@ void Application::cursor_callback(GLFWwindow* window, double x, double y)
 	offsetX *= sensitivity;
 	offsetY *= sensitivity;
 
-	app->camera->Rotate(offsetX, offsetY);
+	camera->Rotate(offsetX, offsetY);
 	
 }
 

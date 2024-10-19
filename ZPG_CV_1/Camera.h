@@ -31,9 +31,9 @@ private:
 public:
     Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movementSpeed, float fov, float aspectRatio, float zNear, float zFar);
 
-    glm::mat4 GetViewMatrix() const; 
+    glm::mat4 GetViewMatrix(); 
 
-    glm::mat4 GetProjectionMatrix() const;   
+    glm::mat4 GetProjectionMatrix();  
 
 	void IncreaseMovementSpeed(float movementSpeed);
 	void DecreaseMovementSpeed(float movementSpeed);
@@ -53,5 +53,4 @@ public:
 
     void AddObserver(ShaderProgram* observer);
     void RemoveObserver(ShaderProgram* observer);
-    void NotifyObservers();
 };

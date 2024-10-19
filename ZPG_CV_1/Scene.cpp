@@ -1,11 +1,9 @@
 #include "Scene.h"
 
-void Scene::Init(const std::vector<DrawableObject>& drawableObjects)
+void Scene::Init(const vector<DrawableObject>& drawableObjects, Camera* camera)
 {
-    for (const auto& object : drawableObjects)
-    {
-        this->objects.push_back(object); 
-    }
+	this->camera = camera;
+	this->objects = drawableObjects;
 }
 
 void Scene::Render()
@@ -18,15 +16,15 @@ void Scene::Render()
 
 void Scene::Update()
 {
-
-    for (auto& object : objects)
-    {
-        // Zde m��e� p�idat dynamick� aktualizace (nap�. rotace)
-        object.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));  // Pro jednoduch� p��klad rotace
-    }
+    
 }
 
 void Scene::AddObject(DrawableObject object)
 {
     objects.push_back(object);
 }
+
+Camera* Scene::GetCamera() const {
+    return this->camera;
+}
+
