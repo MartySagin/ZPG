@@ -14,10 +14,6 @@ void Scene::Render()
     }
 }
 
-void Scene::Update()
-{
-	this->camera->NotifyObservers();
-}
 
 void Scene::AddObject(DrawableObject* object)
 {

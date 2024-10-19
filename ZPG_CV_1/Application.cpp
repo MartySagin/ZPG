@@ -139,9 +139,10 @@ void Application::Init()
 	quadObject->SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
 
 	objects2.push_back(quadObject);
+	
 
 	Scene* scene2 = new Scene();
-	scene2->Init(objects2, camera);
+	scene2->Init(objects2, camera2);
 
 	AddScene(scene2);
 
@@ -208,7 +209,6 @@ void Application::Run()
 
 		
 		scenes[currentSceneIndex]->Render();
-	
 
 		glfwSwapBuffers(this->window);
 		glfwPollEvents();

@@ -15,7 +15,6 @@ public:
 
     void Init(const vector<DrawableObject*> drawableObjects, Camera* camera);  
     void Render();  
-    void Update();  
 
     void AddObject(DrawableObject* object);
 
