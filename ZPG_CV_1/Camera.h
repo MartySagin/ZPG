@@ -53,4 +53,5 @@ public:
 
     void AddObserver(ShaderProgram* observer);
     void RemoveObserver(ShaderProgram* observer);
+    void NotifyObservers();
 };

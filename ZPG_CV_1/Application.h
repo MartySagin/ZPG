@@ -32,16 +32,13 @@ class Application
 	public:
 		GLFWwindow* window;
 
-		vector<ShaderProgram> shaders;
-		vector<Model> models;
-
-		vector<Scene> scenes;    
+		vector<Scene*> scenes;    
 		int currentSceneIndex;
 
 	public:
 		void Init();
 
-		void AddScene(Scene scene);
+		void AddScene(Scene* scene);
 
 		void SwitchScene();
 

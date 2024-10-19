@@ -1,7 +1,7 @@
 ﻿#include "Application.h"
 
-vector<DrawableObject> objects;
-vector<DrawableObject> objects2;
+vector<DrawableObject*> objects;
+vector<DrawableObject*> objects2;
 
 void Application::Init()
 {
@@ -72,9 +72,9 @@ void Application::Init()
 	FragmentShader* fragmentShaderPlain = new FragmentShader(glm::vec4(0.3f, 0.20f, 0.20f, 1.0f));
 
 	//Scene 1
-	DrawableObject plainObject(plain, sizeof(plain), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderPlain->GetShader(), camera, true);
-	plainObject.SetScale(glm::vec3(25.0f));
-	plainObject.SetPosition(glm::vec3(0.0f, 0.0f, 0.5f));
+	DrawableObject* plainObject = new DrawableObject(plain, sizeof(plain), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderPlain->GetShader(), camera, true);
+	plainObject->SetScale(glm::vec3(25.0f));
+	plainObject->SetPosition(glm::vec3(0.0f, 0.0f, 0.5f));
 
 	objects.push_back(plainObject);
 
@@ -90,29 +90,29 @@ void Application::Init()
 			float yPos = 0.0f;  
 			float zPos = row * spacing;  
 
-			DrawableObject treeObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera, true);
+			DrawableObject* treeObject = new DrawableObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera, true);
 
-			treeObject.SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
-			treeObject.SetPosition(glm::vec3(xPos, yPos, zPos));
+			treeObject->SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
+			treeObject->SetPosition(glm::vec3(xPos, yPos, zPos));
 
 			float randomAngleY = rand() % 360;
 			float randomAngleX = rand() % 40 - 20;
 
-			treeObject.SetRotation(glm::vec3(randomAngleX, randomAngleY, 0.0f));
+			treeObject->SetRotation(glm::vec3(randomAngleX, randomAngleY, 0.0f));
 
 			objects.push_back(treeObject);
 
-			DrawableObject bushObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera, true);
+			DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera, true);
 
-			bushObject.SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
-			bushObject.SetPosition(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f));
+			bushObject->SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
+			bushObject->SetPosition(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f));
 
 			objects.push_back(bushObject);
 		}
 	}
 
-	Scene scene1;
-	scene1.Init(objects, camera);
+	Scene* scene1 = new Scene();
+	scene1->Init(objects, camera);
 
 	AddScene(scene1);
 
@@ -127,21 +127,21 @@ void Application::Init()
 
 	Camera* camera2 = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
-	DrawableObject sphereObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
-	sphereObject.SetScale(glm::vec3(0.5f));
+	DrawableObject* sphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
+	sphereObject->SetScale(glm::vec3(0.5f));
 
 	objects2.push_back(sphereObject);
 
 	FragmentShader* fragmentShaderQuad = new FragmentShader(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
-	DrawableObject quadObject(quad, sizeof(quad), GL_QUADS, vertexShader->GetShader(), fragmentShaderQuad->GetShader(), camera2, false);
-	quadObject.SetScale(glm::vec3(0.5f));
-	quadObject.SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
+	DrawableObject* quadObject = new DrawableObject(quad, sizeof(quad), GL_QUADS, vertexShader->GetShader(), fragmentShaderQuad->GetShader(), camera2, false);
+	quadObject->SetScale(glm::vec3(0.5f));
+	quadObject->SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
 
 	objects2.push_back(quadObject);
 
-	Scene scene2;
-	scene2.Init(objects2, camera);
+	Scene* scene2 = new Scene();
+	scene2->Init(objects2, camera);
 
 	AddScene(scene2);
 
@@ -149,7 +149,7 @@ void Application::Init()
 	
 }
 
-void Application::AddScene(Scene scene)
+void Application::AddScene(Scene* scene)
 {
 	scenes.push_back(scene);
 }
@@ -165,19 +165,19 @@ void Application::MoveObject(int direction)
 {
 	printf("MoveObject %d\n", direction);
 	
-	for (auto& object : scenes[currentSceneIndex].objects)
+	for (auto& object : scenes[currentSceneIndex]->objects)
 	{
 		if (direction == 0) {
-			object.SetPosition(glm::vec3(-0.1f, 0.0f, 0.0f));
+			object->SetPosition(glm::vec3(-0.1f, 0.0f, 0.0f));
 		}
 		else if (direction == 1) {
-			object.SetPosition(glm::vec3(0.1f, 0.0f, 0.0f));
+			object->SetPosition(glm::vec3(0.1f, 0.0f, 0.0f));
 		}
 		else if (direction == 2) {
-			object.SetPosition(glm::vec3(0.0f, 0.1f, 0.0f));
+			object->SetPosition(glm::vec3(0.0f, 0.1f, 0.0f));
 		}
 		else if (direction == 3) {
-			object.SetPosition(glm::vec3(0.0f, -0.1f, 0.0f));
+			object->SetPosition(glm::vec3(0.0f, -0.1f, 0.0f));
 		}
 	}
 }
@@ -185,13 +185,13 @@ void Application::MoveObject(int direction)
 void Application::RotateObject(int axis)
 {
 	
-	for (auto& object : scenes[currentSceneIndex].objects)
+	for (auto& object : scenes[currentSceneIndex]->objects)
 	{
 		if (axis == 0) {
-			object.SetRotation(glm::vec3(0.0f, 0.0f, 10.0f));
+			object->SetRotation(glm::vec3(0.0f, 0.0f, 10.0f));
 		}
 		else if (axis == 1) {
-			object.SetRotation(glm::vec3(0.0f, 10.0f, 0.0f));
+			object->SetRotation(glm::vec3(0.0f, 10.0f, 0.0f));
 		}
 	}
 }
@@ -207,15 +207,11 @@ void Application::Run()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		
-		scenes[currentSceneIndex].Render();
+		scenes[currentSceneIndex]->Render();
 	
 
 		glfwSwapBuffers(this->window);
 		glfwPollEvents();
-	}
-
-	for (auto& model : models) {
-		model.DeleteModel();
 	}
 
 	glfwDestroyWindow(this->window);
@@ -259,8 +255,8 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 
 	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 
-	if (app->scenes[app->currentSceneIndex].GetCamera()) {
-		Camera* camera = app->scenes[app->currentSceneIndex].GetCamera();
+	if (app->scenes[app->currentSceneIndex]->GetCamera()) {
+		Camera* camera = app->scenes[app->currentSceneIndex]->GetCamera();
 
 		static float lastFrameTime = 0.0f;
 		float currentFrameTime = glfwGetTime();
@@ -323,7 +319,7 @@ void Application::cursor_callback(GLFWwindow* window, double x, double y)
 { 
 	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 	
-	Camera* camera = app->scenes[app->currentSceneIndex].GetCamera();
+	Camera* camera = app->scenes[app->currentSceneIndex]->GetCamera();
 
 	static double lastX = 400, lastY = 300;
 

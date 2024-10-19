@@ -52,6 +52,7 @@ void Camera::Rotate(float deltaX, float deltaY)
 
     UpdateViewMatrix();
 
+    NotifyObservers();
 }
 
 
@@ -64,6 +65,7 @@ void Camera::MoveForward(float deltaTime)
 
     UpdateViewMatrix();
 
+    NotifyObservers();
 }
 
 void Camera::MoveBackward(float deltaTime)
@@ -74,6 +76,7 @@ void Camera::MoveBackward(float deltaTime)
 
     UpdateViewMatrix();
 
+    NotifyObservers();
 }
 
 void Camera::MoveLeft(float deltaTime)
@@ -86,6 +89,7 @@ void Camera::MoveLeft(float deltaTime)
 
     UpdateViewMatrix();
 
+    NotifyObservers();
 }
 
 void Camera::MoveRight(float deltaTime)
@@ -98,6 +102,7 @@ void Camera::MoveRight(float deltaTime)
 
     UpdateViewMatrix();
 
+	NotifyObservers();
 }
 
 
@@ -120,5 +125,12 @@ void Camera::RemoveObserver(ShaderProgram* observer) {
     observers.erase(remove(observers.begin(), observers.end(), observer), observers.end());
 }
 
+void Camera::NotifyObservers() {
+	for (auto& observer : observers) {
+		observer->UseProgram();
+		observer->SetViewMatrix();
+		observer->SetProjectionMatrix();
+	}
+}
 
 
