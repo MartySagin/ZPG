@@ -31,8 +31,8 @@ void Model::GenerateModelWithNormal(const float* points, GLsizeiptr size)
     glGenVertexArrays(1, &this->VAO);
     glBindVertexArray(this->VAO);
 
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glGenBuffers(1, &this->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
     glBufferData(GL_ARRAY_BUFFER, size, points, GL_STATIC_DRAW);
 
     
