@@ -2,6 +2,6 @@
 class Observer
 {
 	public:
-		void virtual Update() = 0;
+		void virtual UpdateFromSubject() = 0;
 };
 

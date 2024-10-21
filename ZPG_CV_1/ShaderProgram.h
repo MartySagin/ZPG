@@ -30,13 +30,13 @@ class ShaderProgram : Observer
 		Camera* camera;
 
 	public:
-		glm::mat4 Matrix;
+		glm::mat4 modelMatrix;
 
 		ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera);
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
 
-		void SetMatrix(glm::mat4 Matrix);
+		void SetModelMatrix(glm::mat4 modelMatrix);
 
 		void SetViewMatrix();     
 		
@@ -50,6 +50,6 @@ class ShaderProgram : Observer
 
 		void Draw();
 
-		void Update() override;
+		void UpdateFromSubject() override;
 };
 

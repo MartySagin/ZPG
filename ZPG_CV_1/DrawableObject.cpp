@@ -6,11 +6,11 @@ DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLe
 {
 
     if (withNormal)
-		model.GenerateModelWithNormal(vertices, vertexSize);
+		this->model.GenerateModelWithNormal(vertices, vertexSize);
 	else
-        model.GenerateModel(vertices, vertexSize);
+        this->model.GenerateModel(vertices, vertexSize);
 
-    shaderProgram.AddShaders(vertexShader, fragmentShader);
+    this->shaderProgram.AddShaders(vertexShader, fragmentShader);
 
 }
 
@@ -35,15 +35,15 @@ void DrawableObject::SetScale(glm::vec3 scale)
 
 void DrawableObject::Draw()
 {
-    shaderProgram.UseProgram();         
+    this->shaderProgram.UseProgram();         
 
-    shaderProgram.SetMatrix(transform);
+    this->shaderProgram.SetModelMatrix(this->transform);
 
-    model.BindVAO();             
+    this->model.BindVAO();             
 
-    shaderProgram.Draw();
+    this->shaderProgram.Draw();
 
-    model.UnbindVAO();           
+    this->model.UnbindVAO();           
 }
 
 

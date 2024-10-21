@@ -42,9 +42,9 @@ void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_s
 }
 
 
-void ShaderProgram::SetMatrix(glm::mat4 Matrix)
+void ShaderProgram::SetModelMatrix(glm::mat4 modelMatrix)
 {
-	this->Matrix = Matrix;
+	this->modelMatrix = modelMatrix;
 }
 
 void ShaderProgram::SetViewMatrix()
@@ -129,7 +129,7 @@ void ShaderProgram::UseProgram()
 	
 	glUseProgram(this->shader_id);
 
-	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &this->Matrix[0][0]);
+	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &this->modelMatrix[0][0]);
 
 	
 }
@@ -139,7 +139,7 @@ void ShaderProgram::Draw()
 	glDrawArrays(this->mode, this->first, this->count);
 }
 
-void ShaderProgram::Update()
+void ShaderProgram::UpdateFromSubject()
 {
 	UseProgram();
 	SetViewMatrix();
