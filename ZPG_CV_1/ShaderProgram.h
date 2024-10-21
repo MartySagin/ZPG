@@ -14,10 +14,11 @@
 
 #include <stdio.h>
 #include "Camera.h"
+#include "Observer.h"
 
 class Camera;
 
-class ShaderProgram
+class ShaderProgram : Observer
 {
 	private:
 		GLuint shader_id;
@@ -48,5 +49,7 @@ class ShaderProgram
 		void UseProgram();
 
 		void Draw();
+
+		void Update() override;
 };
 

@@ -139,3 +139,10 @@ void ShaderProgram::Draw()
 	glDrawArrays(this->mode, this->first, this->count);
 }
 
+void ShaderProgram::Update()
+{
+	UseProgram();
+	SetViewMatrix();
+	SetProjectionMatrix();
+}
+

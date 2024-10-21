@@ -5,9 +5,12 @@
 
 using namespace std;
 
+#include "Observer.h"
+#include "Subject.h"
+
 class ShaderProgram;
 
-class Camera
+class Camera : Subject
 {
 private:
     glm::vec3 position;   
@@ -26,7 +29,7 @@ private:
     glm::mat4 viewMatrix;       
     glm::mat4 projectionMatrix; 
 
-    vector<ShaderProgram*> observers;
+    vector<Observer*> observers;
 
 public:
     Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movementSpeed, float fov, float aspectRatio, float zNear, float zFar);
@@ -51,7 +54,8 @@ public:
     void UpdateViewMatrix();    
     void UpdateProjectionMatrix(); 
 
-    void AddObserver(ShaderProgram* observer);
-    void RemoveObserver(ShaderProgram* observer);
-    void NotifyObservers();
+    void AddObserver(Observer* observer);
+    void RemoveObserver(Observer* observer);
+
+    void NotifyObservers() override;
 };

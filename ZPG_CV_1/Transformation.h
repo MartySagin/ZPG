@@ -16,3 +16,5 @@ public:
     virtual glm::mat4 GetMatrix() const;
     virtual ~Transformation() = default;  
 };
+
+//TO DO -> Transformation (Rotation, Scale, Translation classes)

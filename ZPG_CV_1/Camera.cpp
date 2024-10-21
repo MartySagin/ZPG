@@ -117,19 +117,17 @@ void Camera::UpdateProjectionMatrix()
     projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, zNear, zFar);  
 }
 
-void Camera::AddObserver(ShaderProgram* observer) {
+void Camera::AddObserver(Observer* observer) {
     observers.push_back(observer);
 }
 
-void Camera::RemoveObserver(ShaderProgram* observer) {
+void Camera::RemoveObserver(Observer* observer) {
     observers.erase(remove(observers.begin(), observers.end(), observer), observers.end());
 }
 
 void Camera::NotifyObservers() {
 	for (auto& observer : observers) {
-		observer->UseProgram();
-		observer->SetViewMatrix();
-		observer->SetProjectionMatrix();
+        observer->Update();
 	}
 }
 
