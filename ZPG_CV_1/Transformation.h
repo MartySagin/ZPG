@@ -17,4 +17,4 @@ public:
     virtual ~Transformation() = default;  
 };
 
-//TO DO -> Transformation (Rotation, Scale, Translation classes)
+//TO DO -> Transformation (Rotation, Scale, Translation classes) => vector transformací 

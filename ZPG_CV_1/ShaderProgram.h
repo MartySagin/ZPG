@@ -30,7 +30,7 @@ class ShaderProgram : Observer
 		Camera* camera;
 
 	public:
-		glm::mat4 modelMatrix;
+		glm::mat4 modelMatrix; // Delete this
 
 		ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera);
 		
