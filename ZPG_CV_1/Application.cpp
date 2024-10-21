@@ -53,7 +53,6 @@ void Application::Init()
 
 	glfwSetMouseButtonCallback(this->window, button_callback);
 
-
 	glfwSetWindowFocusCallback(this->window, window_focus_callback);
 
 	glfwSetWindowIconifyCallback(this->window, window_iconify_callback);

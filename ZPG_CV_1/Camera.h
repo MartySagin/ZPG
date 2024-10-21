@@ -54,8 +54,9 @@ public:
     void UpdateViewMatrix();    
     void UpdateProjectionMatrix(); 
 
-    void AddObserver(Observer* observer);
-    void RemoveObserver(Observer* observer);
+    void AddObserver(Observer* observer) override;
+
+    void RemoveObserver(Observer* observer) override;
 
     void NotifyObservers() override;
 };
