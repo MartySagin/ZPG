@@ -63,9 +63,10 @@ void Application::Init()
 	//Init Camera For Scene 1
 	Camera* camera = new Camera(glm::vec3(0.0f, 5.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
-	
 	//Init Shaders
 	VertexShader* vertexShader = new VertexShader();
+	vertexShader->CreateNewShaderWithNormal();
+
 	FragmentShader* fragmentShaderNormal = new FragmentShader();
 
 	FragmentShader* fragmentShaderPlain = new FragmentShader(glm::vec4(0.3f, 0.20f, 0.20f, 1.0f));
@@ -128,16 +129,36 @@ void Application::Init()
 
 	DrawableObject* sphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
 	sphereObject->SetScale(glm::vec3(0.5f));
+	sphereObject->SetPosition(glm::vec3(-3.0f, 0.0f, 0.0f));
 
 	objects2.push_back(sphereObject);
 
-	FragmentShader* fragmentShaderQuad = new FragmentShader(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	DrawableObject* sphereObject2 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
+	sphereObject2->SetScale(glm::vec3(0.5f));
+	sphereObject2->SetPosition(glm::vec3(3.0f, 0.0f, 0.0f));
+
+	objects2.push_back(sphereObject2);
+
+	DrawableObject* sphereObject3 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
+	sphereObject3->SetScale(glm::vec3(0.5f));
+	sphereObject3->SetPosition(glm::vec3(0.0f, 3.0f, 0.0f));
+
+	objects2.push_back(sphereObject3);
+
+	DrawableObject* sphereObject4 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
+	sphereObject4->SetScale(glm::vec3(0.5f));
+	sphereObject4->SetPosition(glm::vec3(0.0f, -3.0f, 0.0f));
+
+	objects2.push_back(sphereObject4);
+
+
+	/*FragmentShader* fragmentShaderQuad = new FragmentShader(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
 	DrawableObject* quadObject = new DrawableObject(quad, sizeof(quad), GL_QUADS, vertexShader->GetShader(), fragmentShaderQuad->GetShader(), camera2, false);
 	quadObject->SetScale(glm::vec3(0.5f));
 	quadObject->SetPosition(glm::vec3(1.0f, 0.0f, 0.0f));
 
-	objects2.push_back(quadObject);
+	objects2.push_back(quadObject);*/
 	
 
 	Scene* scene2 = new Scene();

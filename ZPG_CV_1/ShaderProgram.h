@@ -30,8 +30,6 @@ class ShaderProgram : Observer
 		Camera* camera;
 
 	public:
-		glm::mat4 modelMatrix; // Delete this
-
 		ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera);
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
@@ -41,6 +39,8 @@ class ShaderProgram : Observer
 		void SetViewMatrix();     
 		
 		void SetProjectionMatrix();
+
+		void SetNormalMatrix(glm::mat3 modelMatrix);
 
 		void CheckProgramLinking(GLuint program);
 

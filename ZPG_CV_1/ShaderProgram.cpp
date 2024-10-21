@@ -44,7 +44,13 @@ void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_s
 
 void ShaderProgram::SetModelMatrix(glm::mat4 modelMatrix)
 {
-	this->modelMatrix = modelMatrix;
+	GLint idModelTransform = glGetUniformLocation(this->shader_id, "modelMatrix");
+
+	if (idModelTransform == -1) {
+		printf("Error: Cannot find uniform 'modelMatrix' in shader!\n");
+	}
+
+	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &modelMatrix[0][0]);
 }
 
 void ShaderProgram::SetViewMatrix()
@@ -73,6 +79,19 @@ void ShaderProgram::SetProjectionMatrix()
 	}
 
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, &projectionMatrix[0][0]);
+}
+
+void ShaderProgram::SetNormalMatrix(glm::mat3 modelMatrix)
+{
+	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
+
+	GLint normalMatrixLoc = glGetUniformLocation(this->shader_id, "normalMatrix");
+
+	if (normalMatrixLoc == -1) {
+		return;
+	}
+
+	glUniformMatrix3fv(normalMatrixLoc, 1, GL_FALSE, &normalMatrix[0][0]);
 }
 
 
@@ -121,17 +140,7 @@ void ShaderProgram::CheckProgramCompiling(GLuint program) {
 
 void ShaderProgram::UseProgram()
 {
-	GLint idModelTransform = glGetUniformLocation(this->shader_id, "modelMatrix");
-
-	if (idModelTransform == -1) {
-		printf("Error: Cannot find uniform 'modelMatrix' in shader!\n");
-	}
-	
 	glUseProgram(this->shader_id);
-
-	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &this->modelMatrix[0][0]);
-
-	
 }
 
 void ShaderProgram::Draw()
@@ -142,7 +151,9 @@ void ShaderProgram::Draw()
 void ShaderProgram::UpdateFromSubject()
 {
 	UseProgram();
+
 	SetViewMatrix();
+
 	SetProjectionMatrix();
 }
 

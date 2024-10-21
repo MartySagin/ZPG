@@ -39,6 +39,8 @@ void DrawableObject::Draw()
 
     this->shaderProgram.SetModelMatrix(this->transform);
 
+    this->shaderProgram.SetNormalMatrix(this->transform);
+
     this->model.BindVAO();             
 
     this->shaderProgram.Draw();
