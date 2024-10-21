@@ -1,20 +1,22 @@
-
 #pragma once
+#include <vector>
+#include "TransformationComponent.h"
 #include <glm/glm.hpp>
+
+using namespace std;
 
 class Transformation
 {
-public:
-    glm::mat4 transform;
+    private:
+            vector<TransformationComponent*> components;
 
-    Transformation();
+    public:
+        Transformation();
 
-    virtual void SetPosition(glm::vec3 position);  
-    virtual void SetRotation(glm::vec3 rotationDegrees);
-    virtual void SetScale(glm::vec3 scale);
-
-    virtual glm::mat4 GetMatrix() const;
-    virtual ~Transformation() = default;  
+        void AddComponent(TransformationComponent* component);
+    
+        glm::mat4 GetMatrix() const;
+    
+        ~Transformation();
+    
 };
-
-//TO DO -> Transformation (Rotation, Scale, Translation classes) => vector transformací 

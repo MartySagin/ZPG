@@ -73,8 +73,8 @@ void Application::Init()
 
 	//Scene 1
 	DrawableObject* plainObject = new DrawableObject(plain, sizeof(plain), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderPlain->GetShader(), camera, true);
-	plainObject->SetScale(glm::vec3(25.0f));
-	plainObject->SetPosition(glm::vec3(0.0f, 0.0f, 0.5f));
+	plainObject->transform.AddComponent(new Scale(glm::vec3(25.0f)));
+	plainObject->transform.AddComponent(new Translate(glm::vec3(0.0f, 0.0f, 0.5f)));
 
 	objects.push_back(plainObject);
 
@@ -92,20 +92,20 @@ void Application::Init()
 
 			DrawableObject* treeObject = new DrawableObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera, true);
 
-			treeObject->SetScale(glm::vec3(rand() % 100 / 1000.0 + 0.05f));
-			treeObject->SetPosition(glm::vec3(xPos, yPos, zPos));
+			treeObject->transform.AddComponent(new Scale(glm::vec3(rand() % 100 / 1000.0 + 0.05f)));
+			treeObject->transform.AddComponent(new Translate(glm::vec3(xPos, yPos, zPos)));
 
 			float randomAngleY = rand() % 360;
 			float randomAngleX = rand() % 40 - 20;
 
-			treeObject->SetRotation(glm::vec3(randomAngleX, randomAngleY, 0.0f));
+			treeObject->transform.AddComponent(new Rotate(glm::vec3(randomAngleX, randomAngleY, 0.0f)));
 
 			objects.push_back(treeObject);
 
 			DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera, true);
 
-			bushObject->SetScale(glm::vec3(rand() % 100 / 500.0 + 0.05f));
-			bushObject->SetPosition(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f));
+			bushObject->transform.AddComponent(new Scale(glm::vec3(rand() % 100 / 500.0 + 0.05f)));
+			bushObject->transform.AddComponent(new Translate(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f)));
 
 			objects.push_back(bushObject);
 		}
@@ -128,26 +128,26 @@ void Application::Init()
 	Camera* camera2 = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
 	DrawableObject* sphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
-	sphereObject->SetScale(glm::vec3(0.5f));
-	sphereObject->SetPosition(glm::vec3(-3.0f, 0.0f, 0.0f));
+	sphereObject->transform.AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject->transform.AddComponent(new Translate(glm::vec3(-3.0f, 0.0f, 0.0f)));
 
 	objects2.push_back(sphereObject);
 
 	DrawableObject* sphereObject2 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
-	sphereObject2->SetScale(glm::vec3(0.5f));
-	sphereObject2->SetPosition(glm::vec3(3.0f, 0.0f, 0.0f));
+	sphereObject2->transform.AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject2->transform.AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
 
 	objects2.push_back(sphereObject2);
 
 	DrawableObject* sphereObject3 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
-	sphereObject3->SetScale(glm::vec3(0.5f));
-	sphereObject3->SetPosition(glm::vec3(0.0f, 3.0f, 0.0f));
+	sphereObject3->transform.AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject3->transform.AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
 
 	objects2.push_back(sphereObject3);
 
 	DrawableObject* sphereObject4 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera2, true);
-	sphereObject4->SetScale(glm::vec3(0.5f));
-	sphereObject4->SetPosition(glm::vec3(0.0f, -3.0f, 0.0f));
+	sphereObject4->transform.AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject4->transform.AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
 
 	objects2.push_back(sphereObject4);
 
@@ -189,16 +189,16 @@ void Application::MoveObject(int direction)
 	for (auto& object : scenes[currentSceneIndex]->objects)
 	{
 		if (direction == 0) {
-			object->SetPosition(glm::vec3(-0.1f, 0.0f, 0.0f));
+			object->transform.AddComponent(new Translate(glm::vec3(-0.1f, 0.0f, 0.0f)));
 		}
 		else if (direction == 1) {
-			object->SetPosition(glm::vec3(0.1f, 0.0f, 0.0f));
+			object->transform.AddComponent(new Translate(glm::vec3(0.1f, 0.0f, 0.0f)));
 		}
 		else if (direction == 2) {
-			object->SetPosition(glm::vec3(0.0f, 0.1f, 0.0f));
+			object->transform.AddComponent(new Translate(glm::vec3(0.0f, 0.1f, 0.0f)));
 		}
 		else if (direction == 3) {
-			object->SetPosition(glm::vec3(0.0f, -0.1f, 0.0f));
+			object->transform.AddComponent(new Translate(glm::vec3(0.0f, -0.1f, 0.0f)));
 		}
 	}
 }
@@ -209,10 +209,10 @@ void Application::RotateObject(int axis)
 	for (auto& object : scenes[currentSceneIndex]->objects)
 	{
 		if (axis == 0) {
-			object->SetRotation(glm::vec3(0.0f, 0.0f, 10.0f));
+			object->transform.AddComponent(new Rotate(glm::vec3(0.0f, 0.0f, 10.0f)));
 		}
 		else if (axis == 1) {
-			object->SetRotation(glm::vec3(0.0f, 10.0f, 0.0f));
+			object->transform.AddComponent(new Rotate(glm::vec3(0.0f, 10.0f, 0.0f)));
 		}
 	}
 }

@@ -12,34 +12,19 @@ DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLe
 
     this->shaderProgram.AddShaders(vertexShader, fragmentShader);
 
+	this->transform = Transformation();
+
 }
 
-
-void DrawableObject::SetPosition(glm::vec3 position)
-{
-    transform = glm::translate(transform, position);
-}
-
-void DrawableObject::SetRotation(glm::vec3 rotationDegrees)
-{
-    transform = glm::rotate(transform, glm::radians(rotationDegrees.x), glm::vec3(1.0f, 0.0f, 0.0f));
-    transform = glm::rotate(transform, glm::radians(rotationDegrees.y), glm::vec3(0.0f, 1.0f, 0.0f));
-    transform = glm::rotate(transform, glm::radians(rotationDegrees.z), glm::vec3(0.0f, 0.0f, 1.0f));
-}
-
-void DrawableObject::SetScale(glm::vec3 scale)
-{
-    transform = glm::scale(transform, scale);
-}
 
 
 void DrawableObject::Draw()
 {
     this->shaderProgram.UseProgram();         
 
-    this->shaderProgram.SetModelMatrix(this->transform);
+    this->shaderProgram.SetModelMatrix(this->transform.GetMatrix());
 
-    this->shaderProgram.SetNormalMatrix(this->transform);
+    this->shaderProgram.SetNormalMatrix(this->transform.GetMatrix());
 
     this->model.BindVAO();             
 
