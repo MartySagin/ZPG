@@ -6,6 +6,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movemen
 {
     UpdateViewMatrix();
     UpdateProjectionMatrix();
+
 }
 
 glm::mat4 Camera::GetViewMatrix()
