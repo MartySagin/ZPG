@@ -45,6 +45,11 @@ void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_s
 	glDeleteShader(fragmentShader);
 }
 
+void ShaderProgram::AddShadersFromFiles(const char* vertex_shader, const char* fragment_shader)
+{
+	this->shaderLoader = new ShaderLoader(vertex_shader, fragment_shader, &this->shader_id);
+}
+
 
 void ShaderProgram::SetModelMatrix(glm::mat4 modelMatrix)
 {
@@ -131,6 +136,18 @@ void ShaderProgram::SetLightIntensity()
 	glUniform1f(lightIntensityLoc, this->light->GetIntensity());
 }
 
+void ShaderProgram::SetViewPosition()
+{
+	GLint viewPositionLoc = glGetUniformLocation(this->shader_id, "viewPosition");
+
+	if (viewPositionLoc == -1) {
+		return;
+	}
+
+	glUniform3fv(viewPositionLoc, 1, glm::value_ptr(this->camera->GetPosition()));
+
+}
+
 
 void ShaderProgram::CheckProgramLinking(GLuint program)
 {
@@ -198,5 +215,7 @@ void ShaderProgram::UpdateFromSubject()
 	SetLightColor();
 
 	SetLightIntensity();
+
+	SetViewPosition();
 }
 

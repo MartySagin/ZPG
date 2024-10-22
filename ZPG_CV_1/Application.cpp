@@ -74,7 +74,7 @@ void Application::Init()
 
 	Light* light1 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f);
 
-	DrawableObject* oneSphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera1, light1, true);
+	DrawableObject* oneSphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera1, light1, true);
 
 	oneSphereObject->transform.AddComponent(new Scale(glm::vec3(0.5f)));
 	oneSphereObject->transform.AddComponent(new Translate(glm::vec3(0.0f, 0.0f, -5.0f)));
@@ -95,25 +95,25 @@ void Application::Init()
 
 	Light* light2 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f);
 
-	DrawableObject* sphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderBlinn, camera2, light2, true);
+	DrawableObject* sphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera2, light2, true);
 	sphereObject->transform.AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject->transform.AddComponent(new Translate(glm::vec3(-3.0f, 0.0f, 0.0f)));
 
 	objects2.push_back(sphereObject);
 
-	DrawableObject* sphereObject2 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderBlinn, camera2, light2, true);
+	DrawableObject* sphereObject2 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera2, light2, true);
 	sphereObject2->transform.AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject2->transform.AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
 
 	objects2.push_back(sphereObject2);
 
-	DrawableObject* sphereObject3 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderBlinn, camera2, light2, true);
+	DrawableObject* sphereObject3 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera2, light2, true);
 	sphereObject3->transform.AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject3->transform.AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
 
 	objects2.push_back(sphereObject3);
 
-	DrawableObject* sphereObject4 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderBlinn, camera2, light2, true);
+	DrawableObject* sphereObject4 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera2, light2, true);
 	sphereObject4->transform.AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject4->transform.AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
 
@@ -127,18 +127,53 @@ void Application::Init()
 	AddScene(scene2);
 
 	//Init Scene 3
+	Camera* camera3 = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
+
+	camera3->Rotate(-90.0f, 0.0f);
+
+	Light* light3 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f);
+
+	DrawableObject* sphereObject8 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera3, light3, true);
+	sphereObject8->transform.AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject8->transform.AddComponent(new Translate(glm::vec3(-3.0f, 0.0f, 0.0f)));
+
+	objects3.push_back(sphereObject8);
+
+	DrawableObject* sphereObject5 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "PhongShader.txt", camera3, light3, true);
+	sphereObject5->transform.AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject5->transform.AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
+
+	objects3.push_back(sphereObject5);
+
+	DrawableObject* sphereObject6 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "LambertShader.txt", camera3, light3, true);
+	sphereObject6->transform.AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject6->transform.AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
+
+	objects3.push_back(sphereObject6);
+
+	DrawableObject* sphereObject7 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "ConstantShader.txt", camera3, light3, true);
+	sphereObject7->transform.AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject7->transform.AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
+
+	objects3.push_back(sphereObject7);
+
+	Scene* scene3 = new Scene();
+
+	scene3->Init(objects3, camera3, light3);
+
+	AddScene(scene3);
 
 	//Init Scene 4
 	Camera* camera4 = new Camera(glm::vec3(0.0f, 5.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
-	Light* light4 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 10.0f);
+	Light* light4 = new Light(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f);
 
 	//Init Shaders for Scene 4
 
 	FragmentShader* fragmentShaderPlain = new FragmentShader(glm::vec4(0.3f, 0.20f, 0.20f, 1.0f));
 	
 	//Scene 4
-	DrawableObject* plainObject = new DrawableObject(plain, sizeof(plain), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderPlain->GetShader(), camera4, light4, true);
+	DrawableObject* plainObject = new DrawableObject(plain, sizeof(plain), GL_TRIANGLES, vertexShader, fragmentShaderPlain, camera4, light4, true);
 	plainObject->transform.AddComponent(new Scale(glm::vec3(25.0f)));
 	plainObject->transform.AddComponent(new Translate(glm::vec3(0.0f, 0.0f, 0.5f)));
 
@@ -156,7 +191,7 @@ void Application::Init()
 			float yPos = 0.0f;  
 			float zPos = row * spacing;  
 
-			DrawableObject* treeObject = new DrawableObject(tree, sizeof(tree), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera4, light4, true);
+			DrawableObject* treeObject = new DrawableObject(tree, sizeof(tree), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera4, light4, true);
 
 			treeObject->transform.AddComponent(new Scale(glm::vec3(rand() % 100 / 1000.0 + 0.05f)));
 			treeObject->transform.AddComponent(new Translate(glm::vec3(xPos, yPos, zPos)));
@@ -168,7 +203,7 @@ void Application::Init()
 
 			objects4.push_back(treeObject);
 
-			DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, vertexShader->GetShader(), fragmentShaderNormal->GetShader(), camera4, light4, true);
+			DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera4, light4, true);
 
 			bushObject->transform.AddComponent(new Scale(glm::vec3(rand() % 100 / 500.0 + 0.05f)));
 			bushObject->transform.AddComponent(new Translate(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f)));

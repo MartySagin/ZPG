@@ -16,6 +16,7 @@
 #include "Camera.h"
 #include "Observer.h"
 #include "Light.h"
+#include "ShaderLoader.h"
 
 class Camera;
 
@@ -32,10 +33,14 @@ class ShaderProgram : Observer
 
 		Light* light;
 
+		ShaderLoader* shaderLoader;
+
 	public:
 		ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, Light* light);
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
+
+		void AddShadersFromFiles(const char* vertex_shader, const char* fragment_shader);
 
 		void SetModelMatrix(glm::mat4 modelMatrix);
 
@@ -50,6 +55,8 @@ class ShaderProgram : Observer
 		void SetLightColor();
 
 		void SetLightIntensity();
+
+		void SetViewPosition();
 
 		void CheckProgramLinking(GLuint program);
 

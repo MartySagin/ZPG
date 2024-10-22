@@ -19,6 +19,11 @@ glm::mat4 Camera::GetProjectionMatrix()
     return this->projectionMatrix;
 }
 
+glm::vec3 Camera::GetPosition()
+{
+    return this->position;
+}
+
 void Camera::IncreaseMovementSpeed(float movementSpeed)
 {
 	this->movementSpeed += movementSpeed;

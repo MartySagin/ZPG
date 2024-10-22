@@ -38,6 +38,8 @@ public:
 
     glm::mat4 GetProjectionMatrix();  
 
+	glm::vec3 GetPosition();
+
 	void IncreaseMovementSpeed(float movementSpeed);
 	void DecreaseMovementSpeed(float movementSpeed);
 
