@@ -54,30 +54,26 @@ void FragmentShader::CreateNewShaderWithNormal()
 {
     this->shader = R"(
         #version 330 core
-        in vec3 FragPos;
-        in vec3 Normal;
+        in vec3 FragPos;    
+        in vec3 Normal;     
 
         out vec4 fragColor;
 
         uniform vec3 lightPosition;
         uniform vec3 lightColor;
-        uniform float lightIntensity;
-        uniform vec3 objectColor;
+        uniform float lightIntensity;      
+        uniform vec3 objectColor = vec3(0.385, 0.647, 0.812); 
 
         void main() {
-            // Ambient lighting
-            float ambientStrength = 0.1;
+            float ambientStrength = 0.35;
             vec3 ambient = ambientStrength * lightColor;
-
-            // Diffuse lighting
-            vec3 norm = normalize(Normal);
-            vec3 lightDir = normalize(lightPosition - FragPos);
-            float diff = max(dot(norm, lightDir), 0.0);
+            
+            vec3 lightDir = normalize(lightPosition - FragPos);  
+            float diff = max(dot(Normal, lightDir), 0.0);      
             vec3 diffuse = diff * lightColor * lightIntensity;
 
-            // Combine lighting effects
             vec3 result = (ambient + diffuse) * objectColor;
-            fragColor = vec4(result, 1.0);
+            fragColor = vec4(result, 1.0); 
         }
     )";
 }

@@ -3,6 +3,7 @@
 #include <vector>
 #include "DrawableObject.h"
 #include "Camera.h"
+#include "Light.h"
 
 using namespace std;
 
@@ -13,11 +14,16 @@ public:
 
 	Camera* camera;
 
-    void Init(const vector<DrawableObject*> drawableObjects, Camera* camera);  
+	Light* light;
+
+    void Init(const vector<DrawableObject*> drawableObjects, Camera* camera, Light* light);  
+
     void Render();  
 
     void AddObject(DrawableObject* object);
 
     Camera* GetCamera() const;
+
+    Light* GetLight() const;
 
 };

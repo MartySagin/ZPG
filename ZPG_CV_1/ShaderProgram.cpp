@@ -1,6 +1,6 @@
 #include "ShaderProgram.h"
 
-ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera)
+ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, Light* light)
 {
 	this->shader_id = 0;
 
@@ -11,6 +11,10 @@ ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* ca
 	this->camera = camera;
 
 	camera->AddObserver(this);
+
+	this->light = light;
+
+	light->AddObserver(this);
 
 }
 
@@ -94,6 +98,39 @@ void ShaderProgram::SetNormalMatrix(glm::mat3 modelMatrix)
 	glUniformMatrix3fv(normalMatrixLoc, 1, GL_FALSE, &normalMatrix[0][0]);
 }
 
+void ShaderProgram::SetLightPosition()
+{
+	GLint lightPositionLoc = glGetUniformLocation(this->shader_id, "lightPosition");
+
+	if (lightPositionLoc == -1) {
+		return;
+	}
+
+	glUniform3fv(lightPositionLoc, 1, glm::value_ptr(this->light->GetPosition()));
+}
+
+void ShaderProgram::SetLightColor()
+{
+	GLint lightColorLoc = glGetUniformLocation(this->shader_id, "lightColor");
+
+	if (lightColorLoc == -1) {
+		return;
+	}
+
+	glUniform3fv(lightColorLoc, 1, glm::value_ptr(this->light->GetColor()));
+}
+
+void ShaderProgram::SetLightIntensity()
+{
+	GLint lightIntensityLoc = glGetUniformLocation(this->shader_id, "lightIntensity");
+
+	if (lightIntensityLoc == -1) {
+		return;
+	}
+
+	glUniform1f(lightIntensityLoc, this->light->GetIntensity());
+}
+
 
 void ShaderProgram::CheckProgramLinking(GLuint program)
 {
@@ -155,5 +192,11 @@ void ShaderProgram::UpdateFromSubject()
 	SetViewMatrix();
 
 	SetProjectionMatrix();
+
+	SetLightPosition();
+
+	SetLightColor();
+
+	SetLightIntensity();
 }
 

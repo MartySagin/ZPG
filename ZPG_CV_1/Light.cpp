@@ -27,14 +27,38 @@ float Light::GetIntensity() const
 void Light::SetPosition(const glm::vec3& newPosition)
 {
 	this->position = newPosition;
+
+	this->NotifyObservers();
 }
 
 void Light::SetColor(const glm::vec3& newColor)
 {
 	this->color = newColor;
+
+	this->NotifyObservers();
 }
 
 void Light::SetIntensity(float newIntensity)
 {
 	this->intensity = newIntensity;
+
+	this->NotifyObservers();
+}
+
+void Light::NotifyObservers()
+{
+	for (auto observer : this->observers)
+	{
+		observer->UpdateFromSubject();
+	}
+}
+
+void Light::AddObserver(Observer* observer)
+{
+	this->observers.push_back(observer);
+}
+
+void Light::RemoveObserver(Observer* observer)
+{
+	this->observers.erase(remove(this->observers.begin(), this->observers.end(), observer), this->observers.end());
 }

@@ -27,7 +27,7 @@
 #include "Translate.h"
 #include "Rotate.h"
 #include "Scale.h"
-
+#include "Light.h"
 
 using namespace std;
 
