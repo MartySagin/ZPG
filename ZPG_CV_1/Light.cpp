@@ -1,37 +1,45 @@
 #include "Light.h"
 
-Light::Light(const glm::vec3& position, const glm::vec3& color, float intensity)
+Light::Light(glm::vec3 position, glm::vec3 color, glm::vec3 objectColor, float intensity)
 {
 	this->position = position;
 
 	this->color = color;
 
+	this->objectColor = objectColor;
+
 	this->intensity = intensity;
 }
 
-glm::vec3 Light::GetPosition() const
+glm::vec3 Light::GetPosition() 
 {
 	return this->position;
 }
 
-glm::vec3 Light::GetColor() const
+glm::vec3 Light::GetColor() 
 {
 	return this->color;
 }
 
-float Light::GetIntensity() const
+glm::vec3 Light::GetObjectColor() 
+{
+	return this->objectColor;
+}
+
+float Light::GetIntensity() 
 {
 	return this->intensity;
 }
 
-void Light::SetPosition(const glm::vec3& newPosition)
+
+void Light::SetPosition(glm::vec3 newPosition)
 {
 	this->position = newPosition;
 
 	this->NotifyObservers();
 }
 
-void Light::SetColor(const glm::vec3& newColor)
+void Light::SetColor(glm::vec3 newColor)
 {
 	this->color = newColor;
 

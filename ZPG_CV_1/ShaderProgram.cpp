@@ -148,6 +148,17 @@ void ShaderProgram::SetViewPosition()
 
 }
 
+void ShaderProgram::SetObjectColor()
+{
+	GLint objectColorLoc = glGetUniformLocation(this->shader_id, "objectColor");
+
+	if (objectColorLoc == -1) {
+		return;
+	}
+
+	glUniform3fv(objectColorLoc, 1, glm::value_ptr(this->light->GetObjectColor()));
+}
+
 
 void ShaderProgram::CheckProgramLinking(GLuint program)
 {
@@ -215,6 +226,8 @@ void ShaderProgram::UpdateFromSubject()
 	SetLightColor();
 
 	SetLightIntensity();
+
+	SetObjectColor();
 
 	SetViewPosition();
 }

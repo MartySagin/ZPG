@@ -7,6 +7,10 @@ void Scene::Init(const vector<DrawableObject*> drawableObjects, Camera* camera, 
 	this->objects = drawableObjects;
 
 	this->light = light;
+
+	this->light->NotifyObservers();
+
+	this->camera->NotifyObservers();
 }
 
 void Scene::Render()

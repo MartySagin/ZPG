@@ -58,6 +58,8 @@ class ShaderProgram : Observer
 
 		void SetViewPosition();
 
+		void SetObjectColor();
+
 		void CheckProgramLinking(GLuint program);
 
 		void CheckProgramCompiling(GLuint program);

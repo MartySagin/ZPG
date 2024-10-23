@@ -41,20 +41,20 @@ void Camera::DecreaseMovementSpeed(float movementSpeed)
 
 void Camera::Rotate(float deltaX, float deltaY)
 {
-    yaw += deltaX;
-    pitch += deltaY;
+    this->yaw += deltaX;
+    this->pitch += deltaY;
 
-    if (pitch > 89.0f) pitch = 89.0f;
-    if (pitch < -89.0f) pitch = -89.0f;
+    if (this->pitch > 89.0f) this->pitch = 89.0f;
+    if (this->pitch < -89.0f) this->pitch = -89.0f;
 
 
     glm::vec3 direction;
 
-    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    direction.y = sin(glm::radians(pitch));
-    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    direction.x = cos(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
+    direction.y = sin(glm::radians(this->pitch));
+    direction.z = sin(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
 
-    target = glm::normalize(direction);
+    this->target = glm::normalize(direction);
 
     UpdateViewMatrix();
 
@@ -65,9 +65,9 @@ void Camera::Rotate(float deltaX, float deltaY)
 
 void Camera::MoveForward(float deltaTime)
 {
-    float velocity = movementSpeed * deltaTime;
+    float velocity = this->movementSpeed * deltaTime;
 
-    position += target * velocity;
+    this->position += this->target * velocity;
 
     UpdateViewMatrix();
 
@@ -76,9 +76,9 @@ void Camera::MoveForward(float deltaTime)
 
 void Camera::MoveBackward(float deltaTime)
 {
-    float velocity = movementSpeed * deltaTime;
+    float velocity = this->movementSpeed * deltaTime;
 
-    position -= target * velocity;
+    this->position -= this->target * velocity;
 
     UpdateViewMatrix();
 
@@ -87,11 +87,11 @@ void Camera::MoveBackward(float deltaTime)
 
 void Camera::MoveLeft(float deltaTime)
 {
-    float velocity = movementSpeed * deltaTime;
+    float velocity = this->movementSpeed * deltaTime;
 
-    glm::vec3 right = glm::normalize(glm::cross(target, up));
+    glm::vec3 right = glm::normalize(glm::cross(this->target, this->up));
 
-    position -= right * velocity;
+    this->position -= right * velocity;
 
     UpdateViewMatrix();
 
@@ -100,11 +100,11 @@ void Camera::MoveLeft(float deltaTime)
 
 void Camera::MoveRight(float deltaTime)
 {
-    float velocity = movementSpeed * deltaTime;
+    float velocity = this->movementSpeed * deltaTime;
 
-    glm::vec3 right = glm::normalize(glm::cross(target, up));
+    glm::vec3 right = glm::normalize(glm::cross(this->target, this->up));
 
-    position += right * velocity;
+    this->position += right * velocity;
 
     UpdateViewMatrix();
 
@@ -115,24 +115,24 @@ void Camera::MoveRight(float deltaTime)
 
 void Camera::UpdateViewMatrix()
 {
-    viewMatrix = glm::lookAt(position, position + target, up);
+    this->viewMatrix = glm::lookAt(this->position, this->position + this->target, this->up);
 }
 
 void Camera::UpdateProjectionMatrix()
 {
-    projectionMatrix = glm::perspective(glm::radians(fov), aspectRatio, zNear, zFar);  
+    this->projectionMatrix = glm::perspective(glm::radians(this->fov), this->aspectRatio, this->zNear, this->zFar);
 }
 
 void Camera::AddObserver(Observer* observer) {
-    observers.push_back(observer);
+    this->observers.push_back(observer);
 }
 
 void Camera::RemoveObserver(Observer* observer) {
-    observers.erase(remove(observers.begin(), observers.end(), observer), observers.end());
+    this->observers.erase(remove(this->observers.begin(), this->observers.end(), observer), this->observers.end());
 }
 
 void Camera::NotifyObservers() {
-	for (auto& observer : observers) {
+	for (auto& observer : this->observers) {
         observer->UpdateFromSubject();
 	}
 }

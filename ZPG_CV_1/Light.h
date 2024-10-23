@@ -12,22 +12,26 @@ class Light : public Subject
 
         glm::vec3 color;
 
+        glm::vec3 objectColor;
+
         float intensity;
 
 		vector<Observer*> observers;
 
     public:
-        Light(const glm::vec3& position, const glm::vec3& color, float intensity);
+        Light(glm::vec3 position, glm::vec3 color, glm::vec3 objectColor, float intensity);
 
-        glm::vec3 GetPosition() const;
+        glm::vec3 GetPosition();
 
-        glm::vec3 GetColor() const;
+        glm::vec3 GetColor();
 
-        float GetIntensity() const;
+		glm::vec3 GetObjectColor();
 
-        void SetPosition(const glm::vec3& newPosition);
+        float GetIntensity();
 
-        void SetColor(const glm::vec3& newColor);
+        void SetPosition(glm::vec3 newPosition);
+
+        void SetColor(glm::vec3 newColor);
 
         void SetIntensity(float newIntensity);
 

@@ -7,7 +7,7 @@
     uniform vec3 lightPosition;
     uniform vec3 lightColor;
     uniform float lightIntensity;
-    uniform vec3 objectColor = vec3(0.385, 0.647, 0.812);
+    uniform vec3 objectColor;
 
     void main() {
         vec3 norm = normalize(Normal);

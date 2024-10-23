@@ -28,6 +28,9 @@
 #include "Rotate.h"
 #include "Scale.h"
 #include "Light.h"
+#include "gift.h"
+#include "suzi_flat.h"
+#include "suzi_smooth.h"
 
 using namespace std;
 
