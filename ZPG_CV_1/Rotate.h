@@ -8,8 +8,8 @@ class Rotate : public TransformationComponent
 {
     glm::vec3 rotation;
 
-public:
-    Rotate(const glm::vec3& rotation) : rotation(rotation) {}
+    public:
+        Rotate(glm::vec3 rotation) : rotation(rotation) {}
 
-    glm::mat4 Apply(const glm::mat4& model) const override;
+        glm::mat4 Apply(glm::mat4 model) override;
 };

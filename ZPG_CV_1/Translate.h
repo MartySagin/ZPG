@@ -10,10 +10,8 @@ class Translate : public TransformationComponent
     glm::vec3 translation;
 
 public:
-    Translate(const glm::vec3& translation) : translation(translation) {}
+    Translate(glm::vec3 translation) : translation(translation) {}
 
-    glm::mat4 Apply(const glm::mat4& model) const override
-    {
-        return glm::translate(model, translation);
-    }
+    glm::mat4 Apply(glm::mat4 model) override;
+    
 };

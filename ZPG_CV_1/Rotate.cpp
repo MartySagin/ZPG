@@ -1,6 +1,7 @@
 #include "Rotate.h"
 
-glm::mat4 Rotate::Apply(const glm::mat4& model) const
+
+glm::mat4 Rotate::Apply(glm::mat4 model)
 {
     glm::mat4 result = model;
 

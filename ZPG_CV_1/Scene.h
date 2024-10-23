@@ -16,14 +16,14 @@ public:
 
 	Light* light;
 
-    void Init(const vector<DrawableObject*> drawableObjects, Camera* camera, Light* light);  
+    void Init(vector<DrawableObject*> drawableObjects, Camera* camera, Light* light);  
 
     void Render();  
 
     void AddObject(DrawableObject* object);
 
-    Camera* GetCamera() const;
+    Camera* GetCamera();
 
-    Light* GetLight() const;
+    Light* GetLight();
 
 };

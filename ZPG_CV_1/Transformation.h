@@ -15,7 +15,7 @@ class Transformation
 
         void AddComponent(TransformationComponent* component);
     
-        glm::mat4 GetMatrix() const;
+        glm::mat4 GetMatrix();
     
         ~Transformation();
     

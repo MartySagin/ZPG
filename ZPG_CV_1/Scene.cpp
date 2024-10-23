@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-void Scene::Init(const vector<DrawableObject*> drawableObjects, Camera* camera, Light* light)
+void Scene::Init(vector<DrawableObject*> drawableObjects, Camera* camera, Light* light)
 {
 	this->camera = camera;
 
@@ -27,11 +27,13 @@ void Scene::AddObject(DrawableObject* object)
     objects.push_back(object);
 }
 
-Camera* Scene::GetCamera() const {
+Camera* Scene::GetCamera()
+{
     return this->camera;
 }
 
-Light* Scene::GetLight() const {
+Light* Scene::GetLight()
+{
 	return this->light;
 }
 
