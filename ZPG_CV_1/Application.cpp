@@ -71,20 +71,18 @@ void Application::Init()
 	//Init Scene 1
 	Camera* camera1 = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
+	Light* light1 = new Light(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f, 0.15f);
 
-	Light* light1 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f);
-
-	DrawableObject* oneSphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera1, light1, true);
+	DrawableObject* oneSphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, vertexShader, fragmentShaderNormal, camera1, light1, true);
 
 	oneSphereObject->transform.AddComponent(new Scale(glm::vec3(0.5f)));
-	oneSphereObject->transform.AddComponent(new Translate(glm::vec3(0.0f, 0.0f, -5.0f)));
 
 	objects.push_back(oneSphereObject);
 
-	camera1->Rotate(-90.0f, 0.0f);
-
 	Scene* scene1 = new Scene();
 	scene1->Init(objects, camera1, light1);
+
+	camera1->Rotate(-90.0f, 0.0f);
 
 	AddScene(scene1);
 
@@ -93,7 +91,7 @@ void Application::Init()
 
 	Camera* camera2 = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
-	Light* light2 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f);
+	Light* light2 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f, 0.15f);
 
 	DrawableObject* sphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera2, light2, true);
 	sphereObject->transform.AddComponent(new Scale(glm::vec3(0.5f)));
@@ -129,7 +127,7 @@ void Application::Init()
 	//Init Scene 3
 	Camera* camera3 = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
-	Light* light3 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f);
+	Light* light3 = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f, 0.15f);
 
 	DrawableObject* giftObject = new DrawableObject(gift, sizeof(gift), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera3, light3, true);
 	giftObject->transform.AddComponent(new Scale(glm::vec3(1.5f)));
@@ -164,9 +162,9 @@ void Application::Init()
 	AddScene(scene3);
 
 	//Init Scene 4
-	Camera* camera4 = new Camera(glm::vec3(0.0f, 5.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
+	Camera* camera4 = new Camera(glm::vec3(0.0f, 10.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 60.0f, ratio, 0.1f, 100.0f);
 
-	Light* light4 = new Light(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.0f);
+	Light* light4 = new Light(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.0f, 0.15f);
 
 	//Init Shaders for Scene 4
 

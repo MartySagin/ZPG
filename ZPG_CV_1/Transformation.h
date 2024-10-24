@@ -10,6 +10,8 @@ class Transformation
     private:
             vector<TransformationComponent*> components;
 
+            glm::mat4 modelMatrix = (1.0f);
+
     public:
         Transformation();
 

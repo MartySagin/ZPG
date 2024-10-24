@@ -1,6 +1,6 @@
 #include "Light.h"
 
-Light::Light(glm::vec3 position, glm::vec3 color, glm::vec3 objectColor, float intensity)
+Light::Light(glm::vec3 position, glm::vec3 color, glm::vec3 objectColor, float intensity, float ambientStrength)
 {
 	this->position = position;
 
@@ -9,6 +9,8 @@ Light::Light(glm::vec3 position, glm::vec3 color, glm::vec3 objectColor, float i
 	this->objectColor = objectColor;
 
 	this->intensity = intensity;
+
+	this->ambientStrength = ambientStrength;
 }
 
 glm::vec3 Light::GetPosition() 
@@ -31,6 +33,11 @@ float Light::GetIntensity()
 	return this->intensity;
 }
 
+float Light::GetAmbientStrength()
+{
+	return this->ambientStrength;
+}
+
 
 void Light::SetPosition(glm::vec3 newPosition)
 {
@@ -49,6 +56,13 @@ void Light::SetColor(glm::vec3 newColor)
 void Light::SetIntensity(float newIntensity)
 {
 	this->intensity = newIntensity;
+
+	this->NotifyObservers();
+}
+
+void Light::SetAmbientStrength(float newAmbientStrength)
+{
+	this->ambientStrength = newAmbientStrength;
 
 	this->NotifyObservers();
 }

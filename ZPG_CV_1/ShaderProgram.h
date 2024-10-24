@@ -60,6 +60,8 @@ class ShaderProgram : Observer
 
 		void SetObjectColor();
 
+		void SetAmbientStrength();
+
 		void CheckProgramLinking(GLuint program);
 
 		void CheckProgramCompiling(GLuint program);

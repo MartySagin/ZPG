@@ -159,6 +159,17 @@ void ShaderProgram::SetObjectColor()
 	glUniform3fv(objectColorLoc, 1, glm::value_ptr(this->light->GetObjectColor()));
 }
 
+void ShaderProgram::SetAmbientStrength()
+{
+	GLint ambientStrengthLoc = glGetUniformLocation(this->shader_id, "ambientStrength");
+
+	if (ambientStrengthLoc == -1) {
+		return;
+	}
+
+	glUniform1f(ambientStrengthLoc, this->light->GetAmbientStrength());
+}
+
 
 void ShaderProgram::CheckProgramLinking(GLuint program)
 {
@@ -230,5 +241,7 @@ void ShaderProgram::UpdateFromSubject()
 	SetObjectColor();
 
 	SetViewPosition();
+
+	SetAmbientStrength();
 }
 

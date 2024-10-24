@@ -65,7 +65,7 @@ void FragmentShader::CreateNewShaderWithNormal()
         uniform vec3 objectColor = vec3(0.385, 0.647, 0.812); 
 
         void main() {
-            float ambientStrength = 0.35;
+            float ambientStrength = 0.15;
             vec3 ambient = ambientStrength * lightColor;
             
             vec3 lightDir = normalize(lightPosition - FragPos);  
