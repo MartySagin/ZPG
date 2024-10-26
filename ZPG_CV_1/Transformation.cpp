@@ -6,19 +6,19 @@ Transformation::Transformation()
 
 void Transformation::AddComponent(TransformationComponent* component)
 {
-    components.push_back(component);
+    this->components.push_back(component);
 
 	this->modelMatrix = component->Apply(this->modelMatrix);
 }
 
-glm::mat4 Transformation::GetMatrix()
+glm::mat4 Transformation::GetModelMatrix()
 {
-    return modelMatrix;
+    return this->modelMatrix;
 }
 
 Transformation::~Transformation()
 {
-    for (auto component : components)
+    for (auto component : this->components)
     {
         delete component;
     }

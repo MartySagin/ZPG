@@ -14,10 +14,11 @@
 
 class Model
 {
-	public:
+	private:
         GLuint VAO;
         GLuint VBO;
 
+    public:
         Model();
 
         void GenerateModel(const float* points, GLsizeiptr size);

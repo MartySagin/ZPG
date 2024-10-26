@@ -15,7 +15,7 @@ void Scene::Init(vector<DrawableObject*> drawableObjects, Camera* camera, Light*
 
 void Scene::Render()
 {
-    for (auto& object : objects)
+    for (auto& object : this->objects)
     {  
         object->Draw();  
     }
@@ -24,7 +24,7 @@ void Scene::Render()
 
 void Scene::AddObject(DrawableObject* object)
 {
-    objects.push_back(object);
+	this->objects.push_back(object);
 }
 
 Camera* Scene::GetCamera()
@@ -35,5 +35,10 @@ Camera* Scene::GetCamera()
 Light* Scene::GetLight()
 {
 	return this->light;
+}
+
+vector<DrawableObject*> Scene::GetObjects()
+{
+	return this->objects;
 }
 

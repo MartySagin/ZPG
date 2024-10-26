@@ -9,15 +9,17 @@
 
 class VertexShader
 {
-public:
-    const char* shader;
+    private:
+        const char* shader;
 
-    VertexShader(const char* shader);
-    VertexShader();
+    public:
 
-    const char* GetShader();
-    void SetShader(const char* shader);
+        VertexShader(const char* shader);
+        VertexShader();
 
-    void CreateNewShaderWithNormal();
-    void CreateNewShaderWithoutNormal();
+        const char* GetShader();
+        void SetShader(const char* shader);
+
+        void CreateNewShaderWithNormal();
+        void CreateNewShaderWithoutNormal();
 };

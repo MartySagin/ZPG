@@ -15,59 +15,38 @@
 #include <vector>
 #include "ShaderProgram.h"
 #include "Model.h"
-#include "bushes.h"
-#include "sphere.h"
-#include "tree.h"
 #include <random>
 #include "Scene.h"
 #include "Camera.h"
-#include "plain.h"
 #include "FragmentShader.h"
 #include "VertexShader.h"
 #include "Translate.h"
 #include "Rotate.h"
 #include "Scale.h"
 #include "Light.h"
-#include "gift.h"
-#include "suzi_flat.h"
-#include "suzi_smooth.h"
+#include "Scale.h"
+#include "Translate.h"
+#include "Rotate.h"
+#include "SceneMaker.h"
+#include "Controller.h"
 
 using namespace std;
 
 class Application
 {
-	public:
+	private:
 		GLFWwindow* window;
 
-		vector<Scene*> scenes;    
-		int currentSceneIndex;
+		SceneMaker* sceneMaker;
+
+		Controller* controller;
 
 	public:
 		void Init();
 
-		void AddScene(Scene* scene);
-
-		void SwitchScene();
-
-		void MoveObject(int direction);
-
-		void RotateObject(int axis);
+		SceneMaker* GetSceneMaker();
 
 		void Run();
-
-		static void error_callback(int error, const char* description);
-
-		static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
-		static void window_focus_callback(GLFWwindow* window, int focused);
-
-		static void window_iconify_callback(GLFWwindow* window, int iconified);
-
-		static void window_size_callback(GLFWwindow* window, int width, int height);
-
-		static void cursor_callback(GLFWwindow* window, double x, double y);
-
-		static void button_callback(GLFWwindow* window, int button, int action, int mode);
 
 };
 

@@ -22,7 +22,7 @@ class ShaderLoader
 		string loadFile(const char *fname);
 
 	protected:
-		GLuint	shaderProgramID=0;
+		GLuint	shaderProgramID = 0;
 
 	public:
 		GLuint loadShader(const char *vertexFile, const char *fragmentFile);

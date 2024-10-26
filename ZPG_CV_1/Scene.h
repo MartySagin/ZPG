@@ -9,21 +9,24 @@ using namespace std;
 
 class Scene
 {
-public:
-    vector<DrawableObject*> objects;  
+    private:
+        vector<DrawableObject*> objects;  
 
-	Camera* camera;
+	    Camera* camera;
 
-	Light* light;
+	    Light* light;
 
-    void Init(vector<DrawableObject*> drawableObjects, Camera* camera, Light* light);  
+    public:
+        void Init(vector<DrawableObject*> drawableObjects, Camera* camera, Light* light);  
 
-    void Render();  
+        void Render();  
 
-    void AddObject(DrawableObject* object);
+        void AddObject(DrawableObject* object);
 
-    Camera* GetCamera();
+        Camera* GetCamera();
 
-    Light* GetLight();
+        Light* GetLight();
+
+		vector<DrawableObject*> GetObjects();
 
 };

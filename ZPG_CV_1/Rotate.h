@@ -6,7 +6,8 @@
 
 class Rotate : public TransformationComponent
 {
-    glm::vec3 rotation;
+    private:
+        glm::vec3 rotation;
 
     public:
         Rotate(glm::vec3 rotation) : rotation(rotation) {}

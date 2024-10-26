@@ -7,11 +7,12 @@
 
 class Translate : public TransformationComponent
 {
-    glm::vec3 translation;
+    private:
+        glm::vec3 translation;
 
-public:
-    Translate(glm::vec3 translation) : translation(translation) {}
+    public:
+        Translate(glm::vec3 translation) : translation(translation) {}
 
-    glm::mat4 Apply(glm::mat4 model) override;
+        glm::mat4 Apply(glm::mat4 model) override;
     
 };

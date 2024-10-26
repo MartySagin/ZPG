@@ -13,8 +13,10 @@ using namespace std;
 
 class FragmentShader
 {
-	public:
+	private:
 		string shader;
+
+	public:
 
 		FragmentShader(const char* shader);
 		FragmentShader(glm::vec4 color);

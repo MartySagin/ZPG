@@ -8,18 +8,24 @@
 
 class DrawableObject
 {
-public:
-    Model model;
+    private:
+        Model model;
 
-    ShaderProgram shaderProgram;
+        ShaderProgram shaderProgram;
 
-    Transformation transform;
+        Transformation transform;
 
-    bool hasNormal;
+        bool hasNormal;
 
-    DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, Light* light, bool withNormal);
+    public:
 
-    DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, const char* vertexShader, const char* fragmentShader, Camera* camera, Light* light, bool withNormal);
+        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, Light* light, bool withNormal);
 
-    void Draw();
+        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, const char* vertexShader, const char* fragmentShader, Camera* camera, Light* light, bool withNormal);
+
+	    DrawableObject(ShaderProgram* shaderProgram, Model* model);
+
+	    Transformation* GetTransformation();
+
+        void Draw();
 };

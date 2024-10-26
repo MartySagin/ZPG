@@ -7,7 +7,8 @@
 
 class Scale : public TransformationComponent
 {
-    glm::vec3 scaling;
+    private:
+        glm::vec3 scaling;
 
     public:
         Scale(glm::vec3 scaling) : scaling(scaling) {}

@@ -5,8 +5,8 @@ Camera::Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movemen
     : position(position), target(target), up(up), movementSpeed(movementSpeed), fov(fov), aspectRatio(aspectRatio), zNear(zNear), zFar(zFar)
 {
     UpdateViewMatrix();
-    UpdateProjectionMatrix();
 
+    UpdateProjectionMatrix();
 }
 
 glm::mat4 Camera::GetViewMatrix()
@@ -33,6 +33,7 @@ void Camera::DecreaseMovementSpeed(float movementSpeed)
 {
 	if (this->movementSpeed - movementSpeed < 1.0f) {
 		this->movementSpeed = 1.0f;
+
 		return;
     }
     
