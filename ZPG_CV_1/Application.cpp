@@ -68,7 +68,7 @@ void Application::Init()
 	// Inicializace Controlleru
 	this->controller = new Controller();
 
-	// Nastavení callbacků
+	// Set Callbacks
 	glfwSetKeyCallback(this->window, Controller::KeyCallback);
 
 	glfwSetCursorPosCallback(this->window, Controller::CursorCallback);
@@ -116,7 +116,6 @@ void Application::Run()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		
 		this->sceneMaker->GetCurrentScene()->Render();
 
 		glfwSwapBuffers(this->window);
