@@ -32,7 +32,10 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
         float currentFrameTime = glfwGetTime();
         float deltaTime = currentFrameTime - lastFrameTime;
 
-        if (deltaTime > 0.01f) deltaTime = 0.01f;
+        if (deltaTime > 0.01f) {
+            deltaTime = 0.01f;
+        }
+
         lastFrameTime = currentFrameTime;
 
         if (action == GLFW_PRESS || action == GLFW_REPEAT) {
