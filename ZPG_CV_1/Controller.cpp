@@ -15,10 +15,10 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-        if (key == GLFW_KEY_LEFT) MoveObject(window,0);
-        else if (key == GLFW_KEY_RIGHT) MoveObject(window, 1);
-        else if (key == GLFW_KEY_UP) MoveObject(window, 2);
-        else if (key == GLFW_KEY_DOWN) MoveObject(window, 3);
+        if (key == GLFW_KEY_LEFT) MoveLight(window,0);
+        else if (key == GLFW_KEY_RIGHT) MoveLight(window, 1);
+        else if (key == GLFW_KEY_UP) MoveLight(window, 2);
+        else if (key == GLFW_KEY_DOWN) MoveLight(window, 3);
         else if (key == GLFW_KEY_R) RotateObject(window, 0);
         else if (key == GLFW_KEY_T) RotateObject(window, 1);
         else if (key == GLFW_KEY_SPACE) app->GetSceneMaker()->SwitchScene();
@@ -98,27 +98,28 @@ void Controller::ButtonCallback(GLFWwindow* window, int button, int action, int 
     }
 }
 
-void Controller::MoveObject(GLFWwindow* window, int direction)
+void Controller::MoveLight(GLFWwindow* window, int direction)
 {
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
     
     printf("MoveObject %d\n", direction);
 
-    for (auto& object : app->GetSceneMaker()->GetCurrentScene()->GetObjects())
-    {
-        if (direction == 0) {
-            object->GetTransformation()->AddComponent(new Translate(glm::vec3(-0.1f, 0.0f, 0.0f)));
-        }
-        else if (direction == 1) {
-            object->GetTransformation()->AddComponent(new Translate(glm::vec3(0.1f, 0.0f, 0.0f)));
-        }
-        else if (direction == 2) {
-            object->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 0.1f, 0.0f)));
-        }
-        else if (direction == 3) {
-            object->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -0.1f, 0.0f)));
-        }
+    Light* light = app->GetSceneMaker()->GetCurrentScene()->GetLight();
+
+	
+    if (direction == 0) {
+        light->SetPosition(light->GetPosition() + glm::vec3(-0.1f, 0.0f, 0.0f));
     }
+    else if (direction == 1) {
+        light->SetPosition(light->GetPosition() + glm::vec3(0.1f, 0.0f, 0.0f));
+    }
+    else if (direction == 2) {
+        light->SetPosition(light->GetPosition() + glm::vec3(0.0f, 0.1f, 0.0f));
+    }
+    else if (direction == 3) {
+        light->SetPosition(light->GetPosition() + glm::vec3(0.0f, -0.1f, 0.0f));
+    }
+    
 }
 
 void Controller::RotateObject(GLFWwindow* window, int axis)

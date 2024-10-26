@@ -24,6 +24,8 @@ class Controller {
 
         static void ButtonCallback(GLFWwindow* window, int button, int action, int mode);
 
+        static void MoveLight(GLFWwindow* window, int direction);
+
         static void MoveObject(GLFWwindow* window, int direction);
 
         static void RotateObject(GLFWwindow* window, int axis);
