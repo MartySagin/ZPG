@@ -50,9 +50,9 @@ void DrawableObject::Draw()
 {
     this->shaderProgram.UseProgram();
 
-    this->shaderProgram.SetModelMatrix(this->transform.GetModelMatrix());
+    this->shaderProgram.SetMat4Uniform("modelMatrix", this->transform.GetModelMatrix());
 
-    this->shaderProgram.SetNormalMatrix(this->transform.GetModelMatrix());
+    this->shaderProgram.SetMat3Uniform("normalMatrix", glm::transpose(glm::inverse(glm::mat3(this->transform.GetModelMatrix()))));
 
     this->model.BindVAO();
 

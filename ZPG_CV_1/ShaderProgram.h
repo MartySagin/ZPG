@@ -42,25 +42,13 @@ class ShaderProgram : Observer
 
 		void AddShadersFromFiles(const char* vertex_shader, const char* fragment_shader);
 
-		void SetModelMatrix(glm::mat4 modelMatrix);
+		void SetMat4Uniform(const char* uniformName, glm::mat4 matrix);
 
-		void SetViewMatrix();     
-		
-		void SetProjectionMatrix();
+		void SetMat3Uniform(const char* uniformName, glm::mat3 matrix);
 
-		void SetNormalMatrix(glm::mat3 modelMatrix);
+		void SetVec3Uniform(const char* uniformName, glm::vec3 vector);
 
-		void SetLightPosition();
-
-		void SetLightColor();
-
-		void SetLightIntensity();
-
-		void SetViewPosition();
-
-		void SetObjectColor();
-
-		void SetAmbientStrength();
+		void SetFloatUniform(const char* uniformName, float value);
 
 		void CheckProgramLinking(GLuint program);
 

@@ -50,126 +50,49 @@ void ShaderProgram::AddShadersFromFiles(const char* vertex_shader, const char* f
 	this->shaderLoader = new ShaderLoader(vertex_shader, fragment_shader, &this->shader_id);
 }
 
-
-void ShaderProgram::SetModelMatrix(glm::mat4 modelMatrix)
+void ShaderProgram::SetMat4Uniform(const char* uniformName, glm::mat4 matrix)
 {
-	GLint idModelTransform = glGetUniformLocation(this->shader_id, "modelMatrix");
+	GLint idModelTransform = glGetUniformLocation(this->shader_id, uniformName);
 
 	if (idModelTransform == -1) {
-		printf("Error: Cannot find uniform 'modelMatrix' in shader!\n");
-	}
-
-	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &modelMatrix[0][0]);
-}
-
-void ShaderProgram::SetViewMatrix()
-{
-	
-	glm::mat4 viewMatrix = this->camera->GetViewMatrix();
-
-	GLint viewLoc = glGetUniformLocation(this->shader_id, "viewMatrix");
-
-	if (viewLoc == -1) {
-		printf("Error: Cannot find uniform 'viewMatrix' in shader!\n");
-	}
-
-	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);
-}
-
-void ShaderProgram::SetProjectionMatrix()
-{
-	
-	glm::mat4 projectionMatrix = this->camera->GetProjectionMatrix();
-	
-	GLint projectionLoc = glGetUniformLocation(this->shader_id, "projectionMatrix");
-
-	if (projectionLoc == -1) {
-		printf("Error: Cannot find uniform 'projectionMatrix' in shader!\n");
-	}
-
-	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, &projectionMatrix[0][0]);
-}
-
-void ShaderProgram::SetNormalMatrix(glm::mat3 modelMatrix)
-{
-	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
-
-	GLint normalMatrixLoc = glGetUniformLocation(this->shader_id, "normalMatrix");
-
-	if (normalMatrixLoc == -1) {
 		return;
 	}
 
-	glUniformMatrix3fv(normalMatrixLoc, 1, GL_FALSE, &normalMatrix[0][0]);
+	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &matrix[0][0]);
 }
 
-void ShaderProgram::SetLightPosition()
+void ShaderProgram::SetMat3Uniform(const char* uniformName, glm::mat3 matrix)
 {
-	GLint lightPositionLoc = glGetUniformLocation(this->shader_id, "lightPosition");
+	GLint idModelTransform = glGetUniformLocation(this->shader_id, uniformName);
 
-	if (lightPositionLoc == -1) {
+	if (idModelTransform == -1) {
 		return;
 	}
 
-	glUniform3fv(lightPositionLoc, 1, glm::value_ptr(this->light->GetPosition()));
+	glUniformMatrix3fv(idModelTransform, 1, GL_FALSE, &matrix[0][0]);
 }
 
-void ShaderProgram::SetLightColor()
+void ShaderProgram::SetVec3Uniform(const char* uniformName, glm::vec3 vector)
 {
-	GLint lightColorLoc = glGetUniformLocation(this->shader_id, "lightColor");
+	GLint idModelTransform = glGetUniformLocation(this->shader_id, uniformName);
 
-	if (lightColorLoc == -1) {
+	if (idModelTransform == -1) {
 		return;
 	}
 
-	glUniform3fv(lightColorLoc, 1, glm::value_ptr(this->light->GetColor()));
+	glUniform3fv(idModelTransform, 1, glm::value_ptr(vector));
 }
 
-void ShaderProgram::SetLightIntensity()
+void ShaderProgram::SetFloatUniform(const char* uniformName, float value)
 {
-	GLint lightIntensityLoc = glGetUniformLocation(this->shader_id, "lightIntensity");
+	GLint idModelTransform = glGetUniformLocation(this->shader_id, uniformName);
 
-	if (lightIntensityLoc == -1) {
+	if (idModelTransform == -1) {
 		return;
 	}
 
-	glUniform1f(lightIntensityLoc, this->light->GetIntensity());
+	glUniform1f(idModelTransform, value);
 }
-
-void ShaderProgram::SetViewPosition()
-{
-	GLint viewPositionLoc = glGetUniformLocation(this->shader_id, "viewPosition");
-
-	if (viewPositionLoc == -1) {
-		return;
-	}
-
-	glUniform3fv(viewPositionLoc, 1, glm::value_ptr(this->camera->GetPosition()));
-
-}
-
-void ShaderProgram::SetObjectColor()
-{
-	GLint objectColorLoc = glGetUniformLocation(this->shader_id, "objectColor");
-
-	if (objectColorLoc == -1) {
-		return;
-	}
-
-	glUniform3fv(objectColorLoc, 1, glm::value_ptr(this->light->GetObjectColor()));
-}
-
-void ShaderProgram::SetAmbientStrength()
-{
-	GLint ambientStrengthLoc = glGetUniformLocation(this->shader_id, "ambientStrength");
-
-	if (ambientStrengthLoc == -1) {
-		return;
-	}
-
-	glUniform1f(ambientStrengthLoc, this->light->GetAmbientStrength());
-}
-
 
 void ShaderProgram::CheckProgramLinking(GLuint program)
 {
@@ -228,20 +151,21 @@ void ShaderProgram::UpdateFromSubject()
 {
 	UseProgram();
 
-	SetViewMatrix();
+	SetMat4Uniform("viewMatrix", this->camera->GetViewMatrix());
 
-	SetProjectionMatrix();
+	SetMat4Uniform("projectionMatrix", this->camera->GetProjectionMatrix());
 
-	SetLightPosition();
+	SetVec3Uniform("lightPosition", this->light->GetPosition());
+	
+	SetVec3Uniform("lightColor", this->light->GetColor());
 
-	SetLightColor();
+	SetFloatUniform("lightIntensity", this->light->GetIntensity());
 
-	SetLightIntensity();
+	SetVec3Uniform("objectColor", this->light->GetObjectColor());
 
-	SetObjectColor();
+	SetVec3Uniform("viewPosition", this->camera->GetPosition());
 
-	SetViewPosition();
+	SetFloatUniform("ambientStrength", this->light->GetAmbientStrength());
 
-	SetAmbientStrength();
 }
 
