@@ -104,12 +104,9 @@ void Controller::ButtonCallback(GLFWwindow* window, int button, int action, int 
 void Controller::MoveLight(GLFWwindow* window, int direction)
 {
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-    
-    printf("MoveObject %d\n", direction);
 
     Light* light = app->GetSceneMaker()->GetCurrentScene()->GetLight();
 
-	
     if (direction == 0) {
         light->SetPosition(light->GetPosition() + glm::vec3(-0.1f, 0.0f, 0.0f));
     }
