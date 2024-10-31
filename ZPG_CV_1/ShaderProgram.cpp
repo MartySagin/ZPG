@@ -147,25 +147,30 @@ void ShaderProgram::Draw()
 	glDrawArrays(this->mode, this->first, this->count);
 }
 
-void ShaderProgram::UpdateFromSubject()
+void ShaderProgram::UpdateFromSubject(Subject* subject)
 {
 	UseProgram();
 
-	SetMat4Uniform("viewMatrix", this->camera->GetViewMatrix());
+	if (typeid(*subject) == typeid(Camera)) {
+		
+		SetMat4Uniform("viewMatrix", camera->GetViewMatrix());
 
-	SetMat4Uniform("projectionMatrix", this->camera->GetProjectionMatrix());
+		SetMat4Uniform("projectionMatrix", camera->GetProjectionMatrix());
 
-	SetVec3Uniform("lightPosition", this->light->GetPosition());
-	
-	SetVec3Uniform("lightColor", this->light->GetColor());
+		SetVec3Uniform("viewPosition", camera->GetPosition());
+	}
+	else if (typeid(*subject) == typeid(Light)) {
+		
+		SetVec3Uniform("lightPosition", light->GetPosition());
 
-	SetFloatUniform("lightIntensity", this->light->GetIntensity());
+		SetVec3Uniform("lightColor", light->GetColor());
 
-	SetVec3Uniform("objectColor", this->light->GetObjectColor());
+		SetFloatUniform("lightIntensity", light->GetIntensity());
 
-	SetVec3Uniform("viewPosition", this->camera->GetPosition());
+		SetVec3Uniform("objectColor", light->GetObjectColor());
 
-	SetFloatUniform("ambientStrength", this->light->GetAmbientStrength());
+		SetFloatUniform("ambientStrength", light->GetAmbientStrength());
+	}
 
 }
 

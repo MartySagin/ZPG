@@ -11,6 +11,7 @@ void Application::Init()
 	}
 
 	this->window = glfwCreateWindow(1920, 1080, "ZPG", NULL, NULL);
+
 	if (!this->window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -65,7 +66,7 @@ void Application::Init()
 	// Hide cursor
 	glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-	// Inicializace Controlleru
+	// Init Controller
 	this->controller = new Controller();
 
 	// Set Callbacks
@@ -109,8 +110,6 @@ SceneMaker* Application::GetSceneMaker()
 void Application::Run()
 {
 	glEnable(GL_DEPTH_TEST);
-
-	
 
 	while (!glfwWindowShouldClose(this->window))
 	{

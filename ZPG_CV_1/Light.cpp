@@ -71,7 +71,7 @@ void Light::NotifyObservers()
 {
 	for (auto observer : this->observers)
 	{
-		observer->UpdateFromSubject();
+		observer->UpdateFromSubject(this);
 	}
 }
 

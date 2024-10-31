@@ -134,7 +134,7 @@ void Camera::RemoveObserver(Observer* observer) {
 
 void Camera::NotifyObservers() {
 	for (auto& observer : this->observers) {
-        observer->UpdateFromSubject();
+        observer->UpdateFromSubject(this);
 	}
 }
 
