@@ -15,6 +15,7 @@ class VertexShader
     public:
 
         VertexShader(const char* shader);
+
         VertexShader();
 
         const char* GetShader();

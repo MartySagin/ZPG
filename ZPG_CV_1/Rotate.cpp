@@ -1,6 +1,10 @@
 #include "Rotate.h"
 
 
+Rotate::Rotate(glm::vec3 rotation) : rotation(rotation)
+{
+}
+
 glm::mat4 Rotate::Apply(glm::mat4 model)
 {
     glm::mat4 result = model;

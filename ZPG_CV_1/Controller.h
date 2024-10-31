@@ -26,7 +26,5 @@ class Controller {
 
         static void MoveLight(GLFWwindow* window, int direction);
 
-        static void MoveObject(GLFWwindow* window, int direction);
-
         static void RotateObject(GLFWwindow* window, int axis);
 };

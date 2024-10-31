@@ -19,7 +19,9 @@ class FragmentShader
 	public:
 
 		FragmentShader(const char* shader);
+
 		FragmentShader(glm::vec4 color);
+
 		FragmentShader();
 
 		const char* GetShader();
