@@ -63,8 +63,6 @@ void Application::Init()
 	float ratio = width / (float)height;
 	glViewport(0, 0, width, height);
 
-	// Hide cursor
-	glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Init Controller
 	this->controller = new Controller();

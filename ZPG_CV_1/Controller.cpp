@@ -2,6 +2,9 @@
 #include "Application.h"
 #include <cstdio>
 
+bool Controller::mouseRightButtonPressed = false;
+bool Controller::firstMouse = true;
+
 Controller::Controller()
 {
 	
@@ -67,38 +70,50 @@ void Controller::WindowSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void Controller::CursorCallback(GLFWwindow* window, double x, double y) {
-    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    if (mouseRightButtonPressed) {
+        Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 
-    Camera* camera = app->GetSceneMaker()->GetCurrentScene()->GetCamera();
+        Camera* camera = app->GetSceneMaker()->GetCurrentScene()->GetCamera();
 
-    static double lastX = 400, lastY = 300;
-    static bool firstMouse = true;
+        static double lastX = 400, lastY = 300;
 
-    if (firstMouse) {
+        if (firstMouse) {
+            lastX = x;
+            lastY = y;
+
+            firstMouse = false;
+        }
+
+        double offsetX = x - lastX;
+        double offsetY = lastY - y;
+
         lastX = x;
         lastY = y;
 
-        firstMouse = false;
+        float sensitivity = 0.1f;
+
+        offsetX *= sensitivity;
+        offsetY *= sensitivity;
+
+        camera->Rotate(offsetX, offsetY);
     }
-
-    double offsetX = x - lastX;
-    double offsetY = lastY - y;
-
-    lastX = x;
-    lastY = y;
-
-    float sensitivity = 0.1f;
-
-    offsetX *= sensitivity;
-    offsetY *= sensitivity;
-
-    camera->Rotate(offsetX, offsetY);
 }
 
 void Controller::ButtonCallback(GLFWwindow* window, int button, int action, int mode) {
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
-        Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-        app->GetSceneMaker()->SwitchScene();
+    
+    if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+        if (action == GLFW_PRESS) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+			mouseRightButtonPressed = true;
+        }
+        else if (action == GLFW_RELEASE) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+			mouseRightButtonPressed = false;
+
+			firstMouse = true;
+        }
     }
 }
 

@@ -7,6 +7,10 @@
 
 
 class Controller {
+    private:
+		static bool mouseRightButtonPressed;
+        static bool firstMouse;
+
     public:
         Controller();
 
