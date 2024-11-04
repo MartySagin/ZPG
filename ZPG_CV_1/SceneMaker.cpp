@@ -39,7 +39,6 @@ void SceneMaker::CreateSceneTriangle()
 
 	Light* light = new Light(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f, 0.15f);
 
-
 	float triangle[] = {
 		0.0f, 0.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
@@ -50,7 +49,7 @@ void SceneMaker::CreateSceneTriangle()
 	FragmentShader* fragmentShader = new FragmentShader(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
 
 	DrawableObject* triangleObject = new DrawableObject(triangle, sizeof(triangle), GL_TRIANGLES, vertexShader, fragmentShader, camera, light, false);
-	triangleObject->GetTransformation()->AddComponent(new Scale(glm::vec3(20.0f)));
+	triangleObject->GetTransformation()->AddComponent(new Scale(20.0f));
 
 	objects.push_back(triangleObject);
 
@@ -71,27 +70,26 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 	Light* light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f, 0.15f);
 
 	DrawableObject* sphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "PhongShader.txt", camera, light, true);
-	sphereObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
-	sphereObject->GetTransformation()->AddComponent(new Translate(glm::vec3(-3.0f, 0.0f, 0.0f)));
-
+	sphereObject->GetTransformation()->AddComponent(new Scale(0.5f));
+	sphereObject->GetTransformation()->AddComponent(new Translate(-3.0f, 0.0f, 0.0f));
 
 	objects.push_back(sphereObject);
 
 	DrawableObject* sphereObject2 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "PhongShader.txt", camera, light, true);
-	sphereObject2->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
-	sphereObject2->GetTransformation()->AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
+	sphereObject2->GetTransformation()->AddComponent(new Scale(0.5f));
+	sphereObject2->GetTransformation()->AddComponent(new Translate(3.0f, 0.0f, 0.0f));
 
 	objects.push_back(sphereObject2);
 
 	DrawableObject* sphereObject3 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "PhongShader.txt", camera, light, true);
-	sphereObject3->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
-	sphereObject3->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
+	sphereObject3->GetTransformation()->AddComponent(new Scale(0.5f));
+	sphereObject3->GetTransformation()->AddComponent(new Translate(0.0f, 3.0f, 0.0f));
 
 	objects.push_back(sphereObject3);
 
 	DrawableObject* sphereObject4 = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "PhongShader.txt", camera, light, true);
-	sphereObject4->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
-	sphereObject4->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
+	sphereObject4->GetTransformation()->AddComponent(new Scale(0.5f));
+	sphereObject4->GetTransformation()->AddComponent(new Translate(0.0f, -3.0f, 0.0f));
 
 	objects.push_back(sphereObject4);
 
@@ -113,26 +111,26 @@ void SceneMaker::CreateSceneWithMoreModels() {
 	Light* light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.385f, 0.647f, 0.812f), 1.25f, 0.15f);
 
 	DrawableObject* giftObject = new DrawableObject(gift, sizeof(gift), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
-	giftObject->GetTransformation()->AddComponent(new Scale(glm::vec3(1.5f)));
-	giftObject->GetTransformation()->AddComponent(new Translate(glm::vec3(-3.0f, 0.0f, 0.0f)));
+	giftObject->GetTransformation()->AddComponent(new Scale(1.5f));
+	giftObject->GetTransformation()->AddComponent(new Translate(-3.0f, 0.0f, 0.0f));
 
 	objects.push_back(giftObject);
 
 	DrawableObject* suziFlatObject = new DrawableObject(suziFlat, sizeof(suziFlat), GL_TRIANGLES, "VertexShader.txt", "PhongShader.txt", camera, light, true);
-	suziFlatObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
-	suziFlatObject->GetTransformation()->AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
+	suziFlatObject->GetTransformation()->AddComponent(new Scale(0.5f));
+	suziFlatObject->GetTransformation()->AddComponent(new Translate(3.0f, 0.0f, 0.0f));
 
 	objects.push_back(suziFlatObject);
 
 	DrawableObject* suziSmoothObject = new DrawableObject(suziSmooth, sizeof(suziSmooth), GL_TRIANGLES, "VertexShader.txt", "LambertShader.txt", camera, light, true);
-	suziSmoothObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
-	suziSmoothObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
+	suziSmoothObject->GetTransformation()->AddComponent(new Scale(0.5f));
+	suziSmoothObject->GetTransformation()->AddComponent(new Translate(0.0f, 3.0f, 0.0f));
 
 	objects.push_back(suziSmoothObject);
 
 	DrawableObject* sphereObject = new DrawableObject(sphere, sizeof(sphere), GL_TRIANGLES, "VertexShader.txt", "ConstantShader.txt", camera, light, true);
-	sphereObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
-	sphereObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
+	sphereObject->GetTransformation()->AddComponent(new Scale(0.5f));
+	sphereObject->GetTransformation()->AddComponent(new Translate(0.0f, -3.0f, 0.0f));
 
 	objects.push_back(sphereObject);
 
@@ -161,8 +159,8 @@ void SceneMaker::CreateSceneForest()
 
 	//Scene Forest
 	DrawableObject* plainObject = new DrawableObject(plain, sizeof(plain), GL_TRIANGLES, vertexShaderWithNormal, fragmentShaderPlain, camera, light, true);
-	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(25.0f)));
-	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
+	plainObject->GetTransformation()->AddComponent(new Scale(25.0f));
+	plainObject->GetTransformation()->AddComponent(new Translate(0.45f, 0.0f, 0.5f));
 
 	objects.push_back(plainObject);
 
@@ -195,21 +193,21 @@ void SceneMaker::CreateSceneForest()
 			//DrawableObject* treeObject = new DrawableObject(tree, sizeof(tree), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
 			DrawableObject* treeObject = new DrawableObject(treeShader, treeModel);
 
-			treeObject->GetTransformation()->AddComponent(new Scale(glm::vec3(rand() % 100 / 1000.0 + 0.05f)));
-			treeObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos, yPos, zPos)));
+			treeObject->GetTransformation()->AddComponent(new Scale(rand() % 100 / 1000.0 + 0.05f));
+			treeObject->GetTransformation()->AddComponent(new Translate(xPos, yPos, zPos));
 
 			float randomAngleY = rand() % 360;
 			float randomAngleX = rand() % 40 - 20;
 
-			treeObject->GetTransformation()->AddComponent(new Rotate(glm::vec3(randomAngleX, randomAngleY, 0.0f)));
+			treeObject->GetTransformation()->AddComponent(new Rotate(randomAngleX, randomAngleY, 0.0f));
 
 			objects.push_back(treeObject);
 
 			//DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel);
 
-			bushObject->GetTransformation()->AddComponent(new Scale(glm::vec3(rand() % 100 / 500.0 + 0.05f)));
-			bushObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f)));
+			bushObject->GetTransformation()->AddComponent(new Scale(rand() % 100 / 500.0 + 0.05f));
+			bushObject->GetTransformation()->AddComponent(new Translate(xPos - 5, yPos, zPos + spacing * 0.25f));
 
 			objects.push_back(bushObject);
 		}

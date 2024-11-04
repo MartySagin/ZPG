@@ -1,6 +1,6 @@
 #include "Translate.h"
 
-Translate::Translate(glm::vec3 translation) : translation(translation)
+Translate::Translate(float x, float y, float z) : translation(x, y, z)
 {
 }
 

@@ -179,6 +179,15 @@
     <ClInclude Include="Translate.h" />
     <ClInclude Include="VertexShader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="BlinnPhongShader.txt" />
+    <Text Include="ConstantShader.txt" />
+    <Text Include="FragmentColor.txt" />
+    <Text Include="FragmentShaderWithNormal.txt" />
+    <Text Include="LambertShader.txt" />
+    <Text Include="PhongShader.txt" />
+    <Text Include="VertexShader.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

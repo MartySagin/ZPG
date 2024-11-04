@@ -77,6 +77,7 @@ void Controller::CursorCallback(GLFWwindow* window, double x, double y) {
     if (firstMouse) {
         lastX = x;
         lastY = y;
+
         firstMouse = false;
     }
 
@@ -129,10 +130,10 @@ void Controller::RotateObject(GLFWwindow* window, int axis)
     for (auto& object : app->GetSceneMaker()->GetCurrentScene()->GetObjects())
     {
         if (axis == 0) {
-            object->GetTransformation()->AddComponent(new Rotate(glm::vec3(0.0f, 0.0f, 10.0f)));
+            object->GetTransformation()->AddComponent(new Rotate(0.0f, 0.0f, 10.0f));
         }
         else if (axis == 1) {
-            object->GetTransformation()->AddComponent(new Rotate(glm::vec3(0.0f, 10.0f, 0.0f)));
+            object->GetTransformation()->AddComponent(new Rotate(0.0f, 10.0f, 0.0f));
         }
     }
 }

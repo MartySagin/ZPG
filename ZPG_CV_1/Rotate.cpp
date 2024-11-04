@@ -1,7 +1,7 @@
 #include "Rotate.h"
 
 
-Rotate::Rotate(glm::vec3 rotation) : rotation(rotation)
+Rotate::Rotate(float angleX, float angleY, float angleZ) : rotation(angleX, angleY, angleZ)
 {
 }
 

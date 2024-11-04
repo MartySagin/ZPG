@@ -62,8 +62,6 @@ void Camera::Rotate(float deltaX, float deltaY)
     NotifyObservers();
 }
 
-
-
 void Camera::MoveForward(float deltaTime)
 {
     float velocity = this->movementSpeed * deltaTime;
@@ -111,8 +109,6 @@ void Camera::MoveRight(float deltaTime)
 
 	NotifyObservers();
 }
-
-
 
 void Camera::UpdateViewMatrix()
 {

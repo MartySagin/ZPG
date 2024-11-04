@@ -11,7 +11,7 @@ class Scale : public TransformationComponent
         glm::vec3 scaling;
 
     public:
-        Scale(glm::vec3 scaling);
+        Scale(float scaleValue);
 
         glm::mat4 Apply(glm::mat4 model) override;
 };
