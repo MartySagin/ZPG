@@ -1,0 +1,3 @@
+﻿
+
+- Nějak pořešit resize okna, ať to pak správně vykresluje 
