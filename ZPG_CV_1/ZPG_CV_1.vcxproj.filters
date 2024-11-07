@@ -156,4 +156,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="BlinnPhongShader.txt" />
+    <Text Include="ConstantShader.txt" />
+    <Text Include="FragmentColor.txt" />
+    <Text Include="FragmentShaderWithNormal.txt" />
+    <Text Include="LambertShader.txt" />
+    <Text Include="PhongShader.txt" />
+    <Text Include="VertexShader.txt" />
+  </ItemGroup>
 </Project>
