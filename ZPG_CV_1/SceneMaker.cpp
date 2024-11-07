@@ -29,6 +29,11 @@ Scene* SceneMaker::GetCurrentScene()
 	return this->scenes[this->currentSceneIndex];
 }
 
+vector<Scene*> SceneMaker::GetAllScenes()
+{
+	return this->scenes;
+}
+
 void SceneMaker::CreateSceneTriangle()
 {
 	vector<DrawableObject*> objects;

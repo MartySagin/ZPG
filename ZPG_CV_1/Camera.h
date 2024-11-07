@@ -56,6 +56,8 @@ public:
     void UpdateViewMatrix();    
     void UpdateProjectionMatrix(); 
 
+	void SetAspectRatio(float ratio);
+
     void AddObserver(Observer* observer) override;
 
     void RemoveObserver(Observer* observer) override;

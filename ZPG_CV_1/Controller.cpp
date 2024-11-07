@@ -67,6 +67,14 @@ void Controller::WindowSizeCallback(GLFWwindow* window, int width, int height) {
     printf("resize %d, %d \n", width, height);
 
     glViewport(0, 0, width, height);
+
+    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+
+	for (auto& scene : app->GetSceneMaker()->GetAllScenes()) {
+		if (scene->GetCamera()) {
+			scene->GetCamera()->SetAspectRatio((float)width / (float)height);
+		}
+	}
 }
 
 void Controller::CursorCallback(GLFWwindow* window, double x, double y) {

@@ -120,6 +120,15 @@ void Camera::UpdateProjectionMatrix()
     this->projectionMatrix = glm::perspective(glm::radians(this->fov), this->aspectRatio, this->zNear, this->zFar);
 }
 
+void Camera::SetAspectRatio(float ratio)
+{
+	this->aspectRatio = ratio;
+
+    UpdateProjectionMatrix();
+
+	NotifyObservers();
+}
+
 void Camera::AddObserver(Observer* observer) {
     this->observers.push_back(observer);
 }

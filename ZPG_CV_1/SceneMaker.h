@@ -38,6 +38,8 @@ class SceneMaker
 
 		Scene* GetCurrentScene();
 
+		vector<Scene*> GetAllScenes();
+
 		void CreateSceneTriangle();
 
 		void CreateSceneFourSpheresLight();
