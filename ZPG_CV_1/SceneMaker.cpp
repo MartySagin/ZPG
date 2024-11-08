@@ -200,7 +200,7 @@ void SceneMaker::CreateSceneForest()
 
 	objects.push_back(plainObject);
 
-	srand(time(NULL));
+	srand((unsigned int)(time(NULL)));
 
 	const int gridRows = 30;
 	const int gridCols = 30;
@@ -229,11 +229,11 @@ void SceneMaker::CreateSceneForest()
 			//DrawableObject* treeObject = new DrawableObject(tree, sizeof(tree), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
 			DrawableObject* treeObject = new DrawableObject(treeShader, treeModel, objectColor);
 
-			treeObject->GetTransformation()->AddComponent(new Scale(rand() % 100 / 1000.0 + 0.05f));
+			treeObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 1000.0 + 0.05f)));
 			treeObject->GetTransformation()->AddComponent(new Translate(xPos, yPos, zPos));
 
-			float randomAngleY = rand() % 360;
-			float randomAngleX = rand() % 40 - 20;
+			float randomAngleY = (float)(rand() % 360);
+			float randomAngleX = (float)(rand() % 40 - 20);
 
 			treeObject->GetTransformation()->AddComponent(new Rotate(randomAngleX, randomAngleY, 0.0f));
 
@@ -242,7 +242,7 @@ void SceneMaker::CreateSceneForest()
 			//DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel, objectColor);
 
-			bushObject->GetTransformation()->AddComponent(new Scale(rand() % 100 / 500.0 + 0.05f));
+			bushObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 500.0 + 0.05f)));
 			bushObject->GetTransformation()->AddComponent(new Translate(xPos - 5, yPos, zPos + spacing * 0.25f));
 
 			objects.push_back(bushObject);
