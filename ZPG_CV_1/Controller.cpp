@@ -15,7 +15,7 @@ void Controller::ErrorCallback(int error, const char* description) {
 }
 
 void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    Application* app = (Application*) (glfwGetWindowUserPointer(window));
 
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         if (key == GLFW_KEY_LEFT) MoveLight(window,0);
@@ -69,7 +69,7 @@ void Controller::WindowSizeCallback(GLFWwindow* window, int width, int height) {
 
     glViewport(0, 0, width, height);
 
-    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    Application* app = (Application*) (glfwGetWindowUserPointer(window));
 
 	for (auto& scene : app->GetSceneMaker()->GetAllScenes()) {
 		if (scene->GetCamera()) {
@@ -80,7 +80,7 @@ void Controller::WindowSizeCallback(GLFWwindow* window, int width, int height) {
 
 void Controller::CursorCallback(GLFWwindow* window, double x, double y) {
     if (mouseRightButtonPressed) {
-        Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+        Application* app = (Application*) (glfwGetWindowUserPointer(window));
 
         Camera* camera = app->GetSceneMaker()->GetCurrentScene()->GetCamera();
 
@@ -128,7 +128,7 @@ void Controller::ButtonCallback(GLFWwindow* window, int button, int action, int 
 
 void Controller::MoveLight(GLFWwindow* window, int direction)
 {
-    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    Application* app = (Application*) (glfwGetWindowUserPointer(window));
 
     for (auto& light : app->GetSceneMaker()->GetCurrentScene()->GetLights()) {
 
@@ -151,7 +151,7 @@ void Controller::MoveLight(GLFWwindow* window, int direction)
 
 void Controller::RotateObject(GLFWwindow* window, int axis)
 {
-    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    Application* app = (Application*) (glfwGetWindowUserPointer(window));
 
     for (auto& object : app->GetSceneMaker()->GetCurrentScene()->GetObjects())
     {
