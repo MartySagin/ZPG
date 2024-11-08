@@ -1,14 +1,17 @@
 #include "Scene.h"
 
-void Scene::Init(vector<DrawableObject*> drawableObjects, Camera* camera, Light* light)
+void Scene::Init(vector<DrawableObject*> drawableObjects, Camera* camera, vector<Light*> lights)
 {
 	this->camera = camera;
 
 	this->objects = drawableObjects;
 
-	this->light = light;
+	this->lights = lights;
 
-	this->light->NotifyObservers();
+	for (auto& light : this->lights)
+	{
+		light->NotifyObservers();
+	}
 
 	this->camera->NotifyObservers();
 }
@@ -32,9 +35,9 @@ Camera* Scene::GetCamera()
     return this->camera;
 }
 
-Light* Scene::GetLight()
+vector<Light*> Scene::GetLights()
 {
-	return this->light;
+	return this->lights;
 }
 
 vector<DrawableObject*> Scene::GetObjects()

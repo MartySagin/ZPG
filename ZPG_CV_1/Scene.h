@@ -14,10 +14,10 @@ class Scene
 
 	    Camera* camera;
 
-	    Light* light;
+	    vector<Light*> lights;
 
     public:
-        void Init(vector<DrawableObject*> drawableObjects, Camera* camera, Light* light);  
+        void Init(vector<DrawableObject*> drawableObjects, Camera* camera, vector<Light*> lights);  
 
         void Render();  
 
@@ -25,7 +25,7 @@ class Scene
 
         Camera* GetCamera();
 
-        Light* GetLight();
+        vector<Light*> GetLights();
 
 		vector<DrawableObject*> GetObjects();
 

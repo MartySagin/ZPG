@@ -24,6 +24,7 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
         else if (key == GLFW_KEY_DOWN) MoveLight(window, 3);
         else if (key == GLFW_KEY_R) RotateObject(window, 0);
         else if (key == GLFW_KEY_T) RotateObject(window, 1);
+		else if (key == GLFW_KEY_Y) RotateObject(window, 2);
         else if (key == GLFW_KEY_SPACE) app->GetSceneMaker()->SwitchScene();
     }
 
@@ -129,19 +130,21 @@ void Controller::MoveLight(GLFWwindow* window, int direction)
 {
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 
-    Light* light = app->GetSceneMaker()->GetCurrentScene()->GetLight();
+    for (auto& light : app->GetSceneMaker()->GetCurrentScene()->GetLights()) {
 
-    if (direction == 0) {
-        light->SetPosition(light->GetPosition() + glm::vec3(-0.1f, 0.0f, 0.0f));
-    }
-    else if (direction == 1) {
-        light->SetPosition(light->GetPosition() + glm::vec3(0.1f, 0.0f, 0.0f));
-    }
-    else if (direction == 2) {
-        light->SetPosition(light->GetPosition() + glm::vec3(0.0f, 0.1f, 0.0f));
-    }
-    else if (direction == 3) {
-        light->SetPosition(light->GetPosition() + glm::vec3(0.0f, -0.1f, 0.0f));
+        if (direction == 0) {
+            light->SetPosition(light->GetPosition() + glm::vec3(-0.1f, 0.0f, 0.0f));
+        }
+        else if (direction == 1) {
+            light->SetPosition(light->GetPosition() + glm::vec3(0.1f, 0.0f, 0.0f));
+        }
+        else if (direction == 2) {
+            light->SetPosition(light->GetPosition() + glm::vec3(0.0f, 0.1f, 0.0f));
+        }
+        else if (direction == 3) {
+            light->SetPosition(light->GetPosition() + glm::vec3(0.0f, -0.1f, 0.0f));
+        }
+
     }
     
 }
@@ -153,10 +156,13 @@ void Controller::RotateObject(GLFWwindow* window, int axis)
     for (auto& object : app->GetSceneMaker()->GetCurrentScene()->GetObjects())
     {
         if (axis == 0) {
-            object->GetTransformation()->AddComponent(new Rotate(0.0f, 0.0f, 10.0f));
+            object->GetTransformation()->AddComponent(new Rotate(0.0f, 0.0f, 5.0f));
         }
         else if (axis == 1) {
-            object->GetTransformation()->AddComponent(new Rotate(0.0f, 10.0f, 0.0f));
+            object->GetTransformation()->AddComponent(new Rotate(0.0f, 5.0f, 0.0f));
         }
+		else if (axis == 2) {
+			object->GetTransformation()->AddComponent(new Rotate(5.0f, 0.0f, 0.0f));
+		}
     }
 }

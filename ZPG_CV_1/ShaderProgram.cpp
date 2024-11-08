@@ -1,6 +1,7 @@
 #include "ShaderProgram.h"
 
-ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, Light* light)
+
+ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, vector<Light*> lights)
 {
 	this->shader_id = 0;
 
@@ -12,9 +13,11 @@ ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* ca
 
 	camera->AddObserver(this);
 
-	this->light = light;
+	this->lights = lights;
 
-	light->AddObserver(this);
+	for (int i = 0; i < lights.size(); i++) {
+		lights[i]->AddObserver(this);
+	}
 
 }
 
@@ -94,6 +97,17 @@ void ShaderProgram::SetFloatUniform(const char* uniformName, float value)
 	glUniform1f(idModelTransform, value);
 }
 
+void ShaderProgram::SetIntUniform(const char* uniformName, int value)
+{
+	GLint idModelTransform = glGetUniformLocation(this->shader_id, uniformName);
+
+	if (idModelTransform == -1) {
+		return;
+	}
+
+	glUniform1i(idModelTransform, value);
+}
+
 void ShaderProgram::CheckProgramLinking(GLuint program)
 {
 
@@ -160,16 +174,21 @@ void ShaderProgram::UpdateFromSubject(Subject* subject)
 		SetVec3Uniform("viewPosition", camera->GetPosition());
 	}
 	else if (typeid(*subject) == typeid(Light)) {
-		
-		SetVec3Uniform("lightPosition", light->GetPosition());
 
-		SetVec3Uniform("lightColor", light->GetColor());
+		SetIntUniform("numberOfLights", lights.size());
 
-		SetFloatUniform("lightIntensity", light->GetIntensity());
+		for (int i = 0; i < lights.size(); i++) {
+			string prefix = "lights[" + std::to_string(i) + "].";
 
-		SetVec3Uniform("objectColor", light->GetObjectColor());
+			SetVec3Uniform((prefix + "position").c_str(), lights[i]->GetPosition());
 
-		SetFloatUniform("ambientStrength", light->GetAmbientStrength());
+			SetVec3Uniform((prefix + "color").c_str(), lights[i]->GetColor());
+
+			SetFloatUniform((prefix + "intensity").c_str(), lights[i]->GetIntensity());
+
+			SetFloatUniform((prefix + "ambientStrength").c_str(), lights[i]->GetAmbientStrength());
+		}
+
 	}
 
 }

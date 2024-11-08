@@ -12,8 +12,6 @@ class Light : public Subject
 
         glm::vec3 color;
 
-        glm::vec3 objectColor;
-
         float intensity;
 
         float ambientStrength;
@@ -21,13 +19,11 @@ class Light : public Subject
 		vector<Observer*> observers;
 
     public:
-        Light(glm::vec3 position, glm::vec3 color, glm::vec3 objectColor, float intensity, float ambientStrength);
+        Light(glm::vec3 position, glm::vec3 color, float intensity, float ambientStrength);
 
         glm::vec3 GetPosition();
 
         glm::vec3 GetColor();
-
-		glm::vec3 GetObjectColor();
 
         float GetIntensity();
 

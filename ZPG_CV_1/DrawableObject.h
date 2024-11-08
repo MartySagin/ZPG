@@ -15,15 +15,17 @@ class DrawableObject
 
         Transformation transform;
 
+        glm::vec3 objectColor;
+
         bool hasNormal;
 
     public:
 
-        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, Light* light, bool withNormal);
+        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);
 
-        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, const char* vertexShader, const char* fragmentShader, Camera* camera, Light* light, bool withNormal);
+        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, const char* vertexShader, const char* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);
 
-	    DrawableObject(ShaderProgram* shaderProgram, Model* model);
+	    DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor);
 
 	    Transformation* GetTransformation();
 

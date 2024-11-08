@@ -31,12 +31,12 @@ class ShaderProgram : Observer
 
 		Camera* camera;
 
-		Light* light;
+		vector<Light*> lights;
 
 		ShaderLoader* shaderLoader;
 
 	public:
-		ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, Light* light);
+		ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, vector<Light*> lights);
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
 
@@ -49,6 +49,8 @@ class ShaderProgram : Observer
 		void SetVec3Uniform(const char* uniformName, glm::vec3 vector);
 
 		void SetFloatUniform(const char* uniformName, float value);
+
+		void SetIntUniform(const char* uniformName, int value);
 
 		void CheckProgramLinking(GLuint program);
 
