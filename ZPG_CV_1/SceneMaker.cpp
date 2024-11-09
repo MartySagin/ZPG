@@ -246,6 +246,7 @@ void SceneMaker::CreateSceneForest()
 					treeObject->GetTransformation()->AddComponent(new Rotate(0.0f, 10.0f * deltaTime, 0.0f));
 
 				});
+
 			}
 
 			objects.push_back(treeObject);
