@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="..\..\..\..\Desktop\Models\suzi_flat.h" />
     <ClInclude Include="..\..\..\..\Desktop\Models\suzi_smooth.h" />
     <ClInclude Include="..\..\..\..\Desktop\Models\tree.h" />
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Controller.h" />

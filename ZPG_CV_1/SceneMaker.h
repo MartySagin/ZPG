@@ -19,6 +19,8 @@
 #include "bushes.h"
 #include "sphere.h"
 #include "tree.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/random.hpp>
 
 class SceneMaker
 {

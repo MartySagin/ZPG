@@ -24,10 +24,19 @@ void Scene::Render()
     }
 }
 
+void Scene::Update(float deltaTime)
+{
+	this->animation.Update(deltaTime);
+}
 
 void Scene::AddObject(DrawableObject* object)
 {
 	this->objects.push_back(object);
+}
+
+void Scene::AddAnimation(function<void(float)> animation)
+{
+	this->animation.AddAnimation(animation);
 }
 
 Camera* Scene::GetCamera()

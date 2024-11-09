@@ -17,8 +17,6 @@ class DrawableObject
 
         glm::vec3 objectColor;
 
-        bool hasNormal;
-
     public:
 
         DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);

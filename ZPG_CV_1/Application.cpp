@@ -25,25 +25,8 @@ void Application::Init()
 
 	// start GLEW extension handler
 	glewExperimental = GL_TRUE;
+
 	glewInit();
-
-	glfwSetErrorCallback(Controller::ErrorCallback);
-
-	if (!glfwInit()) {
-		fprintf(stderr, "ERROR: could not start GLFW3\n");
-		exit(EXIT_FAILURE);
-	}
-
-	this->window = glfwCreateWindow(1920, 1080, "ZPG", NULL, NULL);
-	if (!this->window) {
-		glfwTerminate();
-		exit(EXIT_FAILURE);
-	}
-
-	glfwMakeContextCurrent(this->window);
-	glfwSwapInterval(1);
-	glfwSetWindowUserPointer(this->window, this);
-
 
 	// get version info
 	printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
@@ -112,6 +95,8 @@ void Application::Run()
 	while (!glfwWindowShouldClose(this->window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		this->sceneMaker->GetCurrentScene()->Update(0.016f);
 
 		this->sceneMaker->GetCurrentScene()->Render();
 

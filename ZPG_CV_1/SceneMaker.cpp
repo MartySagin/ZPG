@@ -1,4 +1,4 @@
-#include "SceneMaker.h"
+﻿#include "SceneMaker.h"
 
 SceneMaker::SceneMaker(float ratio)
 {
@@ -174,10 +174,10 @@ void SceneMaker::CreateSceneForest()
 
 	vector<Light*> lights;
 
-	Light* light = new Light(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.15f);
-	Light* light2 = new Light(glm::vec3(0.0f, 5.0f, 15.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.15f);
-	Light* light3 = new Light(glm::vec3(15.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.15f);
-	Light* light4 = new Light(glm::vec3(15.0f, 5.0f, 15.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.15f);
+	Light* light = new Light(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f);
+	Light* light2 = new Light(glm::vec3(0.0f, 5.0f, 15.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f);
+	Light* light3 = new Light(glm::vec3(15.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f);
+	Light* light4 = new Light(glm::vec3(15.0f, 5.0f, 15.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f);
 
 
 	lights.push_back(light);
@@ -194,7 +194,7 @@ void SceneMaker::CreateSceneForest()
 	vertexShaderWithNormal->CreateNewShaderWithNormal();
 
 	//Scene Forest
-	DrawableObject* plainObject = new DrawableObject(plain, sizeof(plain), GL_TRIANGLES, objectColor, vertexShaderWithNormal, fragmentShaderPlain, camera, lights, true);
+	DrawableObject* plainObject = new DrawableObject(plain, sizeof(plain), GL_TRIANGLES, glm::vec3(0.0f, 1.0f, 0.0f), "VertexShader.txt", "BlinnPhongShader.txt", camera, lights, true);
 	plainObject->GetTransformation()->AddComponent(new Scale(25.0f));
 	plainObject->GetTransformation()->AddComponent(new Translate(0.45f, 0.0f, 0.5f));
 
@@ -220,6 +220,8 @@ void SceneMaker::CreateSceneForest()
 	Model* bushModel = new Model();
 	bushModel->GenerateModelWithNormal(bushes, sizeof(bushes));
 
+	Scene* scene = new Scene();
+
 	for (int row = 0; row < gridRows; row++) {
 		for (int col = 0; col < gridCols; col++) {
 			float xPos = col * spacing;
@@ -237,6 +239,15 @@ void SceneMaker::CreateSceneForest()
 
 			treeObject->GetTransformation()->AddComponent(new Rotate(randomAngleX, randomAngleY, 0.0f));
 
+			if (rand() % 100 < 30) { 
+
+				scene->AddAnimation([treeObject](float deltaTime) {
+
+					treeObject->GetTransformation()->AddComponent(new Rotate(0.0f, 10.0f * deltaTime, 0.0f));
+
+				});
+			}
+
 			objects.push_back(treeObject);
 
 			//DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
@@ -249,7 +260,27 @@ void SceneMaker::CreateSceneForest()
 		}
 	}
 
-	Scene* scene = new Scene();
+
+
+	scene->AddAnimation([lights](float deltaTime) {
+		static float time = 0.0f;
+		time += deltaTime; 
+
+		for (auto& light : lights) {
+			
+			float angleOffset = glm::linearRand(0.0f, 6.28318f);  
+
+			float speed = 5.0f;      
+			float radius = 2.0f;   
+
+			float x = radius * cos(time * speed + angleOffset);
+			float z = radius * sin(time * speed + angleOffset);
+
+			glm::vec3 newPosition = light->GetPosition() + glm::vec3(x, 0.0f, z) * deltaTime;
+
+			light->SetPosition(newPosition);
+		}
+	});
 
 	scene->Init(objects, camera, lights);
 
