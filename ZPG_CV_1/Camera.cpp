@@ -24,6 +24,11 @@ glm::vec3 Camera::GetPosition()
     return this->position;
 }
 
+glm::vec3 Camera::GetTarget()
+{
+    return this->target;
+}
+
 void Camera::IncreaseMovementSpeed(float movementSpeed)
 {
 	this->movementSpeed += movementSpeed;

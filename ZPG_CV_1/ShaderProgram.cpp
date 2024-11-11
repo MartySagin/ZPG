@@ -1,4 +1,4 @@
-#include "ShaderProgram.h"
+﻿#include "ShaderProgram.h"
 
 
 ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, vector<Light*> lights)
@@ -174,21 +174,37 @@ void ShaderProgram::UpdateFromSubject(Subject* subject)
 		SetMat4Uniform("projectionMatrix", this->camera->GetProjectionMatrix());
 
 		SetVec3Uniform("viewPosition", this->camera->GetPosition());
+
+		for (int i = 0; i < this->lights.size(); i++) {
+			if (this->lights[i]->GetType() == 2) {
+				SetVec3Uniform(("lights[" + to_string(i) + "].position").c_str(), this->camera->GetPosition());
+
+				SetVec3Uniform(("lights[" + to_string(i) + "].direction").c_str(), this->camera->GetTarget());
+			}
+		}
 	}
 	else if (typeid(*subject) == typeid(Light)) {
 
 		SetIntUniform("numberOfLights", this->lights.size());
 
+		Light* light = (Light*)subject;
+
+		int index = light->GetIndex();
+
 		for (int i = 0; i < this->lights.size(); i++) {
 			string prefix = "lights[" + to_string(i) + "].";
 
-			SetVec3Uniform((prefix + "position").c_str(), this->lights[i]->GetPosition());
+			SetVec3Uniform((prefix + "position").c_str(), this->lights[index]->GetPosition());
 
-			SetVec3Uniform((prefix + "color").c_str(), this->lights[i]->GetColor());
+			SetVec3Uniform((prefix + "color").c_str(), this->lights[index]->GetColor());
 
-			SetFloatUniform((prefix + "intensity").c_str(), this->lights[i]->GetIntensity());
+			SetFloatUniform((prefix + "intensity").c_str(), this->lights[index]->GetIntensity());
 
-			SetFloatUniform((prefix + "ambientStrength").c_str(), this->lights[i]->GetAmbientStrength());
+			SetFloatUniform((prefix + "ambientStrength").c_str(), this->lights[index]->GetAmbientStrength());
+
+			SetIntUniform((prefix + "type").c_str(), this->lights[index]->GetType());
+
+			SetVec3Uniform((prefix + "direction").c_str(), this->lights[index]->GetDirection());
 		}
 
 	}

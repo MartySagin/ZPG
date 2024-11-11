@@ -40,6 +40,8 @@ public:
 
 	glm::vec3 GetPosition();
 
+    glm::vec3 GetTarget();
+
 	void IncreaseMovementSpeed(float movementSpeed);
 	void DecreaseMovementSpeed(float movementSpeed);
 

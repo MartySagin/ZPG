@@ -44,7 +44,7 @@ void SceneMaker::CreateSceneTriangle()
 
 	vector<Light*> lights;
 
-	Light* light = new Light(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f, 0.15f);
+	Light* light = new Light(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 1);
 
 	lights.push_back(light);
 
@@ -80,7 +80,7 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 
 	vector<Light*> lights;
 
-	Light* light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f, 0.15f);
+	Light* light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 1);
 
 	lights.push_back(light);
 
@@ -127,7 +127,7 @@ void SceneMaker::CreateSceneWithMoreModels() {
 
 	vector<Light*> lights;	
 
-	Light* light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f, 0.15f);
+	Light* light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 1);
 
 	lights.push_back(light);
 
@@ -174,16 +174,12 @@ void SceneMaker::CreateSceneForest()
 
 	vector<Light*> lights;
 
-	Light* light = new Light(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f);
-	Light* light2 = new Light(glm::vec3(0.0f, 5.0f, 15.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f);
-	Light* light3 = new Light(glm::vec3(15.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f);
-	Light* light4 = new Light(glm::vec3(15.0f, 5.0f, 15.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f);
-
-
+	Light* light = new Light(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, 0.0f, 0.0f), 2);
+	
 	lights.push_back(light);
-	lights.push_back(light2);
-	lights.push_back(light3);
-	lights.push_back(light4);
+	
+	light->SetIndex(lights.size() - 1);
+
 
 	glm::vec3 objectColor = glm::vec3(0.385f, 0.647f, 0.812f);
 
@@ -243,7 +239,7 @@ void SceneMaker::CreateSceneForest()
 
 				scene->AddAnimation([treeObject](float deltaTime) {
 
-					treeObject->GetTransformation()->AddComponent(new Rotate(0.0f, 10.0f * deltaTime, 0.0f));
+					treeObject->GetTransformation()->AddComponent(new Rotate(0.0f, 20.0f * deltaTime, 0.0f));
 
 				});
 
@@ -261,27 +257,6 @@ void SceneMaker::CreateSceneForest()
 		}
 	}
 
-
-
-	scene->AddAnimation([lights](float deltaTime) {
-		static float time = 0.0f;
-		time += deltaTime; 
-
-		for (auto& light : lights) {
-			
-			float angleOffset = glm::linearRand(0.0f, 6.28318f);  
-
-			float speed = 5.0f;      
-			float radius = 2.0f;   
-
-			float x = radius * cos(time * speed + angleOffset);
-			float z = radius * sin(time * speed + angleOffset);
-
-			glm::vec3 newPosition = light->GetPosition() + glm::vec3(x, 0.0f, z) * deltaTime;
-
-			light->SetPosition(newPosition);
-		}
-	});
 
 	scene->Init(objects, camera, lights);
 
