@@ -3,8 +3,8 @@
 
 
 
-DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, const char* vertexShader, const char* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal)
-	: shaderProgram(drawMode, 0, withNormal == true ? vertexSize / sizeof(float) / 6 : vertexSize / sizeof(float) / 3, camera, lights)
+DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, const char* vertexShader, const char* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal)
+	: shaderProgram(drawMode, 0, withNormal == true ? vertexSize / sizeof(float) / 6 : vertexSize / sizeof(float) / 3, camera, lights), material(*material)
 {
 
     if (withNormal)
@@ -20,8 +20,8 @@ DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLe
 
 }
 
-DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal)
-	: shaderProgram(drawMode, 0, withNormal == true ? vertexSize / sizeof(float) / 6 : vertexSize / sizeof(float) / 3, camera, lights)
+DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal)
+	: shaderProgram(drawMode, 0, withNormal == true ? vertexSize / sizeof(float) / 6 : vertexSize / sizeof(float) / 3, camera, lights), material(*material)
 {
 
 	if (withNormal)
@@ -37,8 +37,8 @@ DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLe
 
 }
 
-DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor)
-	: shaderProgram(*shaderProgram), model(*model)
+DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor, Material* material)
+	: shaderProgram(*shaderProgram), model(*model), material(*material)
 {
 	this->transform = Transformation();
 
@@ -60,11 +60,19 @@ void DrawableObject::Draw()
 
     //this->shaderProgram.SetMat3Uniform("normalMatrix", glm::transpose(glm::inverse(glm::mat3(this->transform.GetModelMatrix()))));
 
+	this->shaderProgram.SetFloatUniform("material.ra", this->material.GetAmbientCoefficient());
+
+	this->shaderProgram.SetFloatUniform("material.rd", this->material.GetDiffuseCoefficient());
+
+	this->shaderProgram.SetFloatUniform("material.rs", this->material.GetSpecularCoefficient());
+
     this->model.BindVAO();
 
     this->shaderProgram.Draw();
 
     this->model.UnbindVAO();
+
+	this->shaderProgram.DisableProgram();
 }
 
 

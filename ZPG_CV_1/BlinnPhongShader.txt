@@ -1,14 +1,24 @@
 ﻿#version 330 core
 
 #define MAX_LIGHTS 4
+#define OFF_LIGHT 0
+#define POINT_LIGHT 1
+#define SPOT_LIGHT 2
+#define DIRECTIONAL_LIGHT 3
 
 struct Light {
     vec3 position;
     vec3 color;
     float intensity;
     float ambientStrength;
-    vec3 direction; // Směr světla pro reflektorové světlo
-    int type;       // Typ světla (0: vypnuté, 1: bodové světlo, 2: reflektorové světlo)
+    vec3 direction; 
+    int type;       // Typ světla (OFF_LIGHT, POINT_LIGHT, SPOT_LIGHT, DIRECTIONAL_LIGHT)
+};
+
+struct Material {
+    float ra;
+    float rd;
+    float rs;
 };
 
 in vec3 FragPos;
@@ -16,6 +26,7 @@ in vec3 Normal;
 out vec4 fragColor;
 
 uniform Light lights[MAX_LIGHTS];
+uniform Material material;
 uniform int numberOfLights;
 uniform vec3 viewPosition;
 uniform vec3 objectColor;
@@ -33,16 +44,30 @@ void main() {
 
     for (int i = 0; i < numberOfLights; i++) {
         
-        if (lights[i].type == 0) {
+        if (lights[i].type == OFF_LIGHT) {
             continue;
         }
 
-        vec3 lightDir = normalize(lights[i].position - FragPos);
+        vec3 lightDir;
+        float attenuation = 1.0;
 
-        vec3 ambient = lights[i].ambientStrength * lights[i].color;
+        if (lights[i].type == DIRECTIONAL_LIGHT) {
+            
+            lightDir = normalize(-lights[i].direction);
+
+            attenuation = 1.0; 
+        } else {
+           
+            lightDir = normalize(lights[i].position - FragPos);
+            
+            float distance = length(lights[i].position - FragPos);
+            attenuation = 1.0 / (constant + linear * distance + quadratic * (distance * distance));
+        }
+
+        vec3 ambient = material.ra * lights[i].ambientStrength * lights[i].color;
 
         float diff = max(dot(norm, lightDir), 0.0);
-        vec3 diffuse = diff * lights[i].color * lights[i].intensity;
+        vec3 diffuse = material.rd * diff * lights[i].color * lights[i].intensity;
 
         vec3 specular = vec3(0.0);
 
@@ -53,13 +78,10 @@ void main() {
 
             float spec = pow(max(dot(norm, halfwayDir), 0.0), 32);
 
-            specular = spec * lights[i].color * lights[i].intensity;
+            specular = material.rs * spec * lights[i].color * lights[i].intensity;
         }
 
-        float distance = length(lights[i].position - FragPos);
-        float attenuation = 1.0 / (constant + linear * distance + quadratic * (distance * distance));
-
-        if (lights[i].type == 2) { 
+        if (lights[i].type == SPOT_LIGHT) { 
             float theta = dot(lightDir, normalize(-lights[i].direction));
             float epsilon = cutOff - outerCutOff;
             float intensity = clamp((theta - outerCutOff) / epsilon, 0.0, 1.0);
@@ -70,6 +92,7 @@ void main() {
         }
 
         vec3 lightEffect = (ambient + diffuse + specular) * attenuation;
+
         result += lightEffect;
     }
 

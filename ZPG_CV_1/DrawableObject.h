@@ -5,11 +5,15 @@
 #include "ShaderProgram.h"
 #include "VertexShader.h"
 #include "FragmentShader.h"
+#include "Material.h"
 
 class DrawableObject
 {
     private:
+
         Model model;
+
+		Material material;
 
         ShaderProgram shaderProgram;
 
@@ -19,11 +23,11 @@ class DrawableObject
 
     public:
 
-        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);
+        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);
 
-        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, const char* vertexShader, const char* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);
+        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, const char* vertexShader, const char* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);
 
-	    DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor);
+	    DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor, Material* material);
 
 	    Transformation* GetTransformation();
 

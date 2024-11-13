@@ -77,7 +77,7 @@ void Application::Init()
 	this->sceneMaker->CreateSceneFourSpheresLight();
 
 	//Init Scene 4
-	this->sceneMaker->CreateSceneWithMoreModels();
+	this->sceneMaker->CreateSceneForestDark();
 
 	
 }

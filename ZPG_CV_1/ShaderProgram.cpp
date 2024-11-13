@@ -158,6 +158,11 @@ void ShaderProgram::UseProgram()
 	glUseProgram(this->shader_id);
 }
 
+void ShaderProgram::DisableProgram()
+{
+	glUseProgram(0);
+}
+
 void ShaderProgram::Draw()
 {
 	glDrawArrays(this->mode, this->first, this->count);
@@ -176,10 +181,13 @@ void ShaderProgram::UpdateFromSubject(Subject* subject)
 		SetVec3Uniform("viewPosition", this->camera->GetPosition());
 
 		for (int i = 0; i < this->lights.size(); i++) {
+			
 			if (this->lights[i]->GetType() == 2) {
 				SetVec3Uniform(("lights[" + to_string(i) + "].position").c_str(), this->camera->GetPosition());
 
 				SetVec3Uniform(("lights[" + to_string(i) + "].direction").c_str(), this->camera->GetTarget());
+
+				break;
 			}
 		}
 	}
@@ -191,21 +199,20 @@ void ShaderProgram::UpdateFromSubject(Subject* subject)
 
 		int index = light->GetIndex();
 
-		for (int i = 0; i < this->lights.size(); i++) {
-			string prefix = "lights[" + to_string(i) + "].";
+		string prefix = "lights[" + to_string(index) + "].";
 
-			SetVec3Uniform((prefix + "position").c_str(), this->lights[index]->GetPosition());
+		SetVec3Uniform((prefix + "position").c_str(), this->lights[index]->GetPosition());
 
-			SetVec3Uniform((prefix + "color").c_str(), this->lights[index]->GetColor());
+		SetVec3Uniform((prefix + "color").c_str(), this->lights[index]->GetColor());
 
-			SetFloatUniform((prefix + "intensity").c_str(), this->lights[index]->GetIntensity());
+		SetFloatUniform((prefix + "intensity").c_str(), this->lights[index]->GetIntensity());
 
-			SetFloatUniform((prefix + "ambientStrength").c_str(), this->lights[index]->GetAmbientStrength());
+		SetFloatUniform((prefix + "ambientStrength").c_str(), this->lights[index]->GetAmbientStrength());
 
-			SetIntUniform((prefix + "type").c_str(), this->lights[index]->GetType());
+		SetIntUniform((prefix + "type").c_str(), this->lights[index]->GetType());
 
-			SetVec3Uniform((prefix + "direction").c_str(), this->lights[index]->GetDirection());
-		}
+		SetVec3Uniform((prefix + "direction").c_str(), this->lights[index]->GetDirection());
+		
 
 	}
 

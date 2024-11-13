@@ -49,5 +49,7 @@ class SceneMaker
 		void CreateSceneWithMoreModels();
 
 		void CreateSceneForest();
+
+		void CreateSceneForestDark();
 };
 
