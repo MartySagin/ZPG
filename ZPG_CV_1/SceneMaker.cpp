@@ -103,7 +103,7 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 
 	vector<Light*> lights;
 
-	Light* light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.25f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 1.0f), 1.25f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 
 	lights.push_back(light);
 
@@ -262,10 +262,10 @@ void SceneMaker::CreateSceneForest()
 
 	vector<Light*> lights;
 
-	Light* light = new Light(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
-	Light* light2 = new Light(glm::vec3(0.0f, 5.0f, 15.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
-	Light* light3 = new Light(glm::vec3(15.0f, 5.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
-	Light* light4 = new Light(glm::vec3(15.0f, 5.0f, 15.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.5f, 0.15f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light = new Light(glm::vec3(0.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 5.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light2 = new Light(glm::vec3(0.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 5.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light3 = new Light(glm::vec3(15.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 5.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light4 = new Light(glm::vec3(15.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 5.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 
 	lights.push_back(light);
 
@@ -297,15 +297,15 @@ void SceneMaker::CreateSceneForest()
 	vector<ShaderProgram*> shaders;
 
 	ShaderProgram* treeShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(tree) / sizeof(float) / 6);
-	treeShader->AddShadersFromFiles("VertexShader.txt", "BlinnPhongShader.txt");
+	treeShader->AddShadersFromFiles("VertexShader.txt", "PhongShader.txt");
 	shaders.push_back(treeShader);
 
 	ShaderProgram* bushShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(bushes) / sizeof(float) / 6);
-	bushShader->AddShadersFromFiles("VertexShader.txt", "BlinnPhongShader.txt");
+	bushShader->AddShadersFromFiles("VertexShader.txt", "PhongShader.txt");
 	shaders.push_back(bushShader);
 
 	ShaderProgram* plainShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(plain) / sizeof(float) / 6);
-	plainShader->AddShadersFromFiles("VertexShader.txt", "BlinnPhongShader.txt");
+	plainShader->AddShadersFromFiles("VertexShader.txt", "PhongShader.txt");
 	shaders.push_back(plainShader);
 
 	//Init Models for Scene Trees, Bushes
@@ -376,8 +376,8 @@ void SceneMaker::CreateSceneForest()
 
 			float angleOffset = glm::linearRand(0.0f, 6.28318f);
 
-			float speed = 5.0f;
-			float radius = 2.0f;
+			float speed = 2.0f;
+			float radius = 0.5f;
 
 			float x = radius * cos(time * speed + angleOffset);
 			float z = radius * sin(time * speed + angleOffset);
@@ -431,15 +431,15 @@ void SceneMaker::CreateSceneForestDark()
 	vector<ShaderProgram*> shaders;
 
 	ShaderProgram* treeShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(tree) / sizeof(float) / 6);
-	treeShader->AddShadersFromFiles("VertexShader.txt", "BlinnPhongShader.txt");
+	treeShader->AddShadersFromFiles("VertexShader.txt", "LambertShader.txt");
 	shaders.push_back(treeShader);
 
 	ShaderProgram* bushShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(bushes) / sizeof(float) / 6);
-	bushShader->AddShadersFromFiles("VertexShader.txt", "BlinnPhongShader.txt");
+	bushShader->AddShadersFromFiles("VertexShader.txt", "LambertShader.txt");
 	shaders.push_back(bushShader);
 
 	ShaderProgram* plainShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(plain) / sizeof(float) / 6);
-	plainShader->AddShadersFromFiles("VertexShader.txt", "BlinnPhongShader.txt");
+	plainShader->AddShadersFromFiles("VertexShader.txt", "LambertShader.txt");
 	shaders.push_back(plainShader);
 
 	//Init Models for Scene Trees, Bushes
@@ -470,7 +470,6 @@ void SceneMaker::CreateSceneForestDark()
 			float yPos = 0.0f;
 			float zPos = row * spacing;
 
-			//DrawableObject* treeObject = new DrawableObject(tree, sizeof(tree), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
 			DrawableObject* treeObject = new DrawableObject(treeShader, treeModel, objectColor, woodMaterial);
 
 			treeObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 1000.0 + 0.05f)));
@@ -493,7 +492,6 @@ void SceneMaker::CreateSceneForestDark()
 
 			objects.push_back(treeObject);
 
-			//DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel, objectColor, bushMaterial);
 
 			bushObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 500.0 + 0.05f)));
