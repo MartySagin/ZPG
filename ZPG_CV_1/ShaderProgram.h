@@ -18,9 +18,7 @@
 #include "Light.h"
 #include "ShaderLoader.h"
 
-class Camera;
-
-class ShaderProgram : Observer
+class ShaderProgram : public Observer
 {
 	private:
 		GLuint shader_id;
@@ -29,14 +27,10 @@ class ShaderProgram : Observer
 		GLint first;
 		GLsizei count;
 
-		Camera* camera;
-
-		vector<Light*> lights;
-
 		ShaderLoader* shaderLoader;
 
 	public:
-		ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, vector<Light*> lights);
+		ShaderProgram(GLenum mode, GLint first, GLsizei count);
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
 
@@ -51,6 +45,8 @@ class ShaderProgram : Observer
 		void SetFloatUniform(const char* uniformName, float value);
 
 		void SetIntUniform(const char* uniformName, int value);
+
+		void SetNumberOfLights(int numberOfLights);
 
 		void CheckProgramLinking(GLuint program);
 

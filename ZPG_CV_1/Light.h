@@ -2,10 +2,11 @@
 #include <glm/glm.hpp>
 #include "Subject.h"
 #include "vector"
+#include "Camera.h"
 
 using namespace std;
 
-class Light : public Subject
+class Light : public Subject, public Observer
 {
     private:
         int index;
@@ -20,12 +21,16 @@ class Light : public Subject
 
         glm::vec3 direction;
 
+		float cutOff;
+
+		float outerCutOff;
+
         int type;
 
 		vector<Observer*> observers;
 
     public:
-        Light(glm::vec3 position, glm::vec3 color, float intensity, float ambientStrength, glm::vec3 direction, int type);
+        Light(glm::vec3 position, glm::vec3 color, float intensity, float ambientStrength, glm::vec3 direction, float cutOff, float outerCutOff, int type);
 
         glm::vec3 GetPosition();
 
@@ -36,6 +41,10 @@ class Light : public Subject
 		float GetAmbientStrength();
 
         glm::vec3 GetDirection();
+
+		float GetCutOff();
+
+		float GetOuterCutOff();
 
         int GetType();
 
@@ -51,9 +60,17 @@ class Light : public Subject
 
         void SetIndex(int index);
 
+		void SetDirection(glm::vec3 newDirection);
+
+		void SetCutOff(float newCutOff);
+
+		void SetOuterCutOff(float newOuterCutOff);
+
 		void NotifyObservers() override;
 
 		void AddObserver(Observer* observer) override;
 
 		void RemoveObserver(Observer* observer) override;
+
+		void UpdateFromSubject(Subject* subject) override;
 };

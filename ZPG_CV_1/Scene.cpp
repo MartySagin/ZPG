@@ -12,7 +12,7 @@ void Scene::Init(vector<DrawableObject*> drawableObjects, Camera* camera, vector
 	{
 		light->NotifyObservers();
 	}
-
+	
 	this->camera->NotifyObservers();
 }
 

@@ -1,7 +1,7 @@
 ﻿#include "ShaderProgram.h"
 
 
-ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* camera, vector<Light*> lights)
+ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count)
 {
 	this->shaderLoader = nullptr;
 	
@@ -10,16 +10,6 @@ ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count, Camera* ca
 	this->mode = mode;
 	this->first = first;
 	this->count = count;
-
-	this->camera = camera;
-
-	camera->AddObserver(this);
-
-	this->lights = lights;
-
-	for (int i = 0; i < lights.size(); i++) {
-		lights[i]->AddObserver(this);
-	}
 
 }
 
@@ -110,6 +100,15 @@ void ShaderProgram::SetIntUniform(const char* uniformName, int value)
 	glUniform1i(idModelTransform, value);
 }
 
+void ShaderProgram::SetNumberOfLights(int numberOfLights)
+{
+	this->UseProgram();
+
+	this->SetIntUniform("numberOfLights", numberOfLights);
+
+	this->DisableProgram();
+}
+
 void ShaderProgram::CheckProgramLinking(GLuint program)
 {
 
@@ -173,27 +172,17 @@ void ShaderProgram::UpdateFromSubject(Subject* subject)
 	UseProgram();
 
 	if (typeid(*subject) == typeid(Camera)) {
+
+		Camera* camera = (Camera*)subject;
 		
-		SetMat4Uniform("viewMatrix", this->camera->GetViewMatrix());
+		SetMat4Uniform("viewMatrix", camera->GetViewMatrix());
 
-		SetMat4Uniform("projectionMatrix", this->camera->GetProjectionMatrix());
+		SetMat4Uniform("projectionMatrix", camera->GetProjectionMatrix());
 
-		SetVec3Uniform("viewPosition", this->camera->GetPosition());
+		SetVec3Uniform("viewPosition", camera->GetPosition());
 
-		for (int i = 0; i < this->lights.size(); i++) {
-			
-			if (this->lights[i]->GetType() == 2) {
-				SetVec3Uniform(("lights[" + to_string(i) + "].position").c_str(), this->camera->GetPosition());
-
-				SetVec3Uniform(("lights[" + to_string(i) + "].direction").c_str(), this->camera->GetTarget());
-
-				break;
-			}
-		}
 	}
 	else if (typeid(*subject) == typeid(Light)) {
-
-		SetIntUniform("numberOfLights", this->lights.size());
 
 		Light* light = (Light*)subject;
 
@@ -201,20 +190,25 @@ void ShaderProgram::UpdateFromSubject(Subject* subject)
 
 		string prefix = "lights[" + to_string(index) + "].";
 
-		SetVec3Uniform((prefix + "position").c_str(), this->lights[index]->GetPosition());
+		SetVec3Uniform((prefix + "position").c_str(), light->GetPosition());
 
-		SetVec3Uniform((prefix + "color").c_str(), this->lights[index]->GetColor());
+		SetVec3Uniform((prefix + "color").c_str(), light->GetColor());
 
-		SetFloatUniform((prefix + "intensity").c_str(), this->lights[index]->GetIntensity());
+		SetFloatUniform((prefix + "intensity").c_str(), light->GetIntensity());
 
-		SetFloatUniform((prefix + "ambientStrength").c_str(), this->lights[index]->GetAmbientStrength());
+		SetFloatUniform((prefix + "ambientStrength").c_str(), light->GetAmbientStrength());
 
-		SetIntUniform((prefix + "type").c_str(), this->lights[index]->GetType());
+		SetIntUniform((prefix + "type").c_str(), light->GetType());
 
-		SetVec3Uniform((prefix + "direction").c_str(), this->lights[index]->GetDirection());
-		
+		SetVec3Uniform((prefix + "direction").c_str(), light->GetDirection());
+
+		SetFloatUniform((prefix + "cutOff").c_str(), glm::cos(glm::radians(light->GetCutOff())));
+
+		SetFloatUniform((prefix + "outerCutOff").c_str(), glm::cos(glm::radians(light->GetOuterCutOff())));
 
 	}
+
+	DisableProgram();
 
 }
 

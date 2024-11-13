@@ -23,13 +23,15 @@ class DrawableObject
 
     public:
 
-        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);
+        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, VertexShader* vertexShader, FragmentShader* fragmentShader, bool withNormal);
 
-        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, const char* vertexShader, const char* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal);
+        DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, const char* vertexShader, const char* fragmentShader, bool withNormal);
 
 	    DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor, Material* material);
 
 	    Transformation* GetTransformation();
+
+		ShaderProgram* GetShaderProgram();
 
         void Draw();
 };

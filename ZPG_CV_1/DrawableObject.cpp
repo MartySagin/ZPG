@@ -3,8 +3,8 @@
 
 
 
-DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, const char* vertexShader, const char* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal)
-	: shaderProgram(drawMode, 0, withNormal == true ? vertexSize / sizeof(float) / 6 : vertexSize / sizeof(float) / 3, camera, lights), material(*material)
+DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, const char* vertexShader, const char* fragmentShader, bool withNormal)
+	: shaderProgram(drawMode, 0, withNormal == true ? vertexSize / sizeof(float) / 6 : vertexSize / sizeof(float) / 3), material(*material)
 {
 
     if (withNormal)
@@ -20,8 +20,8 @@ DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLe
 
 }
 
-DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, VertexShader* vertexShader, FragmentShader* fragmentShader, Camera* camera, vector<Light*> lights, bool withNormal)
-	: shaderProgram(drawMode, 0, withNormal == true ? vertexSize / sizeof(float) / 6 : vertexSize / sizeof(float) / 3, camera, lights), material(*material)
+DrawableObject::DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, VertexShader* vertexShader, FragmentShader* fragmentShader, bool withNormal)
+	: shaderProgram(drawMode, 0, withNormal == true ? vertexSize / sizeof(float) / 6 : vertexSize / sizeof(float) / 3), material(*material)
 {
 
 	if (withNormal)
@@ -48,6 +48,11 @@ DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::
 Transformation* DrawableObject::GetTransformation()
 {
 	return &this->transform;
+}
+
+ShaderProgram* DrawableObject::GetShaderProgram()
+{
+	return &this->shaderProgram;
 }
 
 void DrawableObject::Draw()

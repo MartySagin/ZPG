@@ -12,6 +12,8 @@ struct Light {
     float intensity;
     float ambientStrength;
     vec3 direction;
+    float cutOff;   
+    float outerCutOff;
     int type;       // Typ světla (OFF_LIGHT, POINT_LIGHT, SPOT_LIGHT, DIRECTIONAL_LIGHT)
 };
 
@@ -35,8 +37,6 @@ uniform float constant = 1.0;
 uniform float linear = 0.09;
 uniform float quadratic = 0.032;
 
-const float cutOff = cos(radians(6.5));    
-const float outerCutOff = cos(radians(17.5));
 
 void main() {
     vec3 norm = normalize(Normal);
@@ -80,8 +80,8 @@ void main() {
 
         if (lights[i].type == SPOT_LIGHT) {
             float theta = dot(lightDir, normalize(-lights[i].direction)); 
-            float epsilon = cutOff - outerCutOff;                         
-            float intensity = clamp((theta - outerCutOff) / epsilon, 0.0, 1.0); 
+            float epsilon = lights[i].cutOff - lights[i].outerCutOff;                         
+            float intensity = clamp((theta - lights[i].outerCutOff) / epsilon, 0.0, 1.0); 
 
             diffuse *= intensity;
             specular *= intensity;

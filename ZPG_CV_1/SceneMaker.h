@@ -38,6 +38,8 @@ class SceneMaker
 
 		void SwitchScene();
 
+		void InitObservers(Camera* camera, vector<Light*> lights, vector<ShaderProgram*> shaders);
+
 		Scene* GetCurrentScene();
 
 		vector<Scene*> GetAllScenes();
