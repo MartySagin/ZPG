@@ -336,7 +336,6 @@ void SceneMaker::CreateSceneForest()
 			float yPos = 0.0f;
 			float zPos = row * spacing;
 
-			//DrawableObject* treeObject = new DrawableObject(tree, sizeof(tree), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
 			DrawableObject* treeObject = new DrawableObject(treeShader, treeModel, objectColor, woodMaterial);
 
 			treeObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 1000.0 + 0.05f)));
@@ -359,7 +358,6 @@ void SceneMaker::CreateSceneForest()
 
 			objects.push_back(treeObject);
 
-			//DrawableObject* bushObject = new DrawableObject(bushes, sizeof(bushes), GL_TRIANGLES, "VertexShader.txt", "BlinnPhongShader.txt", camera, light, true);
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel, objectColor, bushMaterial);
 
 			bushObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 500.0 + 0.05f)));
