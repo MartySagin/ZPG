@@ -1,0 +1,20 @@
+#include "DynamicTranslate.h"
+
+DynamicTranslate::DynamicTranslate(glm::vec3 translation, glm::vec3 velocity, float deltaTime)
+	: Translate(translation), velocity(velocity), deltaTime(deltaTime)
+{
+}
+
+void DynamicTranslate::Update()
+{
+    this->translation.x += this->velocity.x * this->deltaTime;
+    this->translation.y += this->velocity.y * this->deltaTime;
+    this->translation.z += this->velocity.z * this->deltaTime;
+}
+
+glm::mat4 DynamicTranslate::Apply(glm::mat4 model)
+{
+    model = glm::translate(model, this->translation);
+
+    return model;
+}

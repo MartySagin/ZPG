@@ -1,6 +1,6 @@
 #include "Scale.h"
 
-Scale::Scale(float scaleValue) : scaling(scaleValue)
+Scale::Scale(glm::vec3 scaling) : scaling(scaling.x, scaling.y, scaling.z)
 {
 }
 

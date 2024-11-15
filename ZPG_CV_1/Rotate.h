@@ -6,11 +6,13 @@
 
 class Rotate : public TransformationComponent
 {
-    private:
+    protected:
         glm::vec3 rotation;
 
     public:
-        Rotate(float angleX, float angleY, float angleZ);
+        Rotate(glm::vec3 rotation);
+
+        void Update() override {};
 
         glm::mat4 Apply(glm::mat4 model) override;
 };

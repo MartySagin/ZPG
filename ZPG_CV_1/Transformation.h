@@ -1,7 +1,11 @@
 #pragma once
 #include <vector>
-#include "TransformationComponent.h"
 #include <glm/glm.hpp>
+
+#include "TransformationComponent.h"
+#include "DynamicRotate.h"
+#include "DynamicTranslate.h"
+#include "DynamicScale.h"
 
 using namespace std;
 
@@ -9,8 +13,6 @@ class Transformation
 {
     private:
             vector<TransformationComponent*> components;
-
-            glm::mat4 modelMatrix = (1.0f);
 
     public:
         Transformation();

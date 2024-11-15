@@ -7,13 +7,21 @@ Transformation::Transformation()
 void Transformation::AddComponent(TransformationComponent* component)
 {
     this->components.push_back(component);
-
-	this->modelMatrix = component->Apply(this->modelMatrix);
 }
 
 glm::mat4 Transformation::GetModelMatrix()
 {
-    return this->modelMatrix;
+	
+	glm::mat4 modelMatrix = (1.0f);
+    
+    for (auto component : this->components)
+	{
+		component->Update();
+        
+        modelMatrix = component->Apply(modelMatrix);
+	}
+
+	return modelMatrix;
 }
 
 Transformation::~Transformation()

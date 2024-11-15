@@ -37,7 +37,7 @@ void SceneMaker::InitObservers(Camera* camera, vector<Light*> lights, vector<Sha
 	}
 
 	for (auto& shader : shaders) {
-		shader->SetNumberOfLights(lights.size());
+		shader->SetNumberOfLights((int)lights.size());
 	}
 }
 
@@ -83,7 +83,7 @@ void SceneMaker::CreateSceneTriangle()
 	camera->AddObserver(triangleShader);
 
 	DrawableObject* triangleObject = new DrawableObject(triangleShader, triangleModel, objectColor, metalMaterial);
-	triangleObject->GetTransformation()->AddComponent(new Scale(20.0f));
+	triangleObject->GetTransformation()->AddComponent(new Scale(glm::vec3(20.0f)));
 
 	objects.push_back(triangleObject);
 
@@ -124,33 +124,33 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 
 	light->AddObserver(sphereShader);
 
-	sphereShader->SetNumberOfLights(lights.size());
+	sphereShader->SetNumberOfLights((int)lights.size());
 
 	//Init Models for Scene
 	Model* sphereModel = new Model();
 	sphereModel->GenerateModelWithNormal(sphere, sizeof(sphere));
 
 	DrawableObject* sphereObject = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
-	sphereObject->GetTransformation()->AddComponent(new Scale(0.5f));
-	sphereObject->GetTransformation()->AddComponent(new Translate(-3.0f, 0.0f, 0.0f));
+	sphereObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject->GetTransformation()->AddComponent(new Translate(glm::vec3(- 3.0f, 0.0f, 0.0f)));
 
 	objects.push_back(sphereObject);
 
 	DrawableObject* sphereObject2 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
-	sphereObject2->GetTransformation()->AddComponent(new Scale(0.5f));
-	sphereObject2->GetTransformation()->AddComponent(new Translate(3.0f, 0.0f, 0.0f));
+	sphereObject2->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject2->GetTransformation()->AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
 
 	objects.push_back(sphereObject2);
 
 	DrawableObject* sphereObject3 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
-	sphereObject3->GetTransformation()->AddComponent(new Scale(0.5f));
-	sphereObject3->GetTransformation()->AddComponent(new Translate(0.0f, 3.0f, 0.0f));
+	sphereObject3->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject3->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
 
 	objects.push_back(sphereObject3);
 
 	DrawableObject* sphereObject4 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
-	sphereObject4->GetTransformation()->AddComponent(new Scale(0.5f));
-	sphereObject4->GetTransformation()->AddComponent(new Translate(0.0f, -3.0f, 0.0f));
+	sphereObject4->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f, 0.5f, 0.5f)));
+	sphereObject4->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
 
 	objects.push_back(sphereObject4);
 
@@ -222,26 +222,26 @@ void SceneMaker::CreateSceneWithMoreModels() {
 
 
 	DrawableObject* giftObject = new DrawableObject(giftShader, giftModel, objectColor, metalMaterial);
-	giftObject->GetTransformation()->AddComponent(new Scale(1.5f));
-	giftObject->GetTransformation()->AddComponent(new Translate(-3.0f, 0.0f, 0.0f));
+	giftObject->GetTransformation()->AddComponent(new Scale(glm::vec3(1.5f, 1.5f, 1.5f)));
+	giftObject->GetTransformation()->AddComponent(new Translate(glm::vec3(-3.0f, 0.0f, 0.0f)));
 
 	objects.push_back(giftObject);
 
 	DrawableObject* suziFlatObject = new DrawableObject(suziFlatShader, suziFlatModel, objectColor, metalMaterial);
-	suziFlatObject->GetTransformation()->AddComponent(new Scale(0.5f));
-	suziFlatObject->GetTransformation()->AddComponent(new Translate(3.0f, 0.0f, 0.0f));
+	suziFlatObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f, 0.5f, 0.5f)));
+	suziFlatObject->GetTransformation()->AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
 
 	objects.push_back(suziFlatObject);
 
 	DrawableObject* suziSmoothObject = new DrawableObject(suziSmoothShader, suziFlatModel, objectColor, metalMaterial);
-	suziSmoothObject->GetTransformation()->AddComponent(new Scale(0.5f));
-	suziSmoothObject->GetTransformation()->AddComponent(new Translate(0.0f, 3.0f, 0.0f));
+	suziSmoothObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f, 0.5f, 0.5f)));
+	suziSmoothObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
 
 	objects.push_back(suziSmoothObject);
 
 	DrawableObject* sphereObject = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
-	sphereObject->GetTransformation()->AddComponent(new Scale(0.5f));
-	sphereObject->GetTransformation()->AddComponent(new Translate(0.0f, -3.0f, 0.0f));
+	sphereObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
+	sphereObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
 
 	objects.push_back(sphereObject);
 
@@ -262,10 +262,10 @@ void SceneMaker::CreateSceneForest()
 
 	vector<Light*> lights;
 
-	Light* light = new Light(glm::vec3(0.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 5.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
-	Light* light2 = new Light(glm::vec3(0.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 5.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
-	Light* light3 = new Light(glm::vec3(15.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 5.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
-	Light* light4 = new Light(glm::vec3(15.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 5.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light = new Light(glm::vec3(0.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light2 = new Light(glm::vec3(0.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light3 = new Light(glm::vec3(15.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light4 = new Light(glm::vec3(15.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 
 	lights.push_back(light);
 
@@ -286,12 +286,6 @@ void SceneMaker::CreateSceneForest()
 	Material* woodMaterial = new Material(0.6f, 0.8f, 0.2f);
 	Material* soilMaterial = new Material(0.5f, 0.7f, 0.1f);
 	Material* bushMaterial = new Material(0.6f, 0.8f, 0.15f);
-
-	srand((unsigned int)(time(NULL)));
-
-	const int gridRows = 30;
-	const int gridCols = 30;
-	const float spacing = 5.0f;
 
 	//Init Shaders for Scene Trees, Bushes
 	vector<ShaderProgram*> shaders;
@@ -323,12 +317,18 @@ void SceneMaker::CreateSceneForest()
 
 	//Scene Forest
 	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, glm::vec3(0.0f, 1.0f, 0.0f), soilMaterial);
-	plainObject->GetTransformation()->AddComponent(new Scale(25.0f));
-	plainObject->GetTransformation()->AddComponent(new Translate(0.45f, 0.0f, 0.5f));
+	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(25.0f, 25.0f, 25.0f)));
+	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
 
 	objects.push_back(plainObject);
 
 	Scene* scene = new Scene();
+
+	srand((unsigned int)(time(NULL)));
+
+	const int gridRows = 30;
+	const int gridCols = 30;
+	const float spacing = 5.0f;
 
 	for (int row = 0; row < gridRows; row++) {
 		for (int col = 0; col < gridCols; col++) {
@@ -338,30 +338,24 @@ void SceneMaker::CreateSceneForest()
 
 			DrawableObject* treeObject = new DrawableObject(treeShader, treeModel, objectColor, woodMaterial);
 
-			treeObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 1000.0 + 0.05f)));
-			treeObject->GetTransformation()->AddComponent(new Translate(xPos, yPos, zPos));
+			treeObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 1000.0 + 0.05f))));
+			treeObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos, yPos, zPos)));
 
 			float randomAngleY = (float)(rand() % 360);
 			float randomAngleX = (float)(rand() % 40 - 20);
 
-			treeObject->GetTransformation()->AddComponent(new Rotate(randomAngleX, randomAngleY, 0.0f));
+			treeObject->GetTransformation()->AddComponent(new Rotate(glm::vec3(randomAngleX, randomAngleY, 0.0f)));
 
 			if (rand() % 100 < 30) {
-
-				scene->AddAnimation([treeObject](float deltaTime) {
-
-					treeObject->GetTransformation()->AddComponent(new Rotate(0.0f, 20.0f * deltaTime, 0.0f));
-
-				});
-
+				treeObject->GetTransformation()->AddComponent(new DynamicRotate(glm::vec3(0.0f), glm::vec3(0.0f, 20.0f, 0.0f), 0.01f));
 			}
 
 			objects.push_back(treeObject);
 
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel, objectColor, bushMaterial);
 
-			bushObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 500.0 + 0.05f)));
-			bushObject->GetTransformation()->AddComponent(new Translate(xPos - 5, yPos, zPos + spacing * 0.25f));
+			bushObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 500.0 + 0.05f))));
+			bushObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f)));
 
 			objects.push_back(bushObject);
 		}
@@ -374,10 +368,10 @@ void SceneMaker::CreateSceneForest()
 
 		for (auto& light : lights) {
 
-			float angleOffset = glm::linearRand(0.0f, 6.28318f);
+			float angleOffset = glm::linearRand(0.0f, 7.0f);
 
-			float speed = 2.0f;
-			float radius = 0.5f;
+			float speed = 20.0f;
+			float radius = 2.0f;
 
 			float x = radius * cos(time * speed + angleOffset);
 			float z = radius * sin(time * speed + angleOffset);
@@ -421,12 +415,6 @@ void SceneMaker::CreateSceneForestDark()
 	Material* soilMaterial = new Material(0.5f, 0.7f, 0.1f);
 	Material* bushMaterial = new Material(0.6f, 0.8f, 0.15f);
 
-	srand((unsigned int)(time(NULL)));
-
-	const int gridRows = 30;
-	const int gridCols = 30;
-	const float spacing = 5.0f;
-
 	//Init Shaders for Scene Trees, Bushes
 	vector<ShaderProgram*> shaders;
 
@@ -457,12 +445,19 @@ void SceneMaker::CreateSceneForestDark()
 
 	//Scene Forest
 	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, glm::vec3(0.0f, 1.0f, 0.0f), soilMaterial);
-	plainObject->GetTransformation()->AddComponent(new Scale(25.0f));
-	plainObject->GetTransformation()->AddComponent(new Translate(0.45f, 0.0f, 0.5f));
+	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(25.0f)));
+	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
 
 	objects.push_back(plainObject);
 
 	Scene* scene = new Scene();
+
+	srand((unsigned int)(time(NULL)));
+
+	const int gridRows = 30;
+	const int gridCols = 30;
+	const float spacing = 5.0f;
+
 
 	for (int row = 0; row < gridRows; row++) {
 		for (int col = 0; col < gridCols; col++) {
@@ -472,30 +467,24 @@ void SceneMaker::CreateSceneForestDark()
 
 			DrawableObject* treeObject = new DrawableObject(treeShader, treeModel, objectColor, woodMaterial);
 
-			treeObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 1000.0 + 0.05f)));
-			treeObject->GetTransformation()->AddComponent(new Translate(xPos, yPos, zPos));
+			treeObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 1000.0 + 0.05f))));
+			treeObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos, yPos, zPos)));
 
 			float randomAngleY = (float)(rand() % 360);
 			float randomAngleX = (float)(rand() % 40 - 20);
 
-			treeObject->GetTransformation()->AddComponent(new Rotate(randomAngleX, randomAngleY, 0.0f));
+			treeObject->GetTransformation()->AddComponent(new Rotate(glm::vec3(randomAngleX, randomAngleY, 0.0f)));
 
 			if (rand() % 100 < 30) { 
-
-				scene->AddAnimation([treeObject](float deltaTime) {
-
-					treeObject->GetTransformation()->AddComponent(new Rotate(0.0f, 20.0f * deltaTime, 0.0f));
-
-				});
-
+				treeObject->GetTransformation()->AddComponent(new DynamicRotate(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), 0.01f));
 			}
 
 			objects.push_back(treeObject);
 
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel, objectColor, bushMaterial);
 
-			bushObject->GetTransformation()->AddComponent(new Scale((float)(rand() % 100 / 500.0 + 0.05f)));
-			bushObject->GetTransformation()->AddComponent(new Translate(xPos - 5, yPos, zPos + spacing * 0.25f));
+			bushObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 500.0 + 0.05f))));
+			bushObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f)));
 
 			objects.push_back(bushObject);
 		}

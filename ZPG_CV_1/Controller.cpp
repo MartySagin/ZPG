@@ -33,7 +33,7 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
 
         static float lastFrameTime = 0.0f;
 
-        float currentFrameTime = glfwGetTime();
+        float currentFrameTime = (float)glfwGetTime();
         float deltaTime = currentFrameTime - lastFrameTime;
 
         if (deltaTime > 0.01f) {
@@ -104,7 +104,7 @@ void Controller::CursorCallback(GLFWwindow* window, double x, double y) {
         offsetX *= sensitivity;
         offsetY *= sensitivity;
 
-        camera->Rotate(offsetX, offsetY);
+        camera->Rotate((float)offsetX, (float)offsetY);
     }
 }
 
@@ -156,13 +156,13 @@ void Controller::RotateObject(GLFWwindow* window, int axis)
     for (auto& object : app->GetSceneMaker()->GetCurrentScene()->GetObjects())
     {
         if (axis == 0) {
-            object->GetTransformation()->AddComponent(new Rotate(0.0f, 0.0f, 5.0f));
+            object->GetTransformation()->AddComponent(new Rotate(glm::vec3(0.0f, 0.0f, 5.0f)));
         }
         else if (axis == 1) {
-            object->GetTransformation()->AddComponent(new Rotate(0.0f, 5.0f, 0.0f));
+            object->GetTransformation()->AddComponent(new Rotate(glm::vec3(0.0f, 5.0f, 0.0f)));
         }
 		else if (axis == 2) {
-			object->GetTransformation()->AddComponent(new Rotate(5.0f, 0.0f, 0.0f));
+			object->GetTransformation()->AddComponent(new Rotate(glm::vec3(5.0f, 0.0f, 0.0f)));
 		}
     }
 }
