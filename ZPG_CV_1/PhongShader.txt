@@ -1,4 +1,4 @@
-﻿#version 330 core
+#version 330 core
 
 #define MAX_LIGHTS 4
 #define OFF_LIGHT 0
