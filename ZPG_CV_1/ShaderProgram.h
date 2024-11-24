@@ -20,7 +20,7 @@
 
 class ShaderProgram : public Observer
 {
-	private:
+	public:
 		GLuint shader_id;
 
 		GLenum mode;

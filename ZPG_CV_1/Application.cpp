@@ -92,6 +92,8 @@ void Application::Run()
 {
 	glEnable(GL_DEPTH_TEST);
 
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
 	while (!glfwWindowShouldClose(this->window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

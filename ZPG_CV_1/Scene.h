@@ -19,6 +19,10 @@ class Scene
 
 		Animation animation;
 
+        DrawableObject* skybox;
+
+        bool followSkybox = true;
+
     public:
         void Init(vector<DrawableObject*> drawableObjects, Camera* camera, vector<Light*> lights);  
 
@@ -30,10 +34,17 @@ class Scene
 
 		void AddAnimation(function<void(float)> animation);
 
+        void SetSkybox(DrawableObject* skybox);
+
+        void SetFollowSkybox(bool followSkybox);
+
         Camera* GetCamera();
 
         vector<Light*> GetLights();
 
 		vector<DrawableObject*> GetObjects();
 
+        DrawableObject* GetSkybox();
+
+        bool GetFollowSkybox();
 };

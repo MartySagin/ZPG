@@ -18,14 +18,15 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
     Application* app = (Application*) (glfwGetWindowUserPointer(window));
 
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-        if (key == GLFW_KEY_LEFT) MoveLight(window,0);
+        if (key == GLFW_KEY_LEFT) MoveLight(window, 0);
         else if (key == GLFW_KEY_RIGHT) MoveLight(window, 1);
         else if (key == GLFW_KEY_UP) MoveLight(window, 2);
         else if (key == GLFW_KEY_DOWN) MoveLight(window, 3);
         else if (key == GLFW_KEY_R) RotateObject(window, 0);
         else if (key == GLFW_KEY_T) RotateObject(window, 1);
-		else if (key == GLFW_KEY_Y) RotateObject(window, 2);
+        else if (key == GLFW_KEY_Y) RotateObject(window, 2);
         else if (key == GLFW_KEY_SPACE) app->GetSceneMaker()->SwitchScene();
+        else if (key == GLFW_KEY_H) app->GetSceneMaker()->GetCurrentScene()->SetFollowSkybox(!app->GetSceneMaker()->GetCurrentScene()->GetFollowSkybox());
     }
 
     if (app->GetSceneMaker()->GetCurrentScene()->GetCamera()) {

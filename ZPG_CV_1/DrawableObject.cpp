@@ -43,7 +43,24 @@ DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::
 	this->transform = Transformation();
 
 	this->objectColor = objectColor;
+
+	this->texture = nullptr;
 }
+
+DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor, Material* material, Texture* texture)
+	: shaderProgram(*shaderProgram), model(*model), material(*material), texture(texture)
+{
+	this->transform = Transformation();
+
+	this->objectColor = objectColor;
+
+}
+
+void DrawableObject::SetTexture(Texture* texture)
+{
+	this->texture = texture;
+}
+
 
 Transformation* DrawableObject::GetTransformation()
 {
@@ -57,9 +74,20 @@ ShaderProgram* DrawableObject::GetShaderProgram()
 
 void DrawableObject::Draw()
 {
-    this->shaderProgram.UseProgram();
+	this->shaderProgram.UseProgram();
 
-    this->shaderProgram.SetMat4Uniform("modelMatrix", this->transform.GetModelMatrix());
+	if (texture != nullptr) {
+		texture->Bind();
+
+		this->shaderProgram.SetIntUniform("hasTexture", 1);
+
+		this->shaderProgram.SetIntUniform("textureUnit", texture->GetTextureUnit());
+	}
+	else {
+		this->shaderProgram.SetIntUniform("hasTexture", 0); 
+	}
+
+	this->shaderProgram.SetMat4Uniform("modelMatrix", this->transform.GetModelMatrix());
 
 	this->shaderProgram.SetVec3Uniform("objectColor", this->objectColor);
 
@@ -69,11 +97,15 @@ void DrawableObject::Draw()
 
 	this->shaderProgram.SetFloatUniform("material.rs", this->material.GetSpecularCoefficient());
 
-    this->model.BindVAO();
+	this->model.BindVAO();
 
-    this->shaderProgram.Draw();
+	this->shaderProgram.Draw();
 
-    this->model.UnbindVAO();
+	this->model.UnbindVAO();
+
+	if (this->texture) {
+		this->texture->Unbind();
+	}
 
 	this->shaderProgram.DisableProgram();
 }

@@ -73,7 +73,7 @@ void SceneMaker::CreateSceneTriangle()
 
 	//Init Shaders for Scene
 	ShaderProgram* triangleShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(triangle) / sizeof(float) / 3);
-	triangleShader->AddShadersFromFiles("VertexShader.txt", "ConstantShader.txt");
+	triangleShader->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
 
 	//Init Models for Scene
 	Model* triangleModel = new Model();
@@ -117,7 +117,7 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 
 	//Init Shaders for Scene
 	ShaderProgram* sphereShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
-	sphereShader->AddShadersFromFiles("VertexShader.txt", "PhongShader.txt");
+	sphereShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 
 	//Init Observers for Camera
 	camera->AddObserver(sphereShader);
@@ -188,19 +188,19 @@ void SceneMaker::CreateSceneWithMoreModels() {
 	vector<ShaderProgram*> shaders;
 
 	ShaderProgram* giftShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(gift) / sizeof(float) / 6);
-	giftShader->AddShadersFromFiles("VertexShader.txt", "BlinnPhongShader.txt");
+	giftShader->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
 	shaders.push_back(giftShader);
 
 	ShaderProgram* suziFlatShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(suziFlat) / sizeof(float) / 6);
-	suziFlatShader->AddShadersFromFiles("VertexShader.txt", "LambertShader.txt");
+	suziFlatShader->AddShadersFromFiles("VertexShader.glsl", "LambertShader.glsl");
 	shaders.push_back(suziFlatShader);
 
 	ShaderProgram* suziSmoothShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(suziSmooth) / sizeof(float) / 6);
-	suziSmoothShader->AddShadersFromFiles("VertexShader.txt", "PhongShader.txt");
+	suziSmoothShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(suziSmoothShader);
 
 	ShaderProgram* sphereShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
-	sphereShader->AddShadersFromFiles("VertexShader.txt", "ConstantShader.txt");
+	sphereShader->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
 	shaders.push_back(sphereShader);
 
 
@@ -262,7 +262,7 @@ void SceneMaker::CreateSceneForest()
 
 	vector<Light*> lights;
 
-	Light* light = new Light(glm::vec3(0.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	/*Light* light = new Light(glm::vec3(0.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 	Light* light2 = new Light(glm::vec3(0.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 	Light* light3 = new Light(glm::vec3(15.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 	Light* light4 = new Light(glm::vec3(15.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
@@ -273,7 +273,11 @@ void SceneMaker::CreateSceneForest()
 
 	lights.push_back(light3);
 
-	lights.push_back(light4);
+	lights.push_back(light4);*/
+
+	Light* dirLight = new Light(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, -1.0f, 0.0f), 6.5f, 17.5f, 3);
+
+	lights.push_back(dirLight);	
 
 	for (int i = 0; i < lights.size(); i++) {
 		lights[i]->SetIndex(i);
@@ -291,15 +295,15 @@ void SceneMaker::CreateSceneForest()
 	vector<ShaderProgram*> shaders;
 
 	ShaderProgram* treeShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(tree) / sizeof(float) / 6);
-	treeShader->AddShadersFromFiles("VertexShader.txt", "PhongShader.txt");
+	treeShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(treeShader);
 
 	ShaderProgram* bushShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(bushes) / sizeof(float) / 6);
-	bushShader->AddShadersFromFiles("VertexShader.txt", "PhongShader.txt");
+	bushShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(bushShader);
 
 	ShaderProgram* plainShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(plain) / sizeof(float) / 6);
-	plainShader->AddShadersFromFiles("VertexShader.txt", "PhongShader.txt");
+	plainShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(plainShader);
 
 	//Init Models for Scene Trees, Bushes
@@ -310,13 +314,21 @@ void SceneMaker::CreateSceneForest()
 	bushModel->GenerateModelWithNormal(bushes, sizeof(bushes));
 
 	Model* plainModel = new Model();
-	plainModel->GenerateModelWithNormal(plain, sizeof(plain));
+	plainModel->GenerateModelWithNormalAndUV(plain, sizeof(plain));
 
 	//Init Observers for Camera
 	this->InitObservers(camera, lights, shaders);
 
+	//Init Textures for Scene
+	Texture* plainTexture = new Texture();
+
+	string filePath = "textures/grass.png";
+
+	plainTexture->Load2DTexture(filePath);
+	
+
 	//Scene Forest
-	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, glm::vec3(0.0f, 1.0f, 0.0f), soilMaterial);
+	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, glm::vec3(0.0f, 1.0f, 0.0f), soilMaterial, plainTexture);
 	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(25.0f, 25.0f, 25.0f)));
 	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
 
@@ -361,7 +373,7 @@ void SceneMaker::CreateSceneForest()
 		}
 	}
 
-	scene->AddAnimation([lights](float deltaTime) {
+	/*scene->AddAnimation([lights](float deltaTime) {
 		static float time = 0.0f;
 
 		time += deltaTime;
@@ -380,8 +392,38 @@ void SceneMaker::CreateSceneForest()
 
 			light->SetPosition(newPosition);
 		}
-	});
+	});*/
 
+
+	ShaderProgram* skyboxShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(skycube) / sizeof(float) / 3);
+	skyboxShader->AddShadersFromFiles("SkyboxVertex.glsl", "SkyboxFragment.glsl");
+
+	camera->AddObserver(skyboxShader);
+
+	Model* skyboxModel = new Model();
+	skyboxModel->GenerateModel(skycube, sizeof(skycube));
+
+
+	vector<string> filePaths = {
+	"textures/posx.jpg",
+	"textures/negx.jpg",
+	"textures/posy.jpg",
+	"textures/negy.jpg",
+	"textures/posz.jpg",
+	"textures/negz.jpg"
+	};
+
+	Texture* cubemapTexture = new Texture();
+
+	cubemapTexture->LoadCubemap(filePaths);
+	
+	DrawableObject* skyboxObject = new DrawableObject(skyboxShader, skyboxModel, glm::vec3(1.0f), soilMaterial, cubemapTexture);
+
+	skyboxObject->GetTransformation()->AddComponent(new Scale(glm::vec3(50.0f)));
+
+	objects.push_back(skyboxObject);
+
+	scene->SetSkybox(skyboxObject);
 
 	scene->Init(objects, camera, lights);
 
@@ -419,15 +461,15 @@ void SceneMaker::CreateSceneForestDark()
 	vector<ShaderProgram*> shaders;
 
 	ShaderProgram* treeShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(tree) / sizeof(float) / 6);
-	treeShader->AddShadersFromFiles("VertexShader.txt", "LambertShader.txt");
+	treeShader->AddShadersFromFiles("VertexShader.glsl", "LambertShader.glsl");
 	shaders.push_back(treeShader);
 
 	ShaderProgram* bushShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(bushes) / sizeof(float) / 6);
-	bushShader->AddShadersFromFiles("VertexShader.txt", "LambertShader.txt");
+	bushShader->AddShadersFromFiles("VertexShader.glsl", "LambertShader.glsl");
 	shaders.push_back(bushShader);
 
 	ShaderProgram* plainShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(plain) / sizeof(float) / 6);
-	plainShader->AddShadersFromFiles("VertexShader.txt", "LambertShader.txt");
+	plainShader->AddShadersFromFiles("VertexShader.glsl", "LambertShader.glsl");
 	shaders.push_back(plainShader);
 
 	//Init Models for Scene Trees, Bushes
@@ -438,13 +480,21 @@ void SceneMaker::CreateSceneForestDark()
 	bushModel->GenerateModelWithNormal(bushes, sizeof(bushes));
 
 	Model* plainModel = new Model();
-	plainModel->GenerateModelWithNormal(plain, sizeof(plain));
+	plainModel->GenerateModelWithNormalAndUV(plain, sizeof(plain));
 
 	//Init Observers for Camera
 	this->InitObservers(camera, lights, shaders);
 
+	//Init Textures for Scene
+
+	Texture* plainTexture = new Texture();
+
+	string filePath = "textures/grass.png";
+
+	plainTexture->Load2DTexture(filePath);
+
 	//Scene Forest
-	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, glm::vec3(0.0f, 1.0f, 0.0f), soilMaterial);
+	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, glm::vec3(0.0f, 1.0f, 0.0f), soilMaterial, plainTexture);
 	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(25.0f)));
 	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
 

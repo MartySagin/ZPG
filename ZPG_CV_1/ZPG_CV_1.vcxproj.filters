@@ -90,6 +90,9 @@
     <ClCompile Include="DynamicScale.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -185,14 +188,23 @@
     <ClInclude Include="DynamicScale.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="skycube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="BlinnPhongShader.txt" />
-    <Text Include="ConstantShader.txt" />
-    <Text Include="FragmentColor.txt" />
-    <Text Include="FragmentShaderWithNormal.txt" />
-    <Text Include="LambertShader.txt" />
-    <Text Include="PhongShader.txt" />
-    <Text Include="VertexShader.txt" />
+    <Text Include="BlinnPhongShader.glsl" />
+    <Text Include="ConstantShader.glsl" />
+    <Text Include="FragmentShaderWithNormal.glsl" />
+    <Text Include="LambertShader.glsl" />
+    <Text Include="PhongShader.glsl" />
+    <Text Include="VertexShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SkyboxVertex.glsl" />
+    <None Include="SkyboxFragment.glsl" />
   </ItemGroup>
 </Project>

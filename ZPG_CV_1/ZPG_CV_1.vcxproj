@@ -151,6 +151,7 @@
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="TransformationComponent.cpp" />
     <ClCompile Include="Translate.cpp" />
@@ -183,20 +184,25 @@
     <ClInclude Include="SceneMaker.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="skycube.h" />
     <ClInclude Include="Subject.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="TransformationComponent.h" />
     <ClInclude Include="Translate.h" />
     <ClInclude Include="VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="BlinnPhongShader.txt" />
-    <Text Include="ConstantShader.txt" />
-    <Text Include="FragmentColor.txt" />
-    <Text Include="FragmentShaderWithNormal.txt" />
-    <Text Include="LambertShader.txt" />
-    <Text Include="PhongShader.txt" />
-    <Text Include="VertexShader.txt" />
+    <Text Include="BlinnPhongShader.glsl" />
+    <Text Include="ConstantShader.glsl" />
+    <Text Include="FragmentShaderWithNormal.glsl" />
+    <Text Include="LambertShader.glsl" />
+    <Text Include="PhongShader.glsl" />
+    <Text Include="VertexShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SkyboxFragment.glsl" />
+    <None Include="SkyboxVertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

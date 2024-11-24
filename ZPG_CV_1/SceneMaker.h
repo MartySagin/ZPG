@@ -19,8 +19,10 @@
 #include "bushes.h"
 #include "sphere.h"
 #include "tree.h"
+#include "skycube.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/random.hpp>
+#include <SOIL.h>
 
 class SceneMaker
 {

@@ -23,6 +23,7 @@ class Model
 
         void GenerateModel(const float* points, GLsizeiptr size);
         void GenerateModelWithNormal(const float* points, GLsizeiptr size);
+        void GenerateModelWithNormalAndUV(const float* points, GLsizeiptr size);
 
         void BindVAO();
         void UnbindVAO();
