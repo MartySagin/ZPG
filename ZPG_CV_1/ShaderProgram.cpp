@@ -164,8 +164,15 @@ void ShaderProgram::DisableProgram()
 
 void ShaderProgram::Draw()
 {
-	glDrawArrays(this->mode, this->first, this->count);
+	if (this->first == 1) {
+		glDrawElements(this->mode, this->count, GL_UNSIGNED_INT, NULL);
+	}
+	else {
+		glDrawArrays(this->mode, this->first, this->count);
+	}
+		
 }
+
 
 void ShaderProgram::UpdateFromSubject(Subject* subject)
 {

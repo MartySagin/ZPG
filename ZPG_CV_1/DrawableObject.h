@@ -10,7 +10,7 @@
 
 class DrawableObject
 {
-    private:
+    protected:
 
         Model model;
 
@@ -32,7 +32,7 @@ class DrawableObject
 
 	    DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor, Material* material);
 
-        DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor, Material* material, Texture* texture);
+        DrawableObject(ShaderProgram* shaderProgram, Model* model, Material* material, Texture* texture);
 
         void SetTexture(Texture* texture);
 
@@ -40,5 +40,5 @@ class DrawableObject
 
 		ShaderProgram* GetShaderProgram();
 
-        void Draw();
+        virtual void Draw();
 };

@@ -1,10 +1,8 @@
 #include "Scene.h"
 
-void Scene::Init(vector<DrawableObject*> drawableObjects, Camera* camera, vector<Light*> lights)
+void Scene::Init(Camera* camera, vector<Light*> lights)
 {
 	this->camera = camera;
-
-	this->objects = drawableObjects;
 
 	this->lights = lights;
 
@@ -18,25 +16,16 @@ void Scene::Init(vector<DrawableObject*> drawableObjects, Camera* camera, vector
 
 void Scene::Render()
 {
-    for (auto& object : this->objects)
+	
+	if (this->skybox) {
+		this->skybox->Draw();
+	}
+	
+	for (auto& object : this->objects)
     {  
 		object->Draw();  
     }
 
-	
-	glDepthFunc(GL_LEQUAL); 
-	glDepthMask(GL_FALSE);  
-
-	if (this->skybox) {
-		this->skybox->GetShaderProgram()->UseProgram();
-
-		this->skybox->GetShaderProgram()->SetIntUniform("followSkybox", this->followSkybox);
-
-		this->skybox->Draw(); 
-	}
-
-	glDepthMask(GL_TRUE); 
-	glDepthFunc(GL_LESS);
 }
 
 void Scene::Update(float deltaTime)
@@ -54,14 +43,9 @@ void Scene::AddAnimation(function<void(float)> animation)
 	this->animation.AddAnimation(animation);
 }
 
-void Scene::SetSkybox(DrawableObject* skybox)
+void Scene::SetSkybox(Skybox* skybox)
 {
 	this->skybox = skybox;
-}
-
-void Scene::SetFollowSkybox(bool followSkybox)
-{
-	this->followSkybox = followSkybox;
 }
 
 Camera* Scene::GetCamera()
@@ -79,12 +63,7 @@ vector<DrawableObject*> Scene::GetObjects()
 	return this->objects;
 }
 
-DrawableObject* Scene::GetSkybox()
+Skybox* Scene::GetSkybox()
 {
 	return this->skybox;
-}
-
-bool Scene::GetFollowSkybox()
-{
-	return this->followSkybox;
 }

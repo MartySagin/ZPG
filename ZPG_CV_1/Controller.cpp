@@ -26,7 +26,16 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
         else if (key == GLFW_KEY_T) RotateObject(window, 1);
         else if (key == GLFW_KEY_Y) RotateObject(window, 2);
         else if (key == GLFW_KEY_SPACE) app->GetSceneMaker()->SwitchScene();
-        else if (key == GLFW_KEY_H) app->GetSceneMaker()->GetCurrentScene()->SetFollowSkybox(!app->GetSceneMaker()->GetCurrentScene()->GetFollowSkybox());
+        else if (key == GLFW_KEY_H) {
+            app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->SetFollowCamera(!app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetFollowCamera());
+
+            if (!app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetFollowCamera()) {
+                app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetTransformation()->AddComponent(new Translate(app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetPosition()));
+            }
+            else {
+                app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetTransformation()->ClearComponents();
+            }
+        }
     }
 
     if (app->GetSceneMaker()->GetCurrentScene()->GetCamera()) {

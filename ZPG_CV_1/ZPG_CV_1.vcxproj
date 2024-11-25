@@ -150,6 +150,7 @@
     <ClCompile Include="SceneMaker.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transformation.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="SceneMaker.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="skycube.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Texture.h" />
@@ -201,6 +203,8 @@
     <Text Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="PhongFragmentShader.glsl" />
+    <None Include="PhongVertexShader.glsl" />
     <None Include="SkyboxFragment.glsl" />
     <None Include="SkyboxVertex.glsl" />
   </ItemGroup>

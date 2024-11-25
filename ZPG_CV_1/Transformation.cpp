@@ -22,6 +22,16 @@ glm::mat4 Transformation::GetModelMatrix()
 	return modelMatrix;
 }
 
+void Transformation::ClearComponents()
+{
+	for (auto component : this->components)
+	{
+		delete component;
+	}
+
+	this->components.clear();
+}
+
 Transformation::~Transformation()
 {
     for (auto component : this->components)

@@ -16,7 +16,7 @@ public:
     Texture();
     ~Texture();
 
-    bool Load2DTexture(string& filePath, GLuint textureUnit = 0, GLenum format = GL_RGBA);
+    bool Load2DTexture(const char* filePath, GLuint textureUnit = 0, GLenum format = GL_RGBA);
     bool LoadCubemap(vector<string>& filePaths);
     void Bind();
     void Unbind();

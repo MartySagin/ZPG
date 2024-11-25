@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "Animation.h"
+#include "Skybox.h"
 
 using namespace std;
 
@@ -19,12 +20,10 @@ class Scene
 
 		Animation animation;
 
-        DrawableObject* skybox;
-
-        bool followSkybox = true;
+        Skybox* skybox;
 
     public:
-        void Init(vector<DrawableObject*> drawableObjects, Camera* camera, vector<Light*> lights);  
+        void Init(Camera* camera, vector<Light*> lights);  
 
         void Render();  
 
@@ -34,9 +33,7 @@ class Scene
 
 		void AddAnimation(function<void(float)> animation);
 
-        void SetSkybox(DrawableObject* skybox);
-
-        void SetFollowSkybox(bool followSkybox);
+        void SetSkybox(Skybox* skybox);
 
         Camera* GetCamera();
 
@@ -44,7 +41,7 @@ class Scene
 
 		vector<DrawableObject*> GetObjects();
 
-        DrawableObject* GetSkybox();
+        Skybox* GetSkybox();
 
         bool GetFollowSkybox();
 };

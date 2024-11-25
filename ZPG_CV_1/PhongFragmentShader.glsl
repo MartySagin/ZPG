@@ -1,12 +1,17 @@
-#version 450
+#version 330 core
 
-in vec2 uv;
+in vec3 FragPos;        
+in vec2 TexCoords;      
+in mat3 TBN;            
 
-uniform sampler2D textureUnitID;
+uniform sampler2D textureUnit;  
+uniform bool hasTexture;        
+uniform vec3 objectColor;     
 
-out vec4 frag_color;
+out vec4 fragColor;             
 
-void main () {
-    frag_color = texture(textureUnitID, uv);
+void main() {
+    vec3 texColor = hasTexture ? texture(textureUnit, TexCoords).rgb : objectColor;
+
+    fragColor = vec4(texColor, 1.0);
 }
-

@@ -16,7 +16,7 @@ Texture::~Texture() {
     }
 }
 
-bool Texture::Load2DTexture(string& filePath, GLuint textureUnit, GLenum format) {
+bool Texture::Load2DTexture(const char* filePath, GLuint textureUnit, GLenum format) {
     this->textureUnit = textureUnit;
     this->textureType = GL_TEXTURE_2D;
 
@@ -24,7 +24,7 @@ bool Texture::Load2DTexture(string& filePath, GLuint textureUnit, GLenum format)
     glGenTextures(1, &this->textureID);
     glBindTexture(GL_TEXTURE_2D, this->textureID);
 
-    this->textureID = SOIL_load_OGL_texture(filePath.c_str(), SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    this->textureID = SOIL_load_OGL_texture(filePath, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     
     if (this->textureID == 0) {
         cerr << "Failed to load texture: " << filePath << endl;

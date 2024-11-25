@@ -20,6 +20,8 @@ class Transformation
         void AddComponent(TransformationComponent* component);
     
         glm::mat4 GetModelMatrix();
+
+		void ClearComponents();
     
         ~Transformation();
     

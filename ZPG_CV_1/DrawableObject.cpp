@@ -47,12 +47,12 @@ DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::
 	this->texture = nullptr;
 }
 
-DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, glm::vec3 objectColor, Material* material, Texture* texture)
+DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, Material* material, Texture* texture)
 	: shaderProgram(*shaderProgram), model(*model), material(*material), texture(texture)
 {
 	this->transform = Transformation();
 
-	this->objectColor = objectColor;
+	this->objectColor = glm::vec3(1.0f);
 
 }
 
@@ -74,6 +74,8 @@ ShaderProgram* DrawableObject::GetShaderProgram()
 
 void DrawableObject::Draw()
 {
+	
+	
 	this->shaderProgram.UseProgram();
 
 	if (texture != nullptr) {
@@ -85,11 +87,11 @@ void DrawableObject::Draw()
 	}
 	else {
 		this->shaderProgram.SetIntUniform("hasTexture", 0); 
+
+		this->shaderProgram.SetVec3Uniform("objectColor", this->objectColor);
 	}
 
 	this->shaderProgram.SetMat4Uniform("modelMatrix", this->transform.GetModelMatrix());
-
-	this->shaderProgram.SetVec3Uniform("objectColor", this->objectColor);
 
 	this->shaderProgram.SetFloatUniform("material.ra", this->material.GetAmbientCoefficient());
 
@@ -108,6 +110,8 @@ void DrawableObject::Draw()
 	}
 
 	this->shaderProgram.DisableProgram();
+
+	
 }
 
 

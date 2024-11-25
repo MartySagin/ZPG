@@ -53,8 +53,8 @@ vector<Scene*> SceneMaker::GetAllScenes()
 
 void SceneMaker::CreateSceneTriangle()
 {
-	vector<DrawableObject*> objects;
-	
+	Scene* scene = new Scene();
+
 	Camera* camera = new Camera(glm::vec3(10.0f, 10.0f, 20.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 30.0f, 60.0f, ratio, 0.1f, 100.0f);
 
 	camera->Rotate(-90.0f, 0.0f);
@@ -71,31 +71,48 @@ void SceneMaker::CreateSceneTriangle()
 		0.5f, 1.0f, 0.0f
 	};
 
-	//Init Shaders for Scene
-	ShaderProgram* triangleShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(triangle) / sizeof(float) / 3);
-	triangleShader->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
-
 	//Init Models for Scene
 	Model* triangleModel = new Model();
 	triangleModel->GenerateModel(triangle, sizeof(triangle));
 
+	Model* objectModel = new Model();
+	objectModel->GenerateModelFromOBJ("objects/login.obj");
+
+	//Init Shaders for Scene
+	ShaderProgram* triangleShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(triangle) / sizeof(float) / 3);
+	triangleShader->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
+
+	ShaderProgram* objectShader = new ShaderProgram(GL_TRIANGLES, 1, objectModel->GetIndicesCount());
+	objectShader->AddShadersFromFiles("PhongVertexShader.glsl", "PhongFragmentShader.glsl");
+	
 	//Init Observers for Camera
 	camera->AddObserver(triangleShader);
+
+	camera->AddObserver(objectShader);
 
 	DrawableObject* triangleObject = new DrawableObject(triangleShader, triangleModel, objectColor, metalMaterial);
 	triangleObject->GetTransformation()->AddComponent(new Scale(glm::vec3(20.0f)));
 
-	objects.push_back(triangleObject);
+	scene->AddObject(triangleObject);
 
-	Scene* scene = new Scene();
+	Texture* objectTexture = new Texture();
+	objectTexture->Load2DTexture("textures/wooden_fence.png");
 
-	scene->Init(objects, camera, lights);
+	DrawableObject* objectObject = new DrawableObject(objectShader, objectModel, metalMaterial, objectTexture);
+	
+	objectObject->GetTransformation()->AddComponent(new Scale(glm::vec3(2.0f)));
+	objectObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 0.0f, 5.0f)));
+
+	scene->AddObject(objectObject);
+
+	scene->Init(camera, lights);
 
 	AddScene(scene);
 }
 
 void SceneMaker::CreateSceneFourSpheresLight() {
-	vector<DrawableObject*> objects;
+	
+	Scene* scene = new Scene();
 
 	Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, ratio, 0.1f, 100.0f);
 
@@ -134,36 +151,34 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 	sphereObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject->GetTransformation()->AddComponent(new Translate(glm::vec3(- 3.0f, 0.0f, 0.0f)));
 
-	objects.push_back(sphereObject);
+	scene->AddObject(sphereObject);
 
 	DrawableObject* sphereObject2 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
 	sphereObject2->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject2->GetTransformation()->AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
 
-	objects.push_back(sphereObject2);
+	scene->AddObject(sphereObject2);
 
 	DrawableObject* sphereObject3 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
 	sphereObject3->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject3->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
 
-	objects.push_back(sphereObject3);
+	scene->AddObject(sphereObject3);
 
 	DrawableObject* sphereObject4 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
 	sphereObject4->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f, 0.5f, 0.5f)));
 	sphereObject4->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
 
-	objects.push_back(sphereObject4);
+	scene->AddObject(sphereObject4);
 
-	Scene* scene = new Scene();
-
-	scene->Init(objects, camera, lights);
+	scene->Init(camera, lights);
 
 	this->AddScene(scene);
 }
 
 
 void SceneMaker::CreateSceneWithMoreModels() {
-	vector<DrawableObject*> objects;
+	Scene* scene = new Scene();
 	
 	Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, ratio, 0.1f, 100.0f);
 
@@ -225,36 +240,34 @@ void SceneMaker::CreateSceneWithMoreModels() {
 	giftObject->GetTransformation()->AddComponent(new Scale(glm::vec3(1.5f, 1.5f, 1.5f)));
 	giftObject->GetTransformation()->AddComponent(new Translate(glm::vec3(-3.0f, 0.0f, 0.0f)));
 
-	objects.push_back(giftObject);
+	scene->AddObject(giftObject);
 
 	DrawableObject* suziFlatObject = new DrawableObject(suziFlatShader, suziFlatModel, objectColor, metalMaterial);
 	suziFlatObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f, 0.5f, 0.5f)));
 	suziFlatObject->GetTransformation()->AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
 
-	objects.push_back(suziFlatObject);
+	scene->AddObject(suziFlatObject);
 
 	DrawableObject* suziSmoothObject = new DrawableObject(suziSmoothShader, suziFlatModel, objectColor, metalMaterial);
 	suziSmoothObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f, 0.5f, 0.5f)));
 	suziSmoothObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
 
-	objects.push_back(suziSmoothObject);
+	scene->AddObject(suziSmoothObject);
 
 	DrawableObject* sphereObject = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
 	sphereObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
 
-	objects.push_back(sphereObject);
+	scene->AddObject(sphereObject);
 
-	Scene* scene = new Scene();
-
-	scene->Init(objects, camera, lights);
+	scene->Init(camera, lights);
 
 	this->AddScene(scene);
 }
 
 void SceneMaker::CreateSceneForest()
 {
-	vector<DrawableObject*> objects;
+	Scene* scene = new Scene();
 
 	Camera* camera = new Camera(glm::vec3(0.0f, 10.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, ratio, 0.1f, 100.0f);
 
@@ -283,8 +296,8 @@ void SceneMaker::CreateSceneForest()
 		lights[i]->SetIndex(i);
 	}
 
+	//Init objectColor for Scene Trees, Bushes
 	glm::vec3 objectColor = glm::vec3(0.385f, 0.647f, 0.812f);
-
 
 	//Init Material for Scene Trees, Bushes
 	Material* woodMaterial = new Material(0.6f, 0.8f, 0.2f);
@@ -322,19 +335,15 @@ void SceneMaker::CreateSceneForest()
 	//Init Textures for Scene
 	Texture* plainTexture = new Texture();
 
-	string filePath = "textures/grass.png";
-
-	plainTexture->Load2DTexture(filePath);
+	plainTexture->Load2DTexture("textures/grass.png");
 	
 
 	//Scene Forest
-	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, glm::vec3(0.0f, 1.0f, 0.0f), soilMaterial, plainTexture);
+	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, soilMaterial, plainTexture);
 	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(25.0f, 25.0f, 25.0f)));
 	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
 
-	objects.push_back(plainObject);
-
-	Scene* scene = new Scene();
+	scene->AddObject(plainObject);
 
 	srand((unsigned int)(time(NULL)));
 
@@ -362,14 +371,14 @@ void SceneMaker::CreateSceneForest()
 				treeObject->GetTransformation()->AddComponent(new DynamicRotate(glm::vec3(0.0f), glm::vec3(0.0f, 20.0f, 0.0f), 0.01f));
 			}
 
-			objects.push_back(treeObject);
+			scene->AddObject(treeObject);
 
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel, objectColor, bushMaterial);
 
 			bushObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 500.0 + 0.05f))));
 			bushObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f)));
 
-			objects.push_back(bushObject);
+			scene->AddObject(bushObject);
 		}
 	}
 
@@ -403,7 +412,6 @@ void SceneMaker::CreateSceneForest()
 	Model* skyboxModel = new Model();
 	skyboxModel->GenerateModel(skycube, sizeof(skycube));
 
-
 	vector<string> filePaths = {
 	"textures/posx.jpg",
 	"textures/negx.jpg",
@@ -417,22 +425,18 @@ void SceneMaker::CreateSceneForest()
 
 	cubemapTexture->LoadCubemap(filePaths);
 	
-	DrawableObject* skyboxObject = new DrawableObject(skyboxShader, skyboxModel, glm::vec3(1.0f), soilMaterial, cubemapTexture);
-
-	skyboxObject->GetTransformation()->AddComponent(new Scale(glm::vec3(50.0f)));
-
-	objects.push_back(skyboxObject);
+	Skybox* skyboxObject = new Skybox(skyboxShader, skyboxModel, soilMaterial, cubemapTexture);
 
 	scene->SetSkybox(skyboxObject);
 
-	scene->Init(objects, camera, lights);
+	scene->Init(camera, lights);
 
 	this->AddScene(scene);
 }
 
 void SceneMaker::CreateSceneForestDark()
 {
-	vector<DrawableObject*> objects;
+	Scene* scene = new Scene();
 	
 	Camera* camera = new Camera(glm::vec3(0.0f, 10.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, ratio, 0.1f, 100.0f);
 
@@ -450,6 +454,7 @@ void SceneMaker::CreateSceneForestDark()
 
 	camera->AddObserver(light);
 
+	//Init objectColor for Scene Trees, Bushes
 	glm::vec3 objectColor = glm::vec3(0.385f, 0.647f, 0.812f);
 
 	//Init Material for Scene Trees, Bushes
@@ -486,21 +491,16 @@ void SceneMaker::CreateSceneForestDark()
 	this->InitObservers(camera, lights, shaders);
 
 	//Init Textures for Scene
-
 	Texture* plainTexture = new Texture();
 
-	string filePath = "textures/grass.png";
-
-	plainTexture->Load2DTexture(filePath);
+	plainTexture->Load2DTexture("textures/grass.png");
 
 	//Scene Forest
-	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, glm::vec3(0.0f, 1.0f, 0.0f), soilMaterial, plainTexture);
+	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, soilMaterial, plainTexture);
 	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(25.0f)));
 	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
 
-	objects.push_back(plainObject);
-
-	Scene* scene = new Scene();
+	scene->AddObject(plainObject);
 
 	srand((unsigned int)(time(NULL)));
 
@@ -529,19 +529,19 @@ void SceneMaker::CreateSceneForestDark()
 				treeObject->GetTransformation()->AddComponent(new DynamicRotate(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), 0.01f));
 			}
 
-			objects.push_back(treeObject);
+			scene->AddObject(treeObject);
 
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel, objectColor, bushMaterial);
 
 			bushObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 500.0 + 0.05f))));
 			bushObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f)));
 
-			objects.push_back(bushObject);
+			scene->AddObject(bushObject);
 		}
 	}
 
 
-	scene->Init(objects, camera, lights);
+	scene->Init(camera, lights);
 
 	this->AddScene(scene);
 }

@@ -93,6 +93,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -194,6 +197,9 @@
     <ClInclude Include="skycube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="BlinnPhongShader.glsl" />
@@ -206,5 +212,7 @@
   <ItemGroup>
     <None Include="SkyboxVertex.glsl" />
     <None Include="SkyboxFragment.glsl" />
+    <None Include="PhongFragmentShader.glsl" />
+    <None Include="PhongVertexShader.glsl" />
   </ItemGroup>
 </Project>

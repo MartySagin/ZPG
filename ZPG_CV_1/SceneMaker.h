@@ -11,6 +11,7 @@
 #include "Rotate.h"
 #include "Scale.h"
 #include "Translate.h"
+#include "Skybox.h"
 
 #include "gift.h"
 #include "suzi_flat.h"
