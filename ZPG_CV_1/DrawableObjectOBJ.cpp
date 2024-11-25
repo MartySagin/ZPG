@@ -13,7 +13,7 @@ void DrawableObjectOBJ::Draw()
 
 		this->shaderProgram.SetIntUniform("hasTexture", 1);
 
-		this->shaderProgram.SetIntUniform("textureUnit", texture->GetTextureUnit());
+		this->shaderProgram.SetIntUniform("textureUnit", this->texture->GetTextureUnit());
 	}
 	else {
 		this->shaderProgram.SetIntUniform("hasTexture", 0);

@@ -224,7 +224,5 @@
   <ItemGroup>
     <None Include="SkyboxVertex.glsl" />
     <None Include="SkyboxFragment.glsl" />
-    <None Include="PhongFragmentShader.glsl" />
-    <None Include="PhongVertexShader.glsl" />
   </ItemGroup>
 </Project>

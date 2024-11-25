@@ -28,16 +28,14 @@ void SceneMaker::InitObservers(Camera* camera, vector<Light*> lights, vector<Sha
 {
 	for (auto& shader : shaders) {
 		camera->AddObserver(shader);
+
+		shader->SetNumberOfLights((int)lights.size());
 	}
 
 	for (auto& light : lights) {
 		for (auto& shader : shaders) {
 			light->AddObserver(shader);
 		}
-	}
-
-	for (auto& shader : shaders) {
-		shader->SetNumberOfLights((int)lights.size());
 	}
 }
 
@@ -59,7 +57,15 @@ void SceneMaker::CreateSceneTriangle()
 
 	camera->Rotate(-90.0f, 0.0f);
 
-	vector<Light*> lights(0);
+	vector<Light*> lights;
+
+	Light* light = new Light(glm::vec3(0.0f, 0.0f, 6.0f), glm::vec3(1.0f, 1.0f, 1.0f), 10.0f, 0.75f, glm::vec3(0.0f, -1.0f, 0.0f), 0.0f, 0.0f, 1);
+
+	lights.push_back(light);
+
+	for (int i = 0; i < lights.size(); i++) {
+		lights[i]->SetIndex(i);
+	}
 
 	glm::vec3 objectColor = glm::vec3(0.0f, 0.0f, 1.0f);
 
@@ -83,12 +89,11 @@ void SceneMaker::CreateSceneTriangle()
 	triangleShader->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
 
 	ShaderProgram* objectShader = new ShaderProgram(GL_TRIANGLES, 0, objectModel->GetIndicesCount());
-	objectShader->AddShadersFromFiles("PhongVertexShader.glsl", "PhongFragmentShader.glsl");
+	objectShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	
 	
 	//Init Observers for Camera
-	camera->AddObserver(triangleShader);
-
-	camera->AddObserver(objectShader);
+	InitObservers(camera, lights, { triangleShader, objectShader });
 
 	DrawableObject* triangleObject = new DrawableObject(triangleShader, triangleModel, objectColor, metalMaterial);
 	triangleObject->GetTransformation()->AddComponent(new Scale(glm::vec3(20.0f)));
@@ -288,9 +293,11 @@ void SceneMaker::CreateSceneForest()
 
 	lights.push_back(light4);*/
 
-	Light* dirLight = new Light(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, -1.0f, 0.0f), 6.5f, 17.5f, 3);
+	Light* dirLight = new Light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, 0.0f, 1.0f), 6.5f, 17.5f, 3);
+	Light* dirLight2 = new Light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, -1.0f, 0.0f), 6.5f, 17.5f, 3);
 
 	lights.push_back(dirLight);	
+	lights.push_back(dirLight2);
 
 	for (int i = 0; i < lights.size(); i++) {
 		lights[i]->SetIndex(i);
@@ -336,7 +343,7 @@ void SceneMaker::CreateSceneForest()
 	shaders.push_back(plainShader);
 
 	ShaderProgram* houseShader = new ShaderProgram(GL_TRIANGLES, 0, houseModel->GetIndicesCount());
-	houseShader->AddShadersFromFiles("PhongVertexShader.glsl", "PhongFragmentShader.glsl");
+	houseShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(houseShader);
 
 	ShaderProgram* skyboxShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(skycube) / sizeof(float) / 3);
@@ -378,9 +385,10 @@ void SceneMaker::CreateSceneForest()
 	scene->AddObject(plainObject);
 
 	DrawableObjectOBJ* houseObject = new DrawableObjectOBJ(houseShader, houseModel, woodMaterial, houseTexture);
-	houseObject->GetTransformation()->AddComponent(new Scale(glm::vec3(1.5f)));
-	houseObject->GetTransformation()->AddComponent(new Translate(glm::vec3(10.0f, 0.0f, 20.0f)));
+
+	houseObject->GetTransformation()->AddComponent(new Translate(glm::vec3(10.0f, 0.0f, 25.0f)));
 	houseObject->GetTransformation()->AddComponent(new Rotate(glm::vec3(0.0f, 90.0f, 0.0f)));
+	houseObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 
 	scene->AddObject(houseObject);
 

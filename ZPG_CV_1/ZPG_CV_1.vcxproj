@@ -207,8 +207,6 @@
     <Text Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PhongFragmentShader.glsl" />
-    <None Include="PhongVertexShader.glsl" />
     <None Include="SkyboxFragment.glsl" />
     <None Include="SkyboxVertex.glsl" />
   </ItemGroup>
