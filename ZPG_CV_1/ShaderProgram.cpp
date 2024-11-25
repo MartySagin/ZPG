@@ -13,6 +13,18 @@ ShaderProgram::ShaderProgram(GLenum mode, GLint first, GLsizei count)
 
 }
 
+ShaderProgram::ShaderProgram(GLenum mode, GLsizei count)
+{
+	this->shaderLoader = nullptr;
+
+	this->shader_id = 0;
+
+	this->mode = mode;
+	this->first = 0;
+	this->count = count;
+
+}
+
 void ShaderProgram::AddShaders(const char* vertex_shader, const char* fragment_shader)
 {
 	

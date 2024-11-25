@@ -304,6 +304,22 @@ void SceneMaker::CreateSceneForest()
 	Material* soilMaterial = new Material(0.5f, 0.7f, 0.1f);
 	Material* bushMaterial = new Material(0.6f, 0.8f, 0.15f);
 
+	//Init Models for Scene Trees, Bushes
+	Model* treeModel = new Model();
+	treeModel->GenerateModelWithNormal(tree, sizeof(tree));
+
+	Model* bushModel = new Model();
+	bushModel->GenerateModelWithNormal(bushes, sizeof(bushes));
+
+	Model* plainModel = new Model();
+	plainModel->GenerateModelWithNormalAndUV(plain, sizeof(plain));
+
+	ModelObject* houseModel = new ModelObject();
+	houseModel->GenerateModelFromOBJ("objects/house.obj");
+
+	Model* skyboxModel = new Model();
+	skyboxModel->GenerateModel(skycube, sizeof(skycube));
+
 	//Init Shaders for Scene Trees, Bushes
 	vector<ShaderProgram*> shaders;
 
@@ -319,15 +335,14 @@ void SceneMaker::CreateSceneForest()
 	plainShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(plainShader);
 
-	//Init Models for Scene Trees, Bushes
-	Model* treeModel = new Model();
-	treeModel->GenerateModelWithNormal(tree, sizeof(tree));
+	ShaderProgram* houseShader = new ShaderProgram(GL_TRIANGLES, 0, houseModel->GetIndicesCount());
+	houseShader->AddShadersFromFiles("PhongVertexShader.glsl", "PhongFragmentShader.glsl");
+	shaders.push_back(houseShader);
 
-	Model* bushModel = new Model();
-	bushModel->GenerateModelWithNormal(bushes, sizeof(bushes));
+	ShaderProgram* skyboxShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(skycube) / sizeof(float) / 3);
+	skyboxShader->AddShadersFromFiles("SkyboxVertex.glsl", "SkyboxFragment.glsl");
+	shaders.push_back(skyboxShader);
 
-	Model* plainModel = new Model();
-	plainModel->GenerateModelWithNormalAndUV(plain, sizeof(plain));
 
 	//Init Observers for Camera
 	this->InitObservers(camera, lights, shaders);
@@ -336,6 +351,23 @@ void SceneMaker::CreateSceneForest()
 	Texture* plainTexture = new Texture();
 
 	plainTexture->Load2DTexture("textures/grass.png");
+
+	Texture* houseTexture = new Texture();
+
+	houseTexture->Load2DTexture("textures/house.png");
+
+	vector<string> filePaths = {
+		"textures/posx.jpg",
+		"textures/negx.jpg",
+		"textures/posy.jpg",
+		"textures/negy.jpg",
+		"textures/posz.jpg",
+		"textures/negz.jpg"
+	};
+
+	Texture* cubemapTexture = new Texture();
+
+	cubemapTexture->LoadCubemap(filePaths);
 	
 
 	//Scene Forest
@@ -344,6 +376,13 @@ void SceneMaker::CreateSceneForest()
 	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
 
 	scene->AddObject(plainObject);
+
+	DrawableObjectOBJ* houseObject = new DrawableObjectOBJ(houseShader, houseModel, woodMaterial, houseTexture);
+	houseObject->GetTransformation()->AddComponent(new Scale(glm::vec3(1.5f)));
+	houseObject->GetTransformation()->AddComponent(new Translate(glm::vec3(10.0f, 0.0f, 20.0f)));
+	houseObject->GetTransformation()->AddComponent(new Rotate(glm::vec3(0.0f, 90.0f, 0.0f)));
+
+	scene->AddObject(houseObject);
 
 	srand((unsigned int)(time(NULL)));
 
@@ -404,27 +443,6 @@ void SceneMaker::CreateSceneForest()
 	});*/
 
 
-	ShaderProgram* skyboxShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(skycube) / sizeof(float) / 3);
-	skyboxShader->AddShadersFromFiles("SkyboxVertex.glsl", "SkyboxFragment.glsl");
-
-	camera->AddObserver(skyboxShader);
-
-	Model* skyboxModel = new Model();
-	skyboxModel->GenerateModel(skycube, sizeof(skycube));
-
-	vector<string> filePaths = {
-	"textures/posx.jpg",
-	"textures/negx.jpg",
-	"textures/posy.jpg",
-	"textures/negy.jpg",
-	"textures/posz.jpg",
-	"textures/negz.jpg"
-	};
-
-	Texture* cubemapTexture = new Texture();
-
-	cubemapTexture->LoadCubemap(filePaths);
-	
 	Skybox* skyboxObject = new Skybox(skyboxShader, skyboxModel, soilMaterial, cubemapTexture);
 
 	scene->SetSkybox(skyboxObject);

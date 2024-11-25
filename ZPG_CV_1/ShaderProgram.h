@@ -31,6 +31,8 @@ class ShaderProgram : public Observer
 
 	public:
 		ShaderProgram(GLenum mode, GLint first, GLsizei count);
+
+		ShaderProgram(GLenum mode, GLsizei count);
 		
 		void AddShaders(const char* vertex_shader, const char* fragment_shader);
 
