@@ -12,9 +12,11 @@ void DynamicScale::Update()
 	this->scaling.z += this->velocity.z * this->deltaTime;
 }
 
-glm::mat4 DynamicScale::Apply(glm::mat4 model)
+glm::mat4 DynamicScale::GetMatrix()
 {
-    model = glm::scale(model, this->scaling);
-
-    return model;
+	Update();
+	
+	glm::mat4 result(1.0f);
+	
+	return glm::scale(result, this->scaling);
 }

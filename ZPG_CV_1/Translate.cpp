@@ -4,7 +4,9 @@ Translate::Translate(glm::vec3 translation) : translation(translation)
 {
 }
 
-glm::mat4 Translate::Apply(glm::mat4 model)
+glm::mat4 Translate::GetMatrix()
 { 
-	return glm::translate(model, this->translation);
+	glm::mat4 result(1.0f);
+	
+	return glm::translate(result, this->translation);
 }

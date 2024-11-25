@@ -11,7 +11,7 @@ private:
 public:
     DynamicScale(glm::vec3 scaling, glm::vec3 velocity, float deltaTime);
 
-    void Update() override;
+    void Update();
 
-    glm::mat4 Apply(glm::mat4 model) override;
+    glm::mat4 GetMatrix() override;
 };

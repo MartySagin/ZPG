@@ -4,7 +4,10 @@ Scale::Scale(glm::vec3 scaling) : scaling(scaling.x, scaling.y, scaling.z)
 {
 }
 
-glm::mat4 Scale::Apply(glm::mat4 model)
+glm::mat4 Scale::GetMatrix()
 {
-    return glm::scale(model, this->scaling);
+	glm::mat4 result(1.0f);
+    
+    return glm::scale(result, this->scaling);
 }
+

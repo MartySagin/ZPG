@@ -12,9 +12,11 @@ void DynamicTranslate::Update()
     this->translation.z += this->velocity.z * this->deltaTime;
 }
 
-glm::mat4 DynamicTranslate::Apply(glm::mat4 model)
+glm::mat4 DynamicTranslate::GetMatrix()
 {
-    model = glm::translate(model, this->translation);
+    Update();
 
-    return model;
+	glm::mat4 result(1.0f);
+    
+    return glm::translate(result, this->translation);
 }

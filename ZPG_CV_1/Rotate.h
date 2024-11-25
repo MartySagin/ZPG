@@ -12,7 +12,5 @@ class Rotate : public TransformationComponent
     public:
         Rotate(glm::vec3 rotation);
 
-        void Update() override {};
-
-        glm::mat4 Apply(glm::mat4 model) override;
+        glm::mat4 GetMatrix() override;
 };

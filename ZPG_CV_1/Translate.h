@@ -13,8 +13,6 @@ class Translate : public TransformationComponent
     public:
         Translate(glm::vec3 translation);
 
-        void Update() override {};
-
-        glm::mat4 Apply(glm::mat4 model) override;
+        glm::mat4 GetMatrix() override;
     
 };

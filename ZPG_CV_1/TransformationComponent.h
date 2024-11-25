@@ -4,9 +4,7 @@
 class TransformationComponent
 {
 public:
-    virtual glm::mat4 Apply(glm::mat4 model) = 0;
-
-    virtual void Update() = 0;
+    virtual glm::mat4 GetMatrix() = 0;
 
     virtual ~TransformationComponent() = default;
 };

@@ -16,9 +16,7 @@ glm::mat4 Transformation::GetModelMatrix()
     
     for (auto component : this->components)
 	{
-		component->Update();
-        
-        modelMatrix = component->Apply(modelMatrix);
+        modelMatrix *= component->GetMatrix();
 	}
 
 	return modelMatrix;
