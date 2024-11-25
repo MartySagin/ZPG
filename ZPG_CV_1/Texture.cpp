@@ -11,8 +11,8 @@ Texture::Texture() {
 }
 
 Texture::~Texture() {
-    if (textureID) {
-        glDeleteTextures(1, &textureID);
+    if (this->textureID) {
+        glDeleteTextures(1, &this->textureID);
     }
 }
 
@@ -21,12 +21,12 @@ bool Texture::Load2DTexture(string& filePath, GLuint textureUnit, GLenum format)
     this->textureType = GL_TEXTURE_2D;
 
     glActiveTexture(GL_TEXTURE0 + textureUnit);
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    glGenTextures(1, &this->textureID);
+    glBindTexture(GL_TEXTURE_2D, this->textureID);
 
-    textureID = SOIL_load_OGL_texture(filePath.c_str(), SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    this->textureID = SOIL_load_OGL_texture(filePath.c_str(), SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     
-    if (textureID == 0) {
+    if (this->textureID == 0) {
         cerr << "Failed to load texture: " << filePath << endl;
         
         return false;
@@ -38,6 +38,7 @@ bool Texture::Load2DTexture(string& filePath, GLuint textureUnit, GLenum format)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     glBindTexture(GL_TEXTURE_2D, 0);
+
     return true;
 }
 
@@ -50,11 +51,11 @@ bool Texture::LoadCubemap(vector<string>& filePaths) {
 
     this->textureType = GL_TEXTURE_CUBE_MAP;
 
-    glGenTextures(1, &textureID);
+    glGenTextures(1, &this->textureID);
     
-    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->textureID);
 
-    textureID = SOIL_load_OGL_cubemap(
+    this->textureID = SOIL_load_OGL_cubemap(
         filePaths[0].c_str(),
         filePaths[1].c_str(),
         filePaths[2].c_str(),
@@ -66,7 +67,7 @@ bool Texture::LoadCubemap(vector<string>& filePaths) {
         SOIL_FLAG_MIPMAPS
     );
 
-    if (!textureID) {
+    if (!this->textureID) {
         cerr << "Failed to load cubemap textures." << endl;
 
         return false;
@@ -85,23 +86,23 @@ bool Texture::LoadCubemap(vector<string>& filePaths) {
 
 
 void Texture::Bind() {
-    glActiveTexture(GL_TEXTURE0 + textureUnit);
+    glActiveTexture(GL_TEXTURE0 + this->textureUnit);
 
-    glBindTexture(textureType, textureID);
+    glBindTexture(this->textureType, this->textureID);
 }
 
 void Texture::Unbind() {
-    glBindTexture(textureType, 0);
+    glBindTexture(this->textureType, 0);
 }
 
 GLuint Texture::GetID() {
-    return textureID;
+    return this->textureID;
 }
 
 GLuint Texture::GetTextureUnit() {
-    return textureUnit;
+    return this->textureUnit;
 }
 
 GLenum Texture::GetType() {
-    return textureType;
+    return this->textureType;
 }
