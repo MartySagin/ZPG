@@ -12,6 +12,7 @@
 #include "Scale.h"
 #include "Translate.h"
 #include "Skybox.h"
+#include "DrawableObjectOBJ.h"
 
 #include "gift.h"
 #include "suzi_flat.h"

@@ -58,6 +58,8 @@ class ShaderProgram : public Observer
 
 		void Draw();
 
+		void DrawOBJ();
+
 		void UpdateFromSubject(Subject* subject) override;
 };
 

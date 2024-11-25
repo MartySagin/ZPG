@@ -14,29 +14,16 @@
 
 class Model
 {
-	private:
+	protected:
         GLuint VAO;
         GLuint VBO;
-		GLuint EBO;
-
-		int indicesCount;
-
-        struct Vertex {
-            float Position[3];
-            float Normal[3];
-            float Texture[2];
-            float Tangent[3];
-        };
-
+		
     public:
         Model();
 
         void GenerateModel(const float* points, GLsizeiptr size);
         void GenerateModelWithNormal(const float* points, GLsizeiptr size);
         void GenerateModelWithNormalAndUV(const float* points, GLsizeiptr size);
-		bool GenerateModelFromOBJ(const char* fileName);
-
-		int GetIndicesCount();
 
         void BindVAO();
         void UnbindVAO();

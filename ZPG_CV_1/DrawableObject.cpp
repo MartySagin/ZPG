@@ -56,11 +56,13 @@ DrawableObject::DrawableObject(ShaderProgram* shaderProgram, Model* model, Mater
 
 }
 
-void DrawableObject::SetTexture(Texture* texture)
+DrawableObject::DrawableObject(ShaderProgram* shaderProgram, ModelObject* model, Material* material, Texture* texture)
+	: shaderProgram(*shaderProgram), model(*model), material(*material), texture(texture)
 {
-	this->texture = texture;
-}
+	this->transform = Transformation();
 
+	this->objectColor = glm::vec3(1.0f);
+}
 
 Transformation* DrawableObject::GetTransformation()
 {
@@ -75,11 +77,10 @@ ShaderProgram* DrawableObject::GetShaderProgram()
 void DrawableObject::Draw()
 {
 	
-	
 	this->shaderProgram.UseProgram();
 
-	if (texture != nullptr) {
-		texture->Bind();
+	if (this->texture != nullptr) {
+		this->texture->Bind();
 
 		this->shaderProgram.SetIntUniform("hasTexture", 1);
 

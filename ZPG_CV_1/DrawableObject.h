@@ -7,6 +7,7 @@
 #include "FragmentShader.h"
 #include "Material.h"
 #include "Texture.h"
+#include "ModelObject.h"
 
 class DrawableObject
 {
@@ -34,7 +35,7 @@ class DrawableObject
 
         DrawableObject(ShaderProgram* shaderProgram, Model* model, Material* material, Texture* texture);
 
-        void SetTexture(Texture* texture);
+		DrawableObject(ShaderProgram* shaderProgram, ModelObject* model, Material* material, Texture* texture);
 
 	    Transformation* GetTransformation();
 

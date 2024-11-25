@@ -75,14 +75,14 @@ void SceneMaker::CreateSceneTriangle()
 	Model* triangleModel = new Model();
 	triangleModel->GenerateModel(triangle, sizeof(triangle));
 
-	Model* objectModel = new Model();
+	ModelObject* objectModel = new ModelObject();
 	objectModel->GenerateModelFromOBJ("objects/login.obj");
 
 	//Init Shaders for Scene
 	ShaderProgram* triangleShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(triangle) / sizeof(float) / 3);
 	triangleShader->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
 
-	ShaderProgram* objectShader = new ShaderProgram(GL_TRIANGLES, 1, objectModel->GetIndicesCount());
+	ShaderProgram* objectShader = new ShaderProgram(GL_TRIANGLES, 0, objectModel->GetIndicesCount());
 	objectShader->AddShadersFromFiles("PhongVertexShader.glsl", "PhongFragmentShader.glsl");
 	
 	//Init Observers for Camera
@@ -98,10 +98,10 @@ void SceneMaker::CreateSceneTriangle()
 	Texture* objectTexture = new Texture();
 	objectTexture->Load2DTexture("textures/wooden_fence.png");
 
-	DrawableObject* objectObject = new DrawableObject(objectShader, objectModel, metalMaterial, objectTexture);
+	DrawableObjectOBJ* objectObject = new DrawableObjectOBJ(objectShader, objectModel, metalMaterial, objectTexture);
 	
 	objectObject->GetTransformation()->AddComponent(new Scale(glm::vec3(2.0f)));
-	objectObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 0.0f, 5.0f)));
+	objectObject->GetTransformation()->AddComponent(new Translate(glm::vec3(2.0f, 2.5f, 5.0f)));
 
 	scene->AddObject(objectObject);
 

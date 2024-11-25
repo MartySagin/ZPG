@@ -135,6 +135,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="DrawableObject.cpp" />
+    <ClCompile Include="DrawableObjectOBJ.cpp" />
     <ClCompile Include="DynamicRotate.cpp" />
     <ClCompile Include="DynamicScale.cpp" />
     <ClCompile Include="DynamicTranslate.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scale.cpp" />
@@ -171,6 +173,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="DrawableObject.h" />
+    <ClInclude Include="DrawableObjectOBJ.h" />
     <ClInclude Include="DynamicRotate.h" />
     <ClInclude Include="DynamicScale.h" />
     <ClInclude Include="DynamicTranslate.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelObject.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Scale.h" />
