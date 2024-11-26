@@ -6,7 +6,9 @@ using namespace std;
 
 Texture::Texture() {
     this->textureID = 0;
+
     this->textureType = GL_TEXTURE_2D;
+
     this->textureUnit = 0;
 }
 
@@ -17,11 +19,15 @@ Texture::~Texture() {
 }
 
 bool Texture::Load2DTexture(const char* filePath, GLuint textureUnit, GLenum format) {
+
     this->textureUnit = textureUnit;
+
     this->textureType = GL_TEXTURE_2D;
 
     glActiveTexture(GL_TEXTURE0 + textureUnit);
+
     glGenTextures(1, &this->textureID);
+
     glBindTexture(GL_TEXTURE_2D, this->textureID);
 
     this->textureID = SOIL_load_OGL_texture(filePath, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);

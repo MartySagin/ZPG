@@ -360,20 +360,19 @@ void SceneMaker::CreateSceneForest()
 
 	//Init Textures for Scene
 	Texture* plainTexture = new Texture();
-
 	plainTexture->Load2DTexture("textures/grass.png");
 
 	Texture* houseTexture = new Texture();
-
 	houseTexture->Load2DTexture("textures/house.png");
 
 	Texture* cokeTexture = new Texture();
-
 	cokeTexture->Load2DTexture("textures/coke_logo.jpg");
 
 	Texture* loginTexture = new Texture();
-
 	loginTexture->Load2DTexture("textures/wooden_fence.png");
+
+	
+	Texture* cubemapTexture = new Texture();
 
 	vector<string> filePaths = {
 		"textures/posx.jpg",
@@ -383,8 +382,6 @@ void SceneMaker::CreateSceneForest()
 		"textures/posz.jpg",
 		"textures/negz.jpg"
 	};
-
-	Texture* cubemapTexture = new Texture();
 
 	cubemapTexture->LoadCubemap(filePaths);
 	
