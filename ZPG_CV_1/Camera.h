@@ -12,57 +12,57 @@ class ShaderProgram;
 
 class Camera : Subject
 {
-private:
-    glm::vec3 position;   
-    glm::vec3 target;    
-    glm::vec3 up;       
+    private:
+        glm::vec3 position;   
+        glm::vec3 target;    
+        glm::vec3 up;       
 
-    float movementSpeed;  
+        float movementSpeed;  
 
-    float fov;           
-    float aspectRatio;   
-    float zNear, zFar;    
+        float fov;           
+        float aspectRatio;   
+        float zNear, zFar;    
 
-    float yaw;    
-    float pitch;
+        float yaw;    
+        float pitch;
 
-    glm::mat4 viewMatrix;       
-    glm::mat4 projectionMatrix; 
+        glm::mat4 viewMatrix;       
+        glm::mat4 projectionMatrix; 
 
-    vector<Observer*> observers;
+        vector<Observer*> observers;
 
-public:
-    Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movementSpeed, float fov, float aspectRatio, float zNear, float zFar);
+    public:
+        Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movementSpeed, float fov, float aspectRatio, float zNear, float zFar);
 
-    glm::mat4 GetViewMatrix(); 
+        glm::mat4 GetViewMatrix(); 
 
-    glm::mat4 GetProjectionMatrix();  
+        glm::mat4 GetProjectionMatrix();  
 
-	glm::vec3 GetPosition();
+	    glm::vec3 GetPosition();
 
-    glm::vec3 GetTarget();
+        glm::vec3 GetTarget();
 
-	void IncreaseMovementSpeed(float movementSpeed);
-	void DecreaseMovementSpeed(float movementSpeed);
+	    void IncreaseMovementSpeed(float movementSpeed);
+	    void DecreaseMovementSpeed(float movementSpeed);
 
-    void Rotate(float deltaX, float deltaY);
+        void Rotate(float deltaX, float deltaY);
 
-    void MoveForward(float deltaTime);
+        void MoveForward(float deltaTime);
 
-    void MoveBackward(float deltaTime);
+        void MoveBackward(float deltaTime);
 
-    void MoveLeft(float deltaTime);
+        void MoveLeft(float deltaTime);
 
-    void MoveRight(float deltaTime);
+        void MoveRight(float deltaTime);
 
-    void UpdateViewMatrix();    
-    void UpdateProjectionMatrix(); 
+        void UpdateViewMatrix();    
+        void UpdateProjectionMatrix(); 
 
-	void SetAspectRatio(float ratio);
+	    void SetAspectRatio(float ratio);
 
-    void AddObserver(Observer* observer) override;
+        void AddObserver(Observer* observer) override;
 
-    void RemoveObserver(Observer* observer) override;
+        void RemoveObserver(Observer* observer) override;
 
-    void NotifyObservers() override;
+        void NotifyObservers() override;
 };

@@ -42,6 +42,4 @@ class Scene
 		vector<DrawableObject*> GetObjects();
 
         Skybox* GetSkybox();
-
-        bool GetFollowSkybox();
 };

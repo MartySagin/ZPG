@@ -7,22 +7,23 @@
 using namespace std;
 
 class Texture {
-private:
-    GLuint textureID;
-    GLenum textureType;
-    GLuint textureUnit;
 
-public:
-    Texture();
-    ~Texture();
+    private:
+        GLuint textureID;
+        GLenum textureType;
+        GLuint textureUnit;
 
-    bool Load2DTexture(const char* filePath, GLuint textureUnit = 0, GLenum format = GL_RGBA);
-    bool LoadCubemap(vector<string>& filePaths);
+    public:
+        Texture();
+        ~Texture();
 
-    void Bind();
-    void Unbind();
+        bool Load2DTexture(const char* filePath, GLuint textureUnit = 0, GLenum format = GL_RGBA);
+        bool LoadCubemap(vector<string>& filePaths);
 
-    GLuint GetID();
-    GLuint GetTextureUnit();
-    GLenum GetType();
+        void Bind();
+        void Unbind();
+
+        GLuint GetID();
+        GLuint GetTextureUnit();
+        GLenum GetType();
 };

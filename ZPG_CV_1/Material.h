@@ -1,18 +1,19 @@
 #pragma once
 
 class Material {
-public:
-    float ra; 
-    float rd; 
-    float rs; 
+    private:
+        float ra; 
+        float rd; 
+        float rs; 
 
-    Material(float ambient, float diffuse, float specular);
+    public:
+        Material(float ambient, float diffuse, float specular);
 
-    void SetAmbientCoefficient(float ambient);
-    void SetDiffuseCoefficient(float diffuse);
-    void SetSpecularCoefficient(float specular);
+        void SetAmbientCoefficient(float ambient);
+        void SetDiffuseCoefficient(float diffuse);
+        void SetSpecularCoefficient(float specular);
 
-    float GetAmbientCoefficient();
-    float GetDiffuseCoefficient();
-    float GetSpecularCoefficient();
+        float GetAmbientCoefficient();
+        float GetDiffuseCoefficient();
+        float GetSpecularCoefficient();
 };

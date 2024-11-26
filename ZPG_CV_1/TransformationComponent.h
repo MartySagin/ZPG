@@ -3,8 +3,8 @@
 
 class TransformationComponent
 {
-public:
-    virtual glm::mat4 GetMatrix() = 0;
+    public:
+        virtual glm::mat4 GetMatrix() = 0;
 
-    virtual ~TransformationComponent() = default;
+        virtual ~TransformationComponent() = default;
 };

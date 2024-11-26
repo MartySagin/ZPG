@@ -1,19 +1,18 @@
-// Animation.h
 #pragma once
+
 #include <vector>
 #include <functional>
-#include "Light.h"  // Pøedpokládáme, že budeme animovat svìtla
+#include "Light.h"
 
 using namespace std;
 
 class Animation {
-private:
-  
-    vector<function<void(float)>> animations;
+    private:
+        vector<function<void(float)>> animations;
 
-public:
+    public:
    
-    void AddAnimation(function<void(float)> animation);
+        void AddAnimation(function<void(float)> animation);
 
-    void Update(float deltaTime);
+        void Update(float deltaTime);
 };

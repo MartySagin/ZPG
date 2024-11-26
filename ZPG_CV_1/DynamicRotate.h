@@ -4,15 +4,15 @@
 
 class DynamicRotate : public Rotate
 {
-private:
-    glm::vec3 velocity;
+    private:
+        glm::vec3 velocity;
 
-	float deltaTime;
+	    float deltaTime;
 
-public:
-    DynamicRotate(glm::vec3 rotation, glm::vec3 velocity, float deltaTime);
+    public:
+        DynamicRotate(glm::vec3 rotation, glm::vec3 velocity, float deltaTime);
 
-    void Update(); 
+        void Update(); 
 
-	glm::mat4 GetMatrix() override;
+	    glm::mat4 GetMatrix() override;
 };
