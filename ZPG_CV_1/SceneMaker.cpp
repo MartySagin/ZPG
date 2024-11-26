@@ -81,34 +81,18 @@ void SceneMaker::CreateSceneTriangle()
 	Model* triangleModel = new Model();
 	triangleModel->GenerateModel(triangle, sizeof(triangle));
 
-	ModelObject* objectModel = new ModelObject();
-	objectModel->GenerateModelFromOBJ("objects/login.obj");
-
 	//Init Shaders for Scene
 	ShaderProgram* triangleShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(triangle) / sizeof(float) / 3);
 	triangleShader->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
 
-	ShaderProgram* objectShader = new ShaderProgram(GL_TRIANGLES, 0, objectModel->GetIndicesCount());
-	objectShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
-	
-	
+
 	//Init Observers for Camera
-	InitObservers(camera, lights, { triangleShader, objectShader });
+	InitObservers(camera, lights, { triangleShader });
 
 	DrawableObject* triangleObject = new DrawableObject(triangleShader, triangleModel, objectColor, metalMaterial);
 	triangleObject->GetTransformation()->AddComponent(new Scale(glm::vec3(20.0f)));
 
 	scene->AddObject(triangleObject);
-
-	Texture* objectTexture = new Texture();
-	objectTexture->Load2DTexture("textures/wooden_fence.png");
-
-	DrawableObjectOBJ* objectObject = new DrawableObjectOBJ(objectShader, objectModel, metalMaterial, objectTexture);
-	
-	objectObject->GetTransformation()->AddComponent(new Scale(glm::vec3(2.0f)));
-	objectObject->GetTransformation()->AddComponent(new Translate(glm::vec3(2.0f, 2.5f, 5.0f)));
-
-	scene->AddObject(objectObject);
 
 	scene->Init(camera, lights);
 
@@ -280,7 +264,7 @@ void SceneMaker::CreateSceneForest()
 
 	vector<Light*> lights;
 
-	/*Light* light = new Light(glm::vec3(0.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+	Light* light = new Light(glm::vec3(0.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 	Light* light2 = new Light(glm::vec3(0.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 	Light* light3 = new Light(glm::vec3(15.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
 	Light* light4 = new Light(glm::vec3(15.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
@@ -291,13 +275,19 @@ void SceneMaker::CreateSceneForest()
 
 	lights.push_back(light3);
 
-	lights.push_back(light4);*/
+	lights.push_back(light4);
 
-	Light* dirLight = new Light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, 0.0f, 1.0f), 6.5f, 17.5f, 3);
-	Light* dirLight2 = new Light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, -1.0f, 0.0f), 6.5f, 17.5f, 3);
+	Light* spotLight = new Light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.5f, glm::vec3(0.0f, 0.0f, 1.0f), 6.5f, 20.5f, 2);
 
-	lights.push_back(dirLight);	
-	lights.push_back(dirLight2);
+	lights.push_back(spotLight);
+
+	camera->AddObserver(spotLight);
+
+	//Light* dirLight = new Light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, 0.0f, 1.0f), 6.5f, 17.5f, 3);
+	//Light* dirLight2 = new Light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.05f, glm::vec3(0.0f, -1.0f, 0.0f), 6.5f, 17.5f, 3);
+
+	//lights.push_back(dirLight);	
+	//lights.push_back(dirLight2);
 
 	for (int i = 0; i < lights.size(); i++) {
 		lights[i]->SetIndex(i);
@@ -324,6 +314,12 @@ void SceneMaker::CreateSceneForest()
 	ModelObject* houseModel = new ModelObject();
 	houseModel->GenerateModelFromOBJ("objects/house.obj");
 
+	ModelObject* cokeModel = new ModelObject();
+	cokeModel->GenerateModelFromOBJ("objects/coke.obj");
+
+	ModelObject* loginModel = new ModelObject();
+	loginModel->GenerateModelFromOBJ("objects/login.obj");
+
 	Model* skyboxModel = new Model();
 	skyboxModel->GenerateModel(skycube, sizeof(skycube));
 
@@ -346,6 +342,14 @@ void SceneMaker::CreateSceneForest()
 	houseShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(houseShader);
 
+	ShaderProgram* cokeShader = new ShaderProgram(GL_TRIANGLES, 0, cokeModel->GetIndicesCount());
+	cokeShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	shaders.push_back(cokeShader);
+
+	ShaderProgram* loginshader = new ShaderProgram(GL_TRIANGLES, 0, loginModel->GetIndicesCount());
+	loginshader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	shaders.push_back(loginshader);
+
 	ShaderProgram* skyboxShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(skycube) / sizeof(float) / 3);
 	skyboxShader->AddShadersFromFiles("SkyboxVertex.glsl", "SkyboxFragment.glsl");
 	shaders.push_back(skyboxShader);
@@ -362,6 +366,14 @@ void SceneMaker::CreateSceneForest()
 	Texture* houseTexture = new Texture();
 
 	houseTexture->Load2DTexture("textures/house.png");
+
+	Texture* cokeTexture = new Texture();
+
+	cokeTexture->Load2DTexture("textures/coke_logo.jpg");
+
+	Texture* loginTexture = new Texture();
+
+	loginTexture->Load2DTexture("textures/wooden_fence.png");
 
 	vector<string> filePaths = {
 		"textures/posx.jpg",
@@ -391,6 +403,20 @@ void SceneMaker::CreateSceneForest()
 	houseObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 
 	scene->AddObject(houseObject);
+
+	DrawableObjectOBJ* cokeObject = new DrawableObjectOBJ(cokeShader, cokeModel, woodMaterial, cokeTexture);
+
+	cokeObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
+	cokeObject->GetTransformation()->AddComponent(new Translate(glm::vec3(-5.0f, 0.0f, 0.0f)));
+
+	scene->AddObject(cokeObject);
+
+	DrawableObjectOBJ* loginObject = new DrawableObjectOBJ(loginshader, loginModel, woodMaterial, loginTexture);
+
+	loginObject->GetTransformation()->AddComponent(new Scale(glm::vec3(3.0f)));
+	loginObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 1.0f, 0.0f)));
+
+	scene->AddObject(loginObject);
 
 	srand((unsigned int)(time(NULL)));
 
