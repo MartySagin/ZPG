@@ -161,13 +161,6 @@
     <ClCompile Include="VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Desktop\Models\bushes.h" />
-    <ClInclude Include="..\..\..\..\Desktop\Models\gift.h" />
-    <ClInclude Include="..\..\..\..\Desktop\Models\plain.h" />
-    <ClInclude Include="..\..\..\..\Desktop\Models\sphere.h" />
-    <ClInclude Include="..\..\..\..\Desktop\Models\suzi_flat.h" />
-    <ClInclude Include="..\..\..\..\Desktop\Models\suzi_smooth.h" />
-    <ClInclude Include="..\..\..\..\Desktop\Models\tree.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
@@ -182,6 +175,14 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelObject.h" />
+    <ClInclude Include="models\bushes.h" />
+    <ClInclude Include="models\gift.h" />
+    <ClInclude Include="models\plain.h" />
+    <ClInclude Include="models\skycube.h" />
+    <ClInclude Include="models\sphere.h" />
+    <ClInclude Include="models\suzi_flat.h" />
+    <ClInclude Include="models\suzi_smooth.h" />
+    <ClInclude Include="models\tree.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Scale.h" />
@@ -190,7 +191,6 @@
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Skybox.h" />
-    <ClInclude Include="skycube.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transformation.h" />

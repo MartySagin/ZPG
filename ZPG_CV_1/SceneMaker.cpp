@@ -331,11 +331,11 @@ void SceneMaker::CreateSceneForest()
 	shaders.push_back(treeShader);
 
 	ShaderProgram* bushShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(bushes) / sizeof(float) / 6);
-	bushShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	bushShader->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
 	shaders.push_back(bushShader);
 
 	ShaderProgram* plainShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(plain) / sizeof(float) / 6);
-	plainShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	plainShader->AddShadersFromFiles("VertexShader.glsl", "LambertShader.glsl");
 	shaders.push_back(plainShader);
 
 	ShaderProgram* houseShader = new ShaderProgram(GL_TRIANGLES, 0, houseModel->GetIndicesCount());
@@ -343,7 +343,7 @@ void SceneMaker::CreateSceneForest()
 	shaders.push_back(houseShader);
 
 	ShaderProgram* cokeShader = new ShaderProgram(GL_TRIANGLES, 0, cokeModel->GetIndicesCount());
-	cokeShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	cokeShader->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
 	shaders.push_back(cokeShader);
 
 	ShaderProgram* loginshader = new ShaderProgram(GL_TRIANGLES, 0, loginModel->GetIndicesCount());

@@ -1,6 +1,6 @@
 #version 330 core
 
-#define MAX_LIGHTS 4
+#define MAX_LIGHTS 6
 #define OFF_LIGHT 0
 #define POINT_LIGHT 1
 #define SPOT_LIGHT 2

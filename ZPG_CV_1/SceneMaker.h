@@ -14,14 +14,14 @@
 #include "Skybox.h"
 #include "DrawableObjectOBJ.h"
 
-#include "gift.h"
-#include "suzi_flat.h"
-#include "suzi_smooth.h"
-#include "plain.h"
-#include "bushes.h"
-#include "sphere.h"
-#include "tree.h"
-#include "skycube.h"
+#include "models/gift.h"
+#include "models/suzi_flat.h"
+#include "models/suzi_smooth.h"
+#include "models/plain.h"
+#include "models/bushes.h"
+#include "models/sphere.h"
+#include "models/tree.h"
+#include "models/skycube.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/random.hpp>
 #include <SOIL.h>

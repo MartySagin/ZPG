@@ -1,8 +1,17 @@
 #version 330 core
-    out vec4 fragColor;
+out vec4 fragColor;
 
-    uniform vec3 objectColor = vec3(0.385, 0.647, 0.812);
+in vec2 TexCoords;
 
-    void main() {
+uniform vec3 objectColor;
+uniform sampler2D textureUnit; 
+uniform bool hasTexture; 
+
+void main() {
+    if (hasTexture) {
+        fragColor = texture(textureUnit, TexCoords);
+    }
+    else {
         fragColor = vec4(objectColor, 1.0);
     }
+}
