@@ -367,19 +367,19 @@ void SceneMaker::CreateSceneForest()
 
 	//Init Textures for Scene
 	Texture* plainTexture = new Texture();
-	plainTexture->Load2DTexture("textures/grass.png", 1);
+	plainTexture->Load2DTexture("textures/grass.png");
 
 	Texture* houseTexture = new Texture();
-	houseTexture->Load2DTexture("textures/house.png", 2);
+	houseTexture->Load2DTexture("textures/house.png");
 
 	Texture* cokeTexture = new Texture();
-	cokeTexture->Load2DTexture("textures/coke_logo.jpg", 3);
+	cokeTexture->Load2DTexture("textures/coke_logo.jpg");
 
 	Texture* loginTexture = new Texture();
-	loginTexture->Load2DTexture("textures/wooden_fence.png", 4);
+	loginTexture->Load2DTexture("textures/wooden_fence.png");
 
 	Texture* zombieTexture = new Texture();
-	zombieTexture->Load2DTexture("textures/zombie.png", 5);
+	zombieTexture->Load2DTexture("textures/zombie.png");
 
 	
 	Texture* cubemapTexture = new Texture();
@@ -393,7 +393,7 @@ void SceneMaker::CreateSceneForest()
 		"textures/negz.jpg"
 	};
 
-	cubemapTexture->LoadCubemap(filePaths, 6);
+	cubemapTexture->LoadCubemap(filePaths);
 	
 
 	//Scene Forest

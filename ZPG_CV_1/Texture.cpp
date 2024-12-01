@@ -48,7 +48,7 @@ bool Texture::Load2DTexture(const char* filePath, GLenum format) {
     return true;
 }
 
-bool Texture::LoadCubemap(vector<string>& filePaths, GLuint textureUnit) {
+bool Texture::LoadCubemap(vector<string>& filePaths) {
     
     if (filePaths.size() != 6) {
         cerr << "Cubemap requires exactly 6 file paths." << endl;
