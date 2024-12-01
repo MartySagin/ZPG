@@ -9,7 +9,7 @@ void DrawableObjectOBJ::Draw()
 	this->shaderProgram.UseProgram();
 
 	if (this->texture != nullptr) {
-		this->texture->Bind();
+		this->texture->ActivateTexture();
 
 		this->shaderProgram.SetIntUniform("hasTexture", 1);
 
@@ -34,10 +34,6 @@ void DrawableObjectOBJ::Draw()
 	this->shaderProgram.DrawOBJ();
 
 	this->model.UnbindVAO();
-
-	if (this->texture) {
-		this->texture->Unbind();
-	}
 
 	this->shaderProgram.DisableProgram();
 }

@@ -4,6 +4,8 @@
 
 using namespace std;
 
+int Texture::textureCount = 0;
+
 Texture::Texture() {
     this->textureID = 0;
 
@@ -18,9 +20,11 @@ Texture::~Texture() {
     }
 }
 
-bool Texture::Load2DTexture(const char* filePath, GLuint textureUnit, GLenum format) {
+bool Texture::Load2DTexture(const char* filePath, GLenum format) {
 
-    this->textureUnit = textureUnit;
+    this->textureCount++;
+    
+    this->textureUnit = this->textureCount;
 
     this->textureType = GL_TEXTURE_2D;
 
@@ -43,19 +47,24 @@ bool Texture::Load2DTexture(const char* filePath, GLuint textureUnit, GLenum for
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    glBindTexture(GL_TEXTURE_2D, 0);
-
     return true;
 }
 
-bool Texture::LoadCubemap(vector<string>& filePaths) {
+bool Texture::LoadCubemap(vector<string>& filePaths, GLuint textureUnit) {
+    
     if (filePaths.size() != 6) {
         cerr << "Cubemap requires exactly 6 file paths." << endl;
 
         return false;
     }
 
+	this->textureCount++;
+
+    this->textureUnit = this->textureCount;
+
     this->textureType = GL_TEXTURE_CUBE_MAP;
+
+	glActiveTexture(GL_TEXTURE0 + textureUnit);
 
     glGenTextures(1, &this->textureID);
     
@@ -85,16 +94,12 @@ bool Texture::LoadCubemap(vector<string>& filePaths) {
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
     return true;
 }
 
 
-void Texture::Bind() {
+void Texture::ActivateTexture() {
     glActiveTexture(GL_TEXTURE0 + this->textureUnit);
-
-    glBindTexture(this->textureType, this->textureID);
 }
 
 void Texture::Unbind() {

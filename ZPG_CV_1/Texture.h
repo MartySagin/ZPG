@@ -13,14 +13,16 @@ class Texture {
         GLenum textureType;
         GLuint textureUnit;
 
+		static int textureCount;
+
     public:
         Texture();
         ~Texture();
 
-        bool Load2DTexture(const char* filePath, GLuint textureUnit = 0, GLenum format = GL_RGBA);
-        bool LoadCubemap(vector<string>& filePaths);
+        bool Load2DTexture(const char* filePath, GLenum format = GL_RGBA);
+        bool LoadCubemap(vector<string>& filePaths, GLuint textureUnit);
 
-        void Bind();
+        void ActivateTexture();
         void Unbind();
 
         GLuint GetID();

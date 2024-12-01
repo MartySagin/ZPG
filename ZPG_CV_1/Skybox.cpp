@@ -27,7 +27,7 @@ void Skybox::Draw()
 	this->shaderProgram.SetIntUniform("followCamera", this->followCamera);
 
 	if (texture != nullptr) {
-		texture->Bind();
+		texture->ActivateTexture();
 
 		this->shaderProgram.SetIntUniform("hasTexture", 1);
 
@@ -52,10 +52,6 @@ void Skybox::Draw()
 	this->shaderProgram.Draw();
 
 	this->model.UnbindVAO();
-
-	if (this->texture) {
-		this->texture->Unbind();
-	}
 
 	this->shaderProgram.DisableProgram();
 

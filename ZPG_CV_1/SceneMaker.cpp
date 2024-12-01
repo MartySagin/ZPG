@@ -320,6 +320,9 @@ void SceneMaker::CreateSceneForest()
 	ModelObject* loginModel = new ModelObject();
 	loginModel->GenerateModelFromOBJ("objects/login.obj");
 
+	ModelObject* zombieModel = new ModelObject();
+	zombieModel->GenerateModelFromOBJ("objects/zombie.obj");
+
 	Model* skyboxModel = new Model();
 	skyboxModel->GenerateModel(skycube, sizeof(skycube));
 
@@ -350,6 +353,10 @@ void SceneMaker::CreateSceneForest()
 	loginshader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(loginshader);
 
+	ShaderProgram* zombieShader = new ShaderProgram(GL_TRIANGLES, 0, zombieModel->GetIndicesCount());
+	zombieShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	shaders.push_back(zombieShader);
+
 	ShaderProgram* skyboxShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(skycube) / sizeof(float) / 3);
 	skyboxShader->AddShadersFromFiles("SkyboxVertex.glsl", "SkyboxFragment.glsl");
 	shaders.push_back(skyboxShader);
@@ -360,16 +367,19 @@ void SceneMaker::CreateSceneForest()
 
 	//Init Textures for Scene
 	Texture* plainTexture = new Texture();
-	plainTexture->Load2DTexture("textures/grass.png");
+	plainTexture->Load2DTexture("textures/grass.png", 1);
 
 	Texture* houseTexture = new Texture();
-	houseTexture->Load2DTexture("textures/house.png");
+	houseTexture->Load2DTexture("textures/house.png", 2);
 
 	Texture* cokeTexture = new Texture();
-	cokeTexture->Load2DTexture("textures/coke_logo.jpg");
+	cokeTexture->Load2DTexture("textures/coke_logo.jpg", 3);
 
 	Texture* loginTexture = new Texture();
-	loginTexture->Load2DTexture("textures/wooden_fence.png");
+	loginTexture->Load2DTexture("textures/wooden_fence.png", 4);
+
+	Texture* zombieTexture = new Texture();
+	zombieTexture->Load2DTexture("textures/zombie.png", 5);
 
 	
 	Texture* cubemapTexture = new Texture();
@@ -383,7 +393,7 @@ void SceneMaker::CreateSceneForest()
 		"textures/negz.jpg"
 	};
 
-	cubemapTexture->LoadCubemap(filePaths);
+	cubemapTexture->LoadCubemap(filePaths, 6);
 	
 
 	//Scene Forest
