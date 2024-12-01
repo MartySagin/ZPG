@@ -30,10 +30,6 @@ bool Texture::Load2DTexture(const char* filePath, GLenum format) {
 
     glActiveTexture(GL_TEXTURE0 + textureUnit);
 
-    glGenTextures(1, &this->textureID);
-
-    glBindTexture(GL_TEXTURE_2D, this->textureID);
-
     this->textureID = SOIL_load_OGL_texture(filePath, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     
     if (this->textureID == 0) {
@@ -46,6 +42,8 @@ bool Texture::Load2DTexture(const char* filePath, GLenum format) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glBindTexture(GL_TEXTURE_2D, this->textureID);
 
     return true;
 }
@@ -65,10 +63,6 @@ bool Texture::LoadCubemap(vector<string>& filePaths, GLuint textureUnit) {
     this->textureType = GL_TEXTURE_CUBE_MAP;
 
 	glActiveTexture(GL_TEXTURE0 + textureUnit);
-
-    glGenTextures(1, &this->textureID);
-    
-    glBindTexture(GL_TEXTURE_CUBE_MAP, this->textureID);
 
     this->textureID = SOIL_load_OGL_cubemap(
         filePaths[0].c_str(),
@@ -93,6 +87,8 @@ bool Texture::LoadCubemap(vector<string>& filePaths, GLuint textureUnit) {
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->textureID);
 
     return true;
 }
