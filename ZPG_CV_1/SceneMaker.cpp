@@ -1,8 +1,12 @@
 ﻿#include "SceneMaker.h"
 
-SceneMaker::SceneMaker(float ratio)
+SceneMaker::SceneMaker(float width, float height, float ratio)
 {
 	this->currentSceneIndex = 0;
+
+	this->width = width;
+
+	this->height = height;
 
 	this->ratio = ratio;
 }
@@ -53,7 +57,7 @@ void SceneMaker::CreateSceneTriangle()
 {
 	Scene* scene = new Scene();
 
-	Camera* camera = new Camera(glm::vec3(10.0f, 10.0f, 20.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 30.0f, 60.0f, ratio, 0.1f, 100.0f);
+	Camera* camera = new Camera(glm::vec3(10.0f, 10.0f, 20.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 30.0f, 60.0f, this->width, this->height, this->ratio, 0.1f, 100.0f);
 
 	camera->Rotate(-90.0f, 0.0f);
 
@@ -103,7 +107,7 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 	
 	Scene* scene = new Scene();
 
-	Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, ratio, 0.1f, 100.0f);
+	Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 7.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, this->width, this->height, this->ratio, 0.1f, 100.0f);
 
 	camera->Rotate(-90.0f, 0.0f);
 
@@ -169,7 +173,7 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 void SceneMaker::CreateSceneWithMoreModels() {
 	Scene* scene = new Scene();
 	
-	Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, ratio, 0.1f, 100.0f);
+	Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, this->width, this->height, this->ratio, 0.1f, 100.0f);
 
 	camera->Rotate(-90.0f, 0.0f);
 
@@ -258,7 +262,7 @@ void SceneMaker::CreateSceneForest()
 {
 	Scene* scene = new Scene();
 
-	Camera* camera = new Camera(glm::vec3(0.0f, 10.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, ratio, 0.1f, 100.0f);
+	Camera* camera = new Camera(glm::vec3(0.0f, 10.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, this->width, this->height, this->ratio, 0.1f, 100.0f);
 
 	camera->Rotate(0.0f, -45.0f);
 
@@ -497,7 +501,7 @@ void SceneMaker::CreateSceneForestDark()
 {
 	Scene* scene = new Scene();
 	
-	Camera* camera = new Camera(glm::vec3(0.0f, 10.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, ratio, 0.1f, 100.0f);
+	Camera* camera = new Camera(glm::vec3(0.0f, 10.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 60.0f, this->width, this->height, this->ratio, 0.1f, 100.0f);
 
 	camera->Rotate(0.0f, -45.0f);
 

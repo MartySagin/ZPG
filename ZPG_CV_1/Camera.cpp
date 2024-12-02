@@ -1,8 +1,8 @@
 #include "Camera.h"
 #include "ShaderProgram.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movementSpeed, float fov, float aspectRatio, float zNear, float zFar)
-    : position(position), target(target), up(up), movementSpeed(movementSpeed), fov(fov), aspectRatio(aspectRatio), zNear(zNear), zFar(zFar)
+Camera::Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movementSpeed, float fov, int width, int height, float aspectRatio, float zNear, float zFar)
+    : position(position), target(target), up(up), movementSpeed(movementSpeed), fov(fov), width(width), height(height), aspectRatio(aspectRatio), zNear(zNear), zFar(zFar)
 {
     UpdateViewMatrix();
 
@@ -27,6 +27,16 @@ glm::vec3 Camera::GetPosition()
 glm::vec3 Camera::GetTarget()
 {
     return this->target;
+}
+
+int Camera::GetWidth()
+{
+    return this->width;
+}
+
+int Camera::GetHeight()
+{
+    return this->height;
 }
 
 void Camera::IncreaseMovementSpeed(float movementSpeed)
@@ -132,6 +142,16 @@ void Camera::SetAspectRatio(float ratio)
     UpdateProjectionMatrix();
 
 	NotifyObservers();
+}
+
+void Camera::SetWidth(int width)
+{
+	this->width = width;
+}
+
+void Camera::SetHeight(int height)
+{
+    this->height = height;
 }
 
 void Camera::AddObserver(Observer* observer) {

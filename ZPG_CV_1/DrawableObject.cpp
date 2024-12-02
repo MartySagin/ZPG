@@ -64,6 +64,15 @@ DrawableObject::DrawableObject(ShaderProgram* shaderProgram, ModelObject* model,
 	this->objectColor = glm::vec3(1.0f);
 }
 
+void DrawableObject::SetObjectID(int objectID)
+{
+	this->objectID = objectID;
+}
+
+int DrawableObject::GetObjectID() {
+	return this->objectID;
+}
+
 Transformation* DrawableObject::GetTransformation()
 {
 	return &this->transform;

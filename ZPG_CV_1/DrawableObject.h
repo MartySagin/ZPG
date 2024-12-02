@@ -25,6 +25,8 @@ class DrawableObject
 
         glm::vec3 objectColor;
 
+        int objectID;
+
     public:
 
         DrawableObject(const float* vertices, GLsizeiptr vertexSize, GLenum drawMode, glm::vec3 objectColor, Material* material, VertexShader* vertexShader, FragmentShader* fragmentShader, bool withNormal);
@@ -36,6 +38,10 @@ class DrawableObject
         DrawableObject(ShaderProgram* shaderProgram, Model* model, Material* material, Texture* texture);
 
 		DrawableObject(ShaderProgram* shaderProgram, ModelObject* model, Material* material, Texture* texture);
+
+		void SetObjectID(int objectID);
+
+        int GetObjectID();
 
 	    Transformation* GetTransformation();
 

@@ -35,8 +35,11 @@ class SceneMaker
 
 		float ratio;
 
+		float width;
+		float height;
+
 	public:
-		SceneMaker(float ratio);
+		SceneMaker(float width, float height, float ratio);
 
 		void AddScene(Scene* scene);
 

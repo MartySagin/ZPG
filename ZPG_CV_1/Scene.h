@@ -22,6 +22,10 @@ class Scene
 
         Skybox* skybox;
 
+		DrawableObject* selectedObject = nullptr;
+
+        glm::vec3 selectedPosition;
+
     public:
         void Init(Camera* camera, vector<Light*> lights);  
 
@@ -35,6 +39,14 @@ class Scene
 
         void SetSkybox(Skybox* skybox);
 
+		void SetSelectedPosition(glm::vec3 position);
+
+		void SelectObject(int objectID);
+
+        void RemoveSelectedObject();
+
+        void InsertObject(glm::vec3 position);
+
         Camera* GetCamera();
 
         vector<Light*> GetLights();
@@ -42,4 +54,6 @@ class Scene
 		vector<DrawableObject*> GetObjects();
 
         Skybox* GetSkybox();
+
+		glm::vec3 GetSelectedPosition();
 };

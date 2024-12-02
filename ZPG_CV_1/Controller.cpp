@@ -35,6 +35,12 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
             else {
                 app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetTransformation()->ClearComponents();
             }
+		}
+        else if (key == GLFW_KEY_DELETE) {
+            app->GetSceneMaker()->GetCurrentScene()->RemoveSelectedObject();
+        }
+        else if (key == GLFW_KEY_INSERT) {
+			app->GetSceneMaker()->GetCurrentScene()->InsertObject(app->GetSceneMaker()->GetCurrentScene()->GetSelectedPosition());
         }
     }
 
@@ -84,6 +90,10 @@ void Controller::WindowSizeCallback(GLFWwindow* window, int width, int height) {
 	for (auto& scene : app->GetSceneMaker()->GetAllScenes()) {
 		if (scene->GetCamera()) {
 			scene->GetCamera()->SetAspectRatio((float)width / (float)height);
+            
+            scene->GetCamera()->SetWidth(width);
+
+			scene->GetCamera()->SetHeight(height);
 		}
 	}
 }
@@ -133,7 +143,44 @@ void Controller::ButtonCallback(GLFWwindow* window, int button, int action, int 
 
 			firstMouse = true;
         }
+	}
+    else if (button == GLFW_MOUSE_BUTTON_LEFT) {
+		if (action == GLFW_PRESS) {
+			Application* app = (Application*)(glfwGetWindowUserPointer(window));
+            
+            GLdouble cursor_x, cursor_y;
+
+            glfwGetCursorPos(window, &cursor_x, &cursor_y);
+
+            GLbyte color[4];
+            GLfloat depth;
+            GLuint index;
+
+            GLint x = (GLint)cursor_x;
+            GLint y = (GLint)cursor_y;
+
+			int newy = app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetHeight() - y;
+
+            glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+            glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+            glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+            printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth% f, stencil index % u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
+
+            glm::vec3 screenX = glm::vec3(x, newy, depth);
+            glm::mat4 view = app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetViewMatrix();
+            glm::mat4 projection = app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetProjectionMatrix();
+            glm::vec4 viewPort = glm::vec4(0, 0, app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetWidth(), app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetHeight());
+            glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
+
+            printf("unProject [%f,%f,%f]\n", pos.x, pos.y, pos.z);
+
+			app->GetSceneMaker()->GetCurrentScene()->SelectObject(index);
+
+            app->GetSceneMaker()->GetCurrentScene()->SetSelectedPosition(pos);
+		}
     }
+
 }
 
 void Controller::MoveLight(GLFWwindow* window, int direction)

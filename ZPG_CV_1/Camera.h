@@ -20,7 +20,11 @@ class Camera : Subject
         float movementSpeed;  
 
         float fov;           
+
+        int width;
+		int height;
         float aspectRatio;   
+        
         float zNear, zFar;    
 
         float yaw;    
@@ -32,7 +36,7 @@ class Camera : Subject
         vector<Observer*> observers;
 
     public:
-        Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movementSpeed, float fov, float aspectRatio, float zNear, float zFar);
+        Camera(glm::vec3 position, glm::vec3 target, glm::vec3 up, float movementSpeed, float fov, int width, int height, float aspectRatio, float zNear, float zFar);
 
         glm::mat4 GetViewMatrix(); 
 
@@ -41,6 +45,10 @@ class Camera : Subject
 	    glm::vec3 GetPosition();
 
         glm::vec3 GetTarget();
+
+		int GetWidth();
+
+		int GetHeight();
 
 	    void IncreaseMovementSpeed(float movementSpeed);
 	    void DecreaseMovementSpeed(float movementSpeed);
@@ -59,6 +67,10 @@ class Camera : Subject
         void UpdateProjectionMatrix(); 
 
 	    void SetAspectRatio(float ratio);
+
+		void SetWidth(int width);
+
+		void SetHeight(int height);
 
         void AddObserver(Observer* observer) override;
 

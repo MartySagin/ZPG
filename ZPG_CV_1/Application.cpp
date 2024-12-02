@@ -65,7 +65,7 @@ void Application::Init()
 
 
 	//Init Scene Maker
-	this->sceneMaker = new SceneMaker(ratio);
+	this->sceneMaker = new SceneMaker(width, height, ratio);
 
 	//Init Scene 1
 	this->sceneMaker->CreateSceneTriangle();
