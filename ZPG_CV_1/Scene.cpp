@@ -137,7 +137,7 @@ void Scene::InsertObject(glm::vec3 position)
 	Texture* woodTexture = new Texture();
 	woodTexture->Load2DTexture("textures/wooden_fence.png");
 
-	DrawableObject* loginObject = new DrawableObject(loginShader, loginModel, woodMaterial, woodTexture);
+	DrawableObjectOBJ* loginObject = new DrawableObjectOBJ(loginShader, loginModel, woodMaterial, woodTexture);
 	loginObject->GetTransformation()->AddComponent(new Translate(position));
 
 	this->objects.push_back(loginObject);

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "DrawableObject.h"
+#include "DrawableObjectOBJ.h"
 #include "Camera.h"
 #include "Light.h"
 #include "Animation.h"
