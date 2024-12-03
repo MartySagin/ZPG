@@ -269,9 +269,14 @@ void SceneMaker::CreateSceneForest()
 	vector<Light*> lights;
 
 	Light* light = new Light(glm::vec3(0.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+
 	Light* light2 = new Light(glm::vec3(0.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+
 	Light* light3 = new Light(glm::vec3(15.0f, 0.2f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+
 	Light* light4 = new Light(glm::vec3(15.0f, 0.2f, 15.0f), glm::vec3(0.3f, 0.3f, 0.3f), 10.0f, 0.125f, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1);
+
+	Light* light5 = new Light(glm::vec3(7.5f, 0.2f, 7.5f), glm::vec3(0.3f, 0.3f, 0.3f), 0.5f, 0.125f, glm::vec3(0.0f, -1.0f, 0.0f), 0.0f, 0.0f, 3);
 
 	lights.push_back(light);
 
@@ -280,6 +285,8 @@ void SceneMaker::CreateSceneForest()
 	lights.push_back(light3);
 
 	lights.push_back(light4);
+
+	lights.push_back(light5);
 
 	Light* spotLight = new Light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.5f, glm::vec3(0.0f, 0.0f, 1.0f), 6.5f, 20.5f, 2);
 
@@ -306,14 +313,14 @@ void SceneMaker::CreateSceneForest()
 	Material* bushMaterial = new Material(0.6f, 0.8f, 0.15f);
 
 	//Init Models for Scene Trees, Bushes
-	Model* treeModel = new Model();
-	treeModel->GenerateModelWithNormal(tree, sizeof(tree));
+	ModelObject* treeModel = new ModelObject();
+	treeModel->GenerateModelFromOBJ("objects/tree.obj");
 
 	Model* bushModel = new Model();
 	bushModel->GenerateModelWithNormal(bushes, sizeof(bushes));
 
-	Model* plainModel = new Model();
-	plainModel->GenerateModelWithNormalAndUV(plain, sizeof(plain));
+	ModelObject* plainModel = new ModelObject();
+	plainModel->GenerateModelFromOBJ("objects/teren.obj");
 
 	ModelObject* houseModel = new ModelObject();
 	houseModel->GenerateModelFromOBJ("objects/house.obj");
@@ -333,7 +340,7 @@ void SceneMaker::CreateSceneForest()
 	//Init Shaders for Scene Trees, Bushes
 	vector<ShaderProgram*> shaders;
 
-	ShaderProgram* treeShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(tree) / sizeof(float) / 6);
+	ShaderProgram* treeShader = new ShaderProgram(GL_TRIANGLES, 0, treeModel->GetIndicesCount());
 	treeShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
 	shaders.push_back(treeShader);
 
@@ -341,7 +348,7 @@ void SceneMaker::CreateSceneForest()
 	bushShader->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
 	shaders.push_back(bushShader);
 
-	ShaderProgram* plainShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(plain) / sizeof(float) / 6);
+	ShaderProgram* plainShader = new ShaderProgram(GL_TRIANGLES, 0, plainModel->GetIndicesCount());
 	plainShader->AddShadersFromFiles("VertexShader.glsl", "LambertShader.glsl");
 	shaders.push_back(plainShader);
 
@@ -385,6 +392,9 @@ void SceneMaker::CreateSceneForest()
 	Texture* zombieTexture = new Texture();
 	zombieTexture->Load2DTexture("textures/zombie.png");
 
+	Texture* treeTexture = new Texture();
+	treeTexture->Load2DTexture("textures/tree.png");
+
 	
 	Texture* cubemapTexture = new Texture();
 
@@ -401,8 +411,8 @@ void SceneMaker::CreateSceneForest()
 	
 
 	//Scene Forest
-	DrawableObject* plainObject = new DrawableObject(plainShader, plainModel, soilMaterial, plainTexture);
-	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(25.0f, 25.0f, 25.0f)));
+	DrawableObjectOBJ* plainObject = new DrawableObjectOBJ(plainShader, plainModel, soilMaterial, plainTexture);
+	plainObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.8f)));
 	plainObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.45f, 0.0f, 0.5f)));
 
 	scene->AddObject(plainObject);
@@ -429,11 +439,29 @@ void SceneMaker::CreateSceneForest()
 
 	scene->AddObject(loginObject);
 
+	for (int i = 0; i < 10; i++) {
+		DrawableObjectOBJ* zombieObject = new DrawableObjectOBJ(zombieShader, zombieModel, woodMaterial, zombieTexture);
+
+		zombieObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f + i * 2, 0.05f, -10.0f)));
+		zombieObject->GetTransformation()->AddComponent(new Scale(glm::vec3(1.0f)));
+
+		scene->AddObject(zombieObject);
+	}
+
+	for (int i = 0; i < 10; i++) {
+		DrawableObjectOBJ* zombieObject = new DrawableObjectOBJ(zombieShader, zombieModel, woodMaterial, zombieTexture);
+
+		zombieObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f + i * 2, 0.05f, -8.0f)));
+		zombieObject->GetTransformation()->AddComponent(new Scale(glm::vec3(1.0f)));
+
+		scene->AddObject(zombieObject);
+	}
+
 	srand((unsigned int)(time(NULL)));
 
-	const int gridRows = 30;
-	const int gridCols = 30;
-	const float spacing = 5.0f;
+	const int gridRows = 20;
+	const int gridCols = 20;
+	const float spacing = 15.0f;
 
 	for (int row = 0; row < gridRows; row++) {
 		for (int col = 0; col < gridCols; col++) {
@@ -441,9 +469,9 @@ void SceneMaker::CreateSceneForest()
 			float yPos = 0.0f;
 			float zPos = row * spacing;
 
-			DrawableObject* treeObject = new DrawableObject(treeShader, treeModel, objectColor, woodMaterial);
+			DrawableObjectOBJ* treeObject = new DrawableObjectOBJ(treeShader, treeModel, woodMaterial, treeTexture);
 
-			treeObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 1000.0 + 0.05f))));
+			treeObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 5000.0 + 0.05f))));
 			treeObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos, yPos, zPos)));
 
 			float randomAngleY = (float)(rand() % 360);
@@ -460,7 +488,7 @@ void SceneMaker::CreateSceneForest()
 			DrawableObject* bushObject = new DrawableObject(bushShader, bushModel, objectColor, bushMaterial);
 
 			bushObject->GetTransformation()->AddComponent(new Scale(glm::vec3((float)(rand() % 100 / 500.0 + 0.05f))));
-			bushObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos - 5, yPos, zPos + spacing * 0.25f)));
+			bushObject->GetTransformation()->AddComponent(new Translate(glm::vec3(xPos * 0.35f, yPos, zPos * 0.35f)));
 
 			scene->AddObject(bushObject);
 		}
