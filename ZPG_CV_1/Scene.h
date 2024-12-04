@@ -19,8 +19,6 @@ class Scene
 
 	    vector<Light*> lights;
 
-		Animation animation;
-
         Skybox* skybox;
 
 		DrawableObject* selectedObject = nullptr;
@@ -32,11 +30,7 @@ class Scene
 
         void Render();  
 
-        void Update(float deltaTime);
-
         void AddObject(DrawableObject* object);
-
-		void AddAnimation(function<void(float)> animation);
 
         void SetSkybox(Skybox* skybox);
 

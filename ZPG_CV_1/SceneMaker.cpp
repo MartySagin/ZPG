@@ -493,28 +493,6 @@ void SceneMaker::CreateSceneForest()
 		}
 	}
 
-	/*scene->AddAnimation([lights](float deltaTime) {
-		static float time = 0.0f;
-
-		time += deltaTime;
-
-		for (auto& light : lights) {
-
-			float angleOffset = glm::linearRand(0.0f, 7.0f);
-
-			float speed = 20.0f;
-			float radius = 2.0f;
-
-			float x = radius * cos(time * speed + angleOffset);
-			float z = radius * sin(time * speed + angleOffset);
-
-			glm::vec3 newPosition = light->GetPosition() + glm::vec3(x, 0.0f, z) * deltaTime;
-
-			light->SetPosition(newPosition);
-		}
-	});*/
-
-
 	Skybox* skyboxObject = new Skybox(skyboxShader, skyboxModel, soilMaterial, cubemapTexture);
 
 	scene->SetSkybox(skyboxObject);
