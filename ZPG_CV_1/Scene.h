@@ -5,7 +5,6 @@
 #include "DrawableObjectOBJ.h"
 #include "Camera.h"
 #include "Light.h"
-#include "Animation.h"
 #include "Skybox.h"
 
 using namespace std;
