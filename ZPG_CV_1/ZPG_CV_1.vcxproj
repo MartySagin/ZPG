@@ -166,7 +166,6 @@
     <ClInclude Include="DynamicRotate.h" />
     <ClInclude Include="DynamicScale.h" />
     <ClInclude Include="DynamicTranslate.h" />
-    <ClInclude Include="FragmentShader.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Model.h" />
@@ -192,7 +191,6 @@
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="TransformationComponent.h" />
     <ClInclude Include="Translate.h" />
-    <ClInclude Include="VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="BlinnPhongShader.glsl" />
