@@ -12,7 +12,7 @@ using namespace std;
 class Transformation
 {
     private:
-            vector<TransformationComponent*> components;
+        vector<TransformationComponent*> components;
 
     public:
         Transformation();
