@@ -139,7 +139,6 @@
     <ClCompile Include="DynamicRotate.cpp" />
     <ClCompile Include="DynamicScale.cpp" />
     <ClCompile Include="DynamicTranslate.cpp" />
-    <ClCompile Include="FragmentShader.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -158,7 +157,6 @@
     <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="TransformationComponent.cpp" />
     <ClCompile Include="Translate.cpp" />
-    <ClCompile Include="VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
