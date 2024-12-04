@@ -5,6 +5,11 @@ DynamicTranslate::DynamicTranslate(glm::vec3 translation, glm::vec3 velocity, fl
 {
 }
 
+void DynamicTranslate::SetVelocity(glm::vec3 velocity)
+{
+	this->velocity = velocity;
+}
+
 void DynamicTranslate::Update()
 {
     this->translation.x += this->velocity.x * this->deltaTime;

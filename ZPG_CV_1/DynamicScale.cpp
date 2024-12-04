@@ -5,6 +5,11 @@ DynamicScale::DynamicScale(glm::vec3 scaling, glm::vec3 velocity, float deltaTim
 {
 }
 
+void DynamicScale::SetVelocity(glm::vec3 velocity)
+{
+	this->velocity = velocity;
+}
+
 void DynamicScale::Update()
 {
 	this->scaling.x += this->velocity.x * this->deltaTime;

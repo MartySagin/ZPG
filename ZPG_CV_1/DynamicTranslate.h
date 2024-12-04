@@ -12,6 +12,8 @@ class DynamicTranslate : public Translate
     public:
         DynamicTranslate(glm::vec3 translation, glm::vec3 velocity, float deltaTime);
 
+		void SetVelocity(glm::vec3 velocity);
+
         void Update(); 
 
         glm::mat4 GetMatrix() override;

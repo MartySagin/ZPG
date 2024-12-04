@@ -21,6 +21,7 @@ struct Material {
     float ra;
     float rd;
     float rs;
+	int shininess;
 };
 
 in vec3 FragPos;

@@ -22,9 +22,6 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
         else if (key == GLFW_KEY_RIGHT) MoveLight(window, 1);
         else if (key == GLFW_KEY_UP) MoveLight(window, 2);
         else if (key == GLFW_KEY_DOWN) MoveLight(window, 3);
-        else if (key == GLFW_KEY_R) RotateObject(window, 0);
-        else if (key == GLFW_KEY_T) RotateObject(window, 1);
-        else if (key == GLFW_KEY_Y) RotateObject(window, 2);
         else if (key == GLFW_KEY_SPACE) app->GetSceneMaker()->SwitchScene();
         else if (key == GLFW_KEY_H) {
             app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->SetFollowCamera(!app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetFollowCamera());
@@ -196,30 +193,13 @@ void Controller::MoveLight(GLFWwindow* window, int direction)
             light->SetPosition(light->GetPosition() + glm::vec3(0.1f, 0.0f, 0.0f));
         }
         else if (direction == 2) {
-            light->SetPosition(light->GetPosition() + glm::vec3(0.0f, 0.1f, 0.0f));
+            light->SetPosition(light->GetPosition() + glm::vec3(0.0f, 0.0f, -0.1f));
         }
         else if (direction == 3) {
-            light->SetPosition(light->GetPosition() + glm::vec3(0.0f, -0.1f, 0.0f));
+            light->SetPosition(light->GetPosition() + glm::vec3(0.0f, 0.0f, 0.1f));
         }
 
     }
     
 }
 
-void Controller::RotateObject(GLFWwindow* window, int axis)
-{
-    Application* app = (Application*) (glfwGetWindowUserPointer(window));
-
-    for (auto& object : app->GetSceneMaker()->GetCurrentScene()->GetObjects())
-    {
-        if (axis == 0) {
-            object->GetTransformation()->AddComponent(new Rotate(glm::vec3(0.0f, 0.0f, 5.0f)));
-        }
-        else if (axis == 1) {
-            object->GetTransformation()->AddComponent(new Rotate(glm::vec3(0.0f, 5.0f, 0.0f)));
-        }
-		else if (axis == 2) {
-			object->GetTransformation()->AddComponent(new Rotate(glm::vec3(5.0f, 0.0f, 0.0f)));
-		}
-    }
-}

@@ -47,6 +47,8 @@ void Skybox::Draw()
 
 	this->shaderProgram.SetFloatUniform("material.rs", this->material.GetSpecularCoefficient());
 
+	this->shaderProgram.SetFloatUniform("material.shininess", this->material.GetShininess());
+
 	this->model.BindVAO();
 
 	this->shaderProgram.Draw();

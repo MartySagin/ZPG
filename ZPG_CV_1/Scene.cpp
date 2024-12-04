@@ -132,7 +132,7 @@ void Scene::InsertObject(glm::vec3 position)
 		light->AddObserver(loginShader);
 	}
 
-	Material* woodMaterial = new Material(0.6f, 0.8f, 0.2f);
+	Material* woodMaterial = new Material(0.6f, 0.8f, 0.2f, 32);
 
 	Texture* woodTexture = new Texture();
 	woodTexture->Load2DTexture("textures/wooden_fence.png");
@@ -148,6 +148,10 @@ void Scene::InsertObject(glm::vec3 position)
 	{
 		light->NotifyObservers();
 	}
+
+	loginObject->SetObjectID(this->objects.size() - 1);
+
+	this->selectedObject = loginObject;
 }
 
 Camera* Scene::GetCamera()

@@ -73,7 +73,7 @@ void SceneMaker::CreateSceneTriangle()
 
 	glm::vec3 objectColor = glm::vec3(0.0f, 0.0f, 1.0f);
 
-	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f);
+	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f, 32);
 
 	float triangle[] = {
 		0.0f, 0.0f, 0.0f,
@@ -123,7 +123,7 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 
 	glm::vec3 objectColor = glm::vec3(0.385f, 0.647f, 0.812f);
 
-	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f);
+	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f, 32);
 
 	//Init Shaders for Scene
 	ShaderProgram* sphereShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
@@ -189,7 +189,7 @@ void SceneMaker::CreateSceneWithMoreModels() {
 
 	glm::vec3 objectColor = glm::vec3(0.385f, 0.647f, 0.812f);
 
-	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f);
+	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f, 32);
 
 
 	//Init Shaders for Scene
@@ -308,9 +308,9 @@ void SceneMaker::CreateSceneForest()
 	glm::vec3 objectColor = glm::vec3(0.385f, 0.647f, 0.812f);
 
 	//Init Material for Scene Trees, Bushes
-	Material* woodMaterial = new Material(0.6f, 0.8f, 0.2f);
-	Material* soilMaterial = new Material(0.5f, 0.7f, 0.1f);
-	Material* bushMaterial = new Material(0.6f, 0.8f, 0.15f);
+	Material* woodMaterial = new Material(0.6f, 0.8f, 0.2f, 32);
+	Material* soilMaterial = new Material(0.5f, 0.7f, 0.1f, 32);
+	Material* bushMaterial = new Material(0.6f, 0.8f, 0.15f, 32);
 
 	//Init Models for Scene Trees, Bushes
 	ModelObject* treeModel = new ModelObject();
@@ -395,7 +395,6 @@ void SceneMaker::CreateSceneForest()
 	Texture* treeTexture = new Texture();
 	treeTexture->Load2DTexture("textures/tree.png");
 
-	
 	Texture* cubemapTexture = new Texture();
 
 	vector<string> filePaths = {
@@ -549,9 +548,9 @@ void SceneMaker::CreateSceneForestDark()
 	glm::vec3 objectColor = glm::vec3(0.385f, 0.647f, 0.812f);
 
 	//Init Material for Scene Trees, Bushes
-	Material* woodMaterial = new Material(0.6f, 0.8f, 0.2f);
-	Material* soilMaterial = new Material(0.5f, 0.7f, 0.1f);
-	Material* bushMaterial = new Material(0.6f, 0.8f, 0.15f);
+	Material* woodMaterial = new Material(0.6f, 0.8f, 0.2f, 32);
+	Material* soilMaterial = new Material(0.5f, 0.7f, 0.1f, 32);
+	Material* bushMaterial = new Material(0.6f, 0.8f, 0.15f, 32);
 
 	//Init Shaders for Scene Trees, Bushes
 	vector<ShaderProgram*> shaders;

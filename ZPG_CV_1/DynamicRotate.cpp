@@ -5,6 +5,16 @@ DynamicRotate::DynamicRotate(glm::vec3 rotation, glm::vec3 velocity, float delta
 {
 }
 
+void DynamicRotate::SetVelocity(glm::vec3 velocity)
+{
+	this->velocity = velocity;
+}
+
+void DynamicRotate::SetRotation(glm::vec3 rotation)
+{
+	this->rotation = rotation;
+}
+
 void DynamicRotate::Update()
 {
 

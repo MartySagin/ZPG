@@ -21,6 +21,7 @@ struct Material {
     float ra;
     float rd;
     float rs;
+	int shininess;
 };
 
 in vec3 FragPos;
@@ -71,7 +72,7 @@ void main() {
         if (dot(norm, lightDir) > 0.0) {
             vec3 viewDir = normalize(viewPosition - FragPos);
             vec3 reflectDir = reflect(-lightDir, norm);
-            float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+            float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
             specular = material.rs * spec * lights[i].color * lights[i].intensity;
         }
 

@@ -29,6 +29,8 @@ void DrawableObjectOBJ::Draw()
 
 	this->shaderProgram.SetFloatUniform("material.rs", this->material.GetSpecularCoefficient());
 
+	this->shaderProgram.SetIntUniform("material.shininess", this->material.GetShininess());
+
 	this->model.BindVAO();
 
 	this->shaderProgram.DrawOBJ();
