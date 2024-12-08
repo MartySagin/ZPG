@@ -28,7 +28,7 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
         else if (key == GLFW_KEY_SPACE) app->GetSceneMaker()->SwitchScene();
         else if (key == GLFW_KEY_H) {
             if (Skybox* skybox = currentScene->GetSkybox()) {
-                skybox->SetFollowCamera(skybox->GetFollowCamera());
+                skybox->SetFollowCamera(!skybox->GetFollowCamera());
 
                 Camera* camera = currentScene->GetCamera();
 
