@@ -3,7 +3,7 @@
 
 #include "Application.h"
 
-
+//Author: Martin Kalus, Login: KAL0326
 
 int main(void)
 {

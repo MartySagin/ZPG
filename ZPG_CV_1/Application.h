@@ -1,5 +1,7 @@
 #pragma once
 
+//Author: Martin Kalus, Login: KAL0326
+
 //Include GLEW
 #include <GL/glew.h>
 //Include GLFW  
