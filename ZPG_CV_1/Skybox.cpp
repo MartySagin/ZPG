@@ -24,8 +24,6 @@ void Skybox::Draw()
 
 	this->shaderProgram.UseProgram();
 
-	this->shaderProgram.SetIntUniform("followCamera", this->followCamera);
-
 	if (texture != nullptr) {
 		texture->ActivateTexture();
 
@@ -62,10 +60,10 @@ void Skybox::Draw()
 
 void Skybox::UpdateFromSubject(Subject* subject)
 {
-	Camera* camera = (Camera*)(subject);
 	
 	if (this->followCamera) {
-		
+		Camera* camera = (Camera*)(subject);
+
 		if (camera != nullptr) {
 			this->transform.ClearComponents();
 
