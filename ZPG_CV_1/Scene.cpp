@@ -56,6 +56,53 @@ void Scene::AddObject(DrawableObject* object)
 	this->objects.push_back(object);
 }
 
+void Scene::AddBezeirControlPoint(glm::vec3 controlPoint)
+{
+	if (this->selectedObject == nullptr)
+	{
+		return;
+	}
+	
+	if (this->bezierControlPoints.size() == 4)
+	{
+		this->bezierControlPoints.clear();
+	}
+	
+	this->bezierControlPoints.push_back(controlPoint);
+
+	if (this->bezierControlPoints.size() == 4)
+	{
+		this->StartBezeirCurve();
+	}
+}
+
+void Scene::StartBezeirCurve() {
+	
+	if (this->bezierControlPoints.size() != 4)
+	{
+		return;
+	}
+
+	if (this->selectedObject == nullptr)
+	{
+		return;
+	}
+
+	if (this->selectedObject == this->skybox && this->skybox->GetFollowCamera() == true)
+	{
+		return;
+	}
+
+	glm::mat4x3 controlPoints = glm::mat4x3(
+		this->bezierControlPoints[0],
+		this->bezierControlPoints[1],
+		this->bezierControlPoints[2],
+		this->bezierControlPoints[3]
+	);
+	
+	this->selectedObject->GetTransformation()->AddComponent(new BezierCurve(controlPoints, 0.001f), true);
+}
+
 void Scene::SetSkybox(Skybox* skybox)
 {
 	this->skybox = skybox;

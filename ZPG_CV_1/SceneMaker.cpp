@@ -155,11 +155,12 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 	DrawableObject* sphereObject3 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
 	sphereObject3->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject3->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
+	
 
 	scene->AddObject(sphereObject3);
 
 	DrawableObject* sphereObject4 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
-	sphereObject4->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f, 0.5f, 0.5f)));
+	sphereObject4->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject4->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
 
 	scene->AddObject(sphereObject4);
@@ -372,7 +373,6 @@ void SceneMaker::CreateSceneForest()
 	skyboxShader->AddShadersFromFiles("SkyboxVertex.glsl", "SkyboxFragment.glsl");
 	shaders.push_back(skyboxShader);
 
-
 	//Init Observers for Camera
 	this->InitObservers(camera, lights, shaders);
 
@@ -433,9 +433,9 @@ void SceneMaker::CreateSceneForest()
 
 	DrawableObjectOBJ* loginObject = new DrawableObjectOBJ(loginshader, loginModel, woodMaterial, loginTexture);
 
-	loginObject->GetTransformation()->AddComponent(new Scale(glm::vec3(3.0f)));
-	loginObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 1.0f, 0.0f)));
-
+	loginObject->GetTransformation()->AddComponent(new Scale(glm::vec3(2.0f)));
+	loginObject->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 2.0f, 0.0f)));
+	
 	scene->AddObject(loginObject);
 
 	for (int i = 0; i < 10; i++) {

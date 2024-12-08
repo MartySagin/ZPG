@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "Skybox.h"
+#include "BezierCurve.h"
 
 using namespace std;
 
@@ -24,12 +25,18 @@ class Scene
 
         glm::vec3 selectedPosition;
 
+		vector<glm::vec3> bezierControlPoints;
+
     public:
         void Init(Camera* camera, vector<Light*> lights);  
 
         void Render();  
 
         void AddObject(DrawableObject* object);
+
+		void AddBezeirControlPoint(glm::vec3 controlPoint);
+
+        void StartBezeirCurve();
 
         void SetSkybox(Skybox* skybox);
 

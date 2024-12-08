@@ -13,6 +13,7 @@
 #include "Translate.h"
 #include "Skybox.h"
 #include "DrawableObjectOBJ.h"
+#include "BezierCurve.h"
 
 #include "models/gift.h"
 #include "models/suzi_flat.h"

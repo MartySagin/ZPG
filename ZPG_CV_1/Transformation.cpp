@@ -4,9 +4,14 @@ Transformation::Transformation()
 {
 }
 
-void Transformation::AddComponent(TransformationComponent* component)
-{
-    this->components.push_back(component);
+void Transformation::AddComponent(TransformationComponent* component, bool addToFront) {
+    
+    if (addToFront) {
+        this->components.insert(this->components.begin(), component);
+    }
+    else {
+        this->components.push_back(component);
+    }
 }
 
 glm::mat4 Transformation::GetModelMatrix()

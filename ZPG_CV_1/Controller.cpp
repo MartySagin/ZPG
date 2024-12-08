@@ -4,6 +4,7 @@
 
 bool Controller::mouseRightButtonPressed = false;
 bool Controller::firstMouse = true;
+bool Controller::addToBezeir = false;
 
 Controller::Controller()
 {
@@ -38,6 +39,11 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
         }
         else if (key == GLFW_KEY_INSERT) {
 			app->GetSceneMaker()->GetCurrentScene()->InsertObject(app->GetSceneMaker()->GetCurrentScene()->GetSelectedPosition());
+        }
+        else if (key == GLFW_KEY_B) {
+			addToBezeir = !addToBezeir;
+
+			cout << "addToBezeir: " << addToBezeir << endl;
         }
     }
 
@@ -172,9 +178,15 @@ void Controller::ButtonCallback(GLFWwindow* window, int button, int action, int 
 
             printf("unProject [%f,%f,%f]\n", pos.x, pos.y, pos.z);
 
-			app->GetSceneMaker()->GetCurrentScene()->SelectObject(index);
+            if (!addToBezeir) {
+                app->GetSceneMaker()->GetCurrentScene()->SelectObject(index);
+            }
 
             app->GetSceneMaker()->GetCurrentScene()->SetSelectedPosition(pos);
+
+            if (addToBezeir) {
+				app->GetSceneMaker()->GetCurrentScene()->AddBezeirControlPoint(pos);
+            }
 		}
     }
 

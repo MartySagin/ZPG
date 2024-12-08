@@ -17,7 +17,7 @@ class Transformation
     public:
         Transformation();
 
-        void AddComponent(TransformationComponent* component);
+        void AddComponent(TransformationComponent* component, bool addToFront = false);
     
         glm::mat4 GetModelMatrix();
 
