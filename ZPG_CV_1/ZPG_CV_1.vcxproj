@@ -195,7 +195,7 @@
     <ClInclude Include="Translate.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="BlinnPhongShader.glsl" />
+    <Text Include="BlinnShader.glsl" />
     <Text Include="ConstantShader.glsl" />
     <Text Include="FragmentShaderWithNormal.glsl" />
     <Text Include="LambertShader.glsl" />

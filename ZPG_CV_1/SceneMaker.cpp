@@ -137,7 +137,7 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 	shaders.push_back(sphereShaderConstant);
 
 	ShaderProgram* sphereShaderBlinn = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
-	sphereShaderBlinn->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
+	sphereShaderBlinn->AddShadersFromFiles("VertexShader.glsl", "BlinnShader.glsl");
 	shaders.push_back(sphereShaderBlinn);
 
 	ShaderProgram* sphereShaderLambert = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
@@ -208,7 +208,7 @@ void SceneMaker::CreateSceneWithMoreModels() {
 	vector<ShaderProgram*> shaders;
 
 	ShaderProgram* giftShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(gift) / sizeof(float) / 6);
-	giftShader->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
+	giftShader->AddShadersFromFiles("VertexShader.glsl", "BlinnShader.glsl");
 	shaders.push_back(giftShader);
 
 	ShaderProgram* suziFlatShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(suziFlat) / sizeof(float) / 6);
@@ -357,7 +357,7 @@ void SceneMaker::CreateSceneForest()
 	shaders.push_back(treeShader);
 
 	ShaderProgram* bushShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(bushes) / sizeof(float) / 6);
-	bushShader->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
+	bushShader->AddShadersFromFiles("VertexShader.glsl", "BlinnShader.glsl");
 	shaders.push_back(bushShader);
 
 	ShaderProgram* plainShader = new ShaderProgram(GL_TRIANGLES, 0, plainModel->GetIndicesCount());
@@ -369,7 +369,7 @@ void SceneMaker::CreateSceneForest()
 	shaders.push_back(houseShader);
 
 	ShaderProgram* cokeShader = new ShaderProgram(GL_TRIANGLES, 0, cokeModel->GetIndicesCount());
-	cokeShader->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
+	cokeShader->AddShadersFromFiles("VertexShader.glsl", "BlinnShader.glsl");
 	shaders.push_back(cokeShader);
 
 	ShaderProgram* loginshader = new ShaderProgram(GL_TRIANGLES, 0, loginModel->GetIndicesCount());
