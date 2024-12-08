@@ -18,8 +18,6 @@
 #include <random>
 #include "Scene.h"
 #include "Camera.h"
-#include "FragmentShader.h"
-#include "VertexShader.h"
 #include "Translate.h"
 #include "Rotate.h"
 #include "Scale.h"
