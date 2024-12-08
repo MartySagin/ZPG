@@ -89,9 +89,8 @@ void SceneMaker::CreateSceneTriangle()
 	ShaderProgram* triangleShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(triangle) / sizeof(float) / 3);
 	triangleShader->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
 
-
 	//Init Observers for Camera
-	InitObservers(camera, lights, { triangleShader });
+	this->InitObservers(camera, lights, { triangleShader });
 
 	DrawableObject* triangleObject = new DrawableObject(triangleShader, triangleModel, objectColor, metalMaterial);
 	triangleObject->GetTransformation()->AddComponent(new Scale(glm::vec3(20.0f)));
@@ -100,7 +99,7 @@ void SceneMaker::CreateSceneTriangle()
 
 	scene->Init(camera, lights);
 
-	AddScene(scene);
+	this->AddScene(scene);
 }
 
 void SceneMaker::CreateSceneFourSpheresLight() {
@@ -202,7 +201,6 @@ void SceneMaker::CreateSceneWithMoreModels() {
 	glm::vec3 objectColor = glm::vec3(0.385f, 0.647f, 0.812f);
 
 	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f, 32);
-
 
 	//Init Shaders for Scene
 	vector<ShaderProgram*> shaders;

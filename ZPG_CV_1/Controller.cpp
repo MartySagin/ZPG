@@ -18,6 +18,8 @@ void Controller::ErrorCallback(int error, const char* description) {
 void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     Application* app = (Application*) (glfwGetWindowUserPointer(window));
 
+    Scene* currentScene = app->GetSceneMaker()->GetCurrentScene();
+
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         if (key == GLFW_KEY_LEFT) MoveLight(window, 0);
         else if (key == GLFW_KEY_RIGHT) MoveLight(window, 1);
@@ -25,32 +27,35 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
         else if (key == GLFW_KEY_DOWN) MoveLight(window, 3);
         else if (key == GLFW_KEY_SPACE) app->GetSceneMaker()->SwitchScene();
         else if (key == GLFW_KEY_H) {
-            if (app->GetSceneMaker()->GetCurrentScene()->GetSkybox()) {
-                app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->SetFollowCamera(!app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetFollowCamera());
+            if (Skybox* skybox = currentScene->GetSkybox()) {
+                skybox->SetFollowCamera(skybox->GetFollowCamera());
 
-                if (!app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetFollowCamera()) {
-                    app->GetSceneMaker()->GetCurrentScene()->GetCamera()->RemoveObserver(app->GetSceneMaker()->GetCurrentScene()->GetSkybox());
+                Camera* camera = currentScene->GetCamera();
+
+                if (!skybox->GetFollowCamera()) {
+                    camera->RemoveObserver(skybox);
                 }
                 else {
-                    app->GetSceneMaker()->GetCurrentScene()->GetCamera()->AddObserver(app->GetSceneMaker()->GetCurrentScene()->GetSkybox());
+                    camera->AddObserver(skybox);
                 }
             }
 		}
         else if (key == GLFW_KEY_DELETE) {
-            app->GetSceneMaker()->GetCurrentScene()->RemoveSelectedObject();
+            currentScene->RemoveSelectedObject();
         }
         else if (key == GLFW_KEY_INSERT) {
-			app->GetSceneMaker()->GetCurrentScene()->InsertObject(app->GetSceneMaker()->GetCurrentScene()->GetSelectedPosition());
+            currentScene->InsertObject(currentScene->GetSelectedPosition());
         }
         else if (key == GLFW_KEY_B) {
 			addToBezeir = !addToBezeir;
+
+            currentScene->ResetBezeirControlPoints();
 
 			cout << "addToBezeir: " << addToBezeir << endl;
         }
     }
 
-    if (app->GetSceneMaker()->GetCurrentScene()->GetCamera()) {
-        Camera* camera = app->GetSceneMaker()->GetCurrentScene()->GetCamera();
+    if (Camera * camera = app->GetSceneMaker()->GetCurrentScene()->GetCamera()) {
 
         static float lastFrameTime = 0.0f;
 
@@ -93,12 +98,12 @@ void Controller::WindowSizeCallback(GLFWwindow* window, int width, int height) {
     Application* app = (Application*) (glfwGetWindowUserPointer(window));
 
 	for (auto& scene : app->GetSceneMaker()->GetAllScenes()) {
-		if (scene->GetCamera()) {
-			scene->GetCamera()->SetAspectRatio((float)width / (float)height);
+		if (Camera* camera = scene->GetCamera()) {
+            camera->SetAspectRatio((float)width / (float)height);
             
-            scene->GetCamera()->SetWidth(width);
+            camera->SetWidth(width);
 
-			scene->GetCamera()->SetHeight(height);
+            camera->SetHeight(height);
 		}
 	}
 }
@@ -164,7 +169,11 @@ void Controller::ButtonCallback(GLFWwindow* window, int button, int action, int 
             GLint x = (GLint)cursor_x;
             GLint y = (GLint)cursor_y;
 
-			int newy = app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetHeight() - y;
+            Scene* currentScene = app->GetSceneMaker()->GetCurrentScene();
+
+            Camera* camera = currentScene->GetCamera();
+
+			int newy = camera->GetHeight() - y;
 
             glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
             glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
@@ -173,21 +182,21 @@ void Controller::ButtonCallback(GLFWwindow* window, int button, int action, int 
             printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth% f, stencil index % u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
 
             glm::vec3 screenX = glm::vec3(x, newy, depth);
-            glm::mat4 view = app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetViewMatrix();
-            glm::mat4 projection = app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetProjectionMatrix();
-            glm::vec4 viewPort = glm::vec4(0, 0, app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetWidth(), app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetHeight());
+            glm::mat4 view = camera->GetViewMatrix();
+            glm::mat4 projection = camera->GetProjectionMatrix();
+            glm::vec4 viewPort = glm::vec4(0, 0, camera->GetWidth(), camera->GetHeight());
             glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
 
             printf("unProject [%f,%f,%f]\n", pos.x, pos.y, pos.z);
 
             if (!addToBezeir) {
-                app->GetSceneMaker()->GetCurrentScene()->SelectObject(index);
+                currentScene->SelectObject(index);
             }
 
-            app->GetSceneMaker()->GetCurrentScene()->SetSelectedPosition(pos);
+            currentScene->SetSelectedPosition(pos);
 
             if (addToBezeir) {
-				app->GetSceneMaker()->GetCurrentScene()->AddBezeirControlPoint(pos);
+                currentScene->AddBezeirControlPoint(pos);
             }
 		}
     }

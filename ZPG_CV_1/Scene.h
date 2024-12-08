@@ -48,6 +48,8 @@ class Scene
 
         void InsertObject(glm::vec3 position);
 
+        void ResetBezeirControlPoints();
+
         Camera* GetCamera();
 
         vector<Light*> GetLights();

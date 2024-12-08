@@ -7,13 +7,6 @@ void Scene::Init(Camera* camera, vector<Light*> lights)
 
 	this->lights = lights;
 
-	for (auto& light : this->lights)
-	{
-		light->NotifyObservers();
-	}
-	
-	this->camera->NotifyObservers();
-
 	int objectID = 0;
 
 	if (this->skybox)
@@ -179,13 +172,6 @@ void Scene::InsertObject(glm::vec3 position)
 
 	this->objects.push_back(loginObject);
 
-	this->camera->NotifyObservers();
-
-	for (auto& light : this->lights)
-	{
-		light->NotifyObservers();
-	}
-
 	loginObject->SetObjectID(this->objects.size() - 1);
 
 	this->selectedObject = loginObject;
@@ -209,6 +195,11 @@ vector<DrawableObject*> Scene::GetObjects()
 Skybox* Scene::GetSkybox()
 {
 	return this->skybox;
+}
+
+void Scene::ResetBezeirControlPoints()
+{
+	this->bezierControlPoints.clear();
 }
 
 glm::vec3 Scene::GetSelectedPosition()

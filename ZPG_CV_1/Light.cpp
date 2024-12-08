@@ -130,11 +130,15 @@ void Light::NotifyObservers()
 void Light::AddObserver(Observer* observer)
 {
 	this->observers.push_back(observer);
+
+	this->NotifyObservers();
 }
 
 void Light::RemoveObserver(Observer* observer)
 {
 	this->observers.erase(remove(this->observers.begin(), this->observers.end(), observer), this->observers.end());
+
+	this->NotifyObservers();
 }
 
 
