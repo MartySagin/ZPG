@@ -2,7 +2,7 @@
 
 #include "DrawableObject.h"
 
-class Skybox : public DrawableObject
+class Skybox : public DrawableObject, public Observer
 {
 	private:
 		bool followCamera;
@@ -15,5 +15,7 @@ class Skybox : public DrawableObject
 		bool GetFollowCamera();
 
 		virtual void Draw() override;
+
+		void UpdateFromSubject(Subject* subject) override;
 };
 

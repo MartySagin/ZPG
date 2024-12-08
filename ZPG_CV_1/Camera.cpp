@@ -156,10 +156,14 @@ void Camera::SetHeight(int height)
 
 void Camera::AddObserver(Observer* observer) {
     this->observers.push_back(observer);
+
+    this->NotifyObservers();
 }
 
 void Camera::RemoveObserver(Observer* observer) {
     this->observers.erase(remove(this->observers.begin(), this->observers.end(), observer), this->observers.end());
+    
+    this->NotifyObservers();
 }
 
 void Camera::NotifyObservers() {

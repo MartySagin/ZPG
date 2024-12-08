@@ -381,7 +381,7 @@ void SceneMaker::CreateSceneForest()
 	shaders.push_back(zombieShader);
 
 	ShaderProgram* skyboxShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(skycube) / sizeof(float) / 3);
-	skyboxShader->AddShadersFromFiles("SkyboxVertex.glsl", "SkyboxFragment.glsl");
+	skyboxShader->AddShadersFromFiles("VertexShader.glsl", "SkyboxFragment.glsl");
 	shaders.push_back(skyboxShader);
 
 	//Init Observers for Camera
@@ -505,6 +505,8 @@ void SceneMaker::CreateSceneForest()
 	}
 
 	Skybox* skyboxObject = new Skybox(skyboxShader, skyboxModel, soilMaterial, cubemapTexture);
+
+	camera->AddObserver(skyboxObject);
 
 	scene->SetSkybox(skyboxObject);
 

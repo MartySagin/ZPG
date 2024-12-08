@@ -29,10 +29,10 @@ void Controller::KeyCallback(GLFWwindow* window, int key, int scancode, int acti
                 app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->SetFollowCamera(!app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetFollowCamera());
 
                 if (!app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetFollowCamera()) {
-                    app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetTransformation()->AddComponent(new Translate(app->GetSceneMaker()->GetCurrentScene()->GetCamera()->GetPosition()));
+                    app->GetSceneMaker()->GetCurrentScene()->GetCamera()->RemoveObserver(app->GetSceneMaker()->GetCurrentScene()->GetSkybox());
                 }
                 else {
-                    app->GetSceneMaker()->GetCurrentScene()->GetSkybox()->GetTransformation()->ClearComponents();
+                    app->GetSceneMaker()->GetCurrentScene()->GetCamera()->AddObserver(app->GetSceneMaker()->GetCurrentScene()->GetSkybox());
                 }
             }
 		}

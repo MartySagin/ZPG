@@ -59,3 +59,21 @@ void Skybox::Draw()
 
 	glEnable(GL_DEPTH_TEST);
 }
+
+void Skybox::UpdateFromSubject(Subject* subject)
+{
+	Camera* camera = (Camera*)(subject);
+	
+	if (this->followCamera) {
+		
+		if (camera != nullptr) {
+			this->transform.ClearComponents();
+
+			this->transform.AddComponent(new Translate(camera->GetPosition()));
+		}
+	}
+	
+}
+
+
+

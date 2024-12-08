@@ -210,7 +210,6 @@
     <Text Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SkyboxVertex.glsl" />
     <None Include="SkyboxFragment.glsl" />
   </ItemGroup>
 </Project>
