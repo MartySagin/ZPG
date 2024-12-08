@@ -76,7 +76,7 @@ void SceneMaker::CreateSceneTriangle()
 	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f, 32);
 
 	float triangle[] = {
-		0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 
 		1.0f, 0.0f, 0.0f,
 		0.5f, 1.0f, 0.0f
 	};
@@ -126,40 +126,51 @@ void SceneMaker::CreateSceneFourSpheresLight() {
 	Material* metalMaterial = new Material(0.1f, 0.5f, 0.9f, 32);
 
 	//Init Shaders for Scene
-	ShaderProgram* sphereShader = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
-	sphereShader->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	vector<ShaderProgram*> shaders;
+
+	ShaderProgram* sphereShaderPhong = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
+	sphereShaderPhong->AddShadersFromFiles("VertexShader.glsl", "PhongShader.glsl");
+	shaders.push_back(sphereShaderPhong);
+
+	ShaderProgram* sphereShaderConstant = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
+	sphereShaderConstant->AddShadersFromFiles("VertexShader.glsl", "ConstantShader.glsl");
+	shaders.push_back(sphereShaderConstant);
+
+	ShaderProgram* sphereShaderBlinn = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
+	sphereShaderBlinn->AddShadersFromFiles("VertexShader.glsl", "BlinnPhongShader.glsl");
+	shaders.push_back(sphereShaderBlinn);
+
+	ShaderProgram* sphereShaderLambert = new ShaderProgram(GL_TRIANGLES, 0, sizeof(sphere) / sizeof(float) / 6);
+	sphereShaderLambert->AddShadersFromFiles("VertexShader.glsl", "LambertShader.glsl");
+	shaders.push_back(sphereShaderLambert);
 
 	//Init Observers for Camera
-	camera->AddObserver(sphereShader);
-
-	light->AddObserver(sphereShader);
-
-	sphereShader->SetNumberOfLights((int)lights.size());
+	this->InitObservers(camera, lights, shaders);
 
 	//Init Models for Scene
 	Model* sphereModel = new Model();
 	sphereModel->GenerateModelWithNormal(sphere, sizeof(sphere));
 
-	DrawableObject* sphereObject = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
+	DrawableObject* sphereObject = new DrawableObject(sphereShaderPhong, sphereModel, objectColor, metalMaterial);
 	sphereObject->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject->GetTransformation()->AddComponent(new Translate(glm::vec3(- 3.0f, 0.0f, 0.0f)));
 
 	scene->AddObject(sphereObject);
 
-	DrawableObject* sphereObject2 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
+	DrawableObject* sphereObject2 = new DrawableObject(sphereShaderConstant, sphereModel, objectColor, metalMaterial);
 	sphereObject2->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject2->GetTransformation()->AddComponent(new Translate(glm::vec3(3.0f, 0.0f, 0.0f)));
 
 	scene->AddObject(sphereObject2);
 
-	DrawableObject* sphereObject3 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
+	DrawableObject* sphereObject3 = new DrawableObject(sphereShaderBlinn, sphereModel, objectColor, metalMaterial);
 	sphereObject3->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject3->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, 3.0f, 0.0f)));
 	
 
 	scene->AddObject(sphereObject3);
 
-	DrawableObject* sphereObject4 = new DrawableObject(sphereShader, sphereModel, objectColor, metalMaterial);
+	DrawableObject* sphereObject4 = new DrawableObject(sphereShaderLambert, sphereModel, objectColor, metalMaterial);
 	sphereObject4->GetTransformation()->AddComponent(new Scale(glm::vec3(0.5f)));
 	sphereObject4->GetTransformation()->AddComponent(new Translate(glm::vec3(0.0f, -3.0f, 0.0f)));
 
